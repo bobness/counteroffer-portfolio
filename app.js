@@ -4,43 +4,54 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
   http = require("http"),
-  { Client } = require("pg");
+  { Pool } = require("pg");
 
-// console.log('*** co.app.js accessed');
-app.use("/", (req, res, next) => next(), express.static("public/co-app"));
+app.use("/", (req, res, next) => next(), express.static("public"));
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(async (req, res, next) => {
-  // TODO: store secrets somewhere secure
-  const client = new Client({
-    user: "postgres",
-    password: "p4ssw0rd",
-    host: "localhost",
-    port: 5432,
-    database: "counteroffer",
-  });
-  console.log("*** connecting to postgres client...");
-  await client.connect(); // FIXME: not connecting to the db
-  console.log("*** postgres client connected");
-  req.client = client;
-  next();
+const pool = new Pool({
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  host: process.env.DATABASE_HOST,
+  port: process.env.DATABASE_PORT,
+  database: process.env.DATABASE_NAME,
+  max: 50, // 10 is default
+  idleTimeoutMillis: 10000, // 10000 is default
+  connectionTimeoutMillis: 2000, // 0 (no timeout!) is default
 });
 
-const index = require("./routes/co-app");
+pool.on("error", (err) => {
+  console.error("pg pool error: ", err);
+  process.exit();
+});
+
+app.use(async (req, res, next) => {
+  try {
+    req.client = await pool.connect();
+    next();
+  } catch (err) {
+    console.error(err);
+    console.error("*** totalCount", pool.totalCount);
+    console.error("*** idleCount", pool.idleCount);
+    console.error("*** waitingCount", pool.waitingCount);
+    console.error("*** so, restarting server...");
+    process.exit();
+  }
+});
+
+const index = require("./routes/index");
 app.use("/", index);
 
-console.log("*** routes added");
-
 const server = http.createServer(app);
-server.listen(process.env.PORT || 3002);
+server.listen(process.env.PORT || 5000);
 server.on("listening", () => {
   console.log("Listening on ", server.address());
 });
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   console.log("error! " + err);
   return res.status(err.status || 500).json({
     message: err.message,
