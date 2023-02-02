@@ -15,13 +15,13 @@ const Facts = ({ data }: Props) => {
       <tbody>
         {data.map((fact, i) => (
           <tr key={`tr #${i}`}>
-            <td scope="row">
-              <span>
+            <td style={{ fontWeight: "bold", width: "100px" }}>
+              {/* <span>
                 <label>
                   Include
                   <input type="checkbox" />
                 </label>
-              </span>
+              </span> */}
               {fact.key}
             </td>
             <td>{fact.value}</td>

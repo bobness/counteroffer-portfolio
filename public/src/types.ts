@@ -12,8 +12,8 @@ export interface Experience {
   // id: number;
   title: string;
   company: string;
-  startDate: Date;
-  endDate?: Date;
+  startdate: Date;
+  enddate?: Date;
   summary: string;
   tags: Tag[];
 }

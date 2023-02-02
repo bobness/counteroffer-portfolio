@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Experience } from "../types";
 
 interface Props {
@@ -6,12 +6,24 @@ interface Props {
 }
 
 const ExperienceRow = ({ data }: Props) => {
+  const startDate = useMemo(() => {
+    const date = new Date(data.startdate);
+    return date.toLocaleDateString("en-US");
+  }, [data?.startdate]);
+
+  const endDate = useMemo(() => {
+    if (data.enddate) {
+      const date = new Date(data.enddate);
+      return date.toLocaleDateString("en-US");
+    }
+    return "";
+  }, [data?.enddate]);
   return (
     <div>
       <>
         <h1>{data.title}</h1>
         <h2>{data.company}</h2>
-        {data.startDate} - {data.endDate ?? ""}
+        {startDate} - {endDate}
         <div>{data.summary}</div>
         {/* <ul className="tag-list">
           {data.tags.map((tag) => (
