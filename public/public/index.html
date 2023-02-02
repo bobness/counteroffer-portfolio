@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Counteroffer</title>
+
+    <style>
+      body {
+        margin: 50px;
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-top: 10px;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-top: 10px;
+      }
+
+      .tagBar {
+        background-color: #337ab7;
+      }
+
+      .tagBar.danger {
+        background-color: #d9534f;
+      }
+
+      .tag-list {
+        background-color: white;
+        border: 1px dark gray;
+        cursor: text;
+        padding: 1px;
+      }
+
+      .tag-item {
+        margin: 2px;
+        padding: 0 5px;
+        display: inline-block;
+        font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        height: 26px;
+        line-height: 25px;
+        border-radius: 3px;
+        background-color: #337ab7;
+        color: white;
+        font-weight: bold;
+      }
+
+      survey {
+        padding: 10px;
+      }
+
+      table#facts tbody th {
+        width: 100px;
+      }
+
+      table#facts tbody td {
+        width: 80%;
+      }
+
+      .togglePrint {
+        float: left;
+        width: 60px;
+        font-size: 14px;
+        font-weight: normal;
+        border: 1px #ccc solid;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 10px;
+      }
+
+      .togglePrint label {
+        margin: 0;
+        padding: 5px;
+      }
+
+      @media print {
+        histogram,
+        #navLinks,
+        smcx-widget {
+          display: none !important;
+        }
+
+        .hideFromPrint {
+          display: none;
+        }
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+      integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
