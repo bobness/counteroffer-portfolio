@@ -4,18 +4,18 @@ const md5 = require("md5");
 const uuidv4 = require("uuid/v4");
 const nodemailer = require("nodemailer");
 
-let transporter;
-router.use((req, res, next) => {
-  // console.log("*** accessed co-app routes");
-  // transporter = nodemailer.createTransport({
-  //   sendmail: true,
-  //   newline: 'unix',
-  //   path: '/usr/sbin/sendmail'
-  // });
-  next();
-});
+// let transporter;
+// router.use((req, res, next) => {
+// console.log("*** accessed co-app routes");
+// transporter = nodemailer.createTransport({
+//   sendmail: true,
+//   newline: 'unix',
+//   path: '/usr/sbin/sendmail'
+// });
+//   next();
+// });
 
-// TODO: in the future, validate sessions on every request if I want to allow them to timeout
+// FIXME: use jwt instead of my homegrown stuff for users/sessions?
 /*
 router.use((req, res, next) => {
   const session = req.get('session'),
