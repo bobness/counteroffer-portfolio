@@ -16,11 +16,11 @@ const Portfolio = ({ user_id }: Props) => {
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
+        <Facts data={portfolio.facts} />
+        {/* <Histogram data={portfolio.experiences} /> */}
         <Navigation items={["Experiences", "Contact"]}>
           <div key="Experiences">
             <>
-              <Facts data={portfolio.facts} />
-              {/* <Histogram data={portfolio.experiences} /> */}
               {portfolio.experiences.map((e, i) => (
                 <ExperienceRow data={e} key={`ExperienceRow #${i}`} />
               ))}
