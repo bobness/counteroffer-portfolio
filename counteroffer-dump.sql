@@ -117,7 +117,6 @@ ALTER TABLE public.messages OWNER TO postgres;
 
 CREATE TABLE public.tags (
     id integer NOT NULL,
-    user_id integer NOT NULL,
     experience_id integer NOT NULL,
     value text NOT NULL
 );
@@ -228,7 +227,7 @@ COPY public.messages (id, type, value, job_id, datetime, sender) FROM stdin;
 -- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.tags (id, user_id, experience_id, value) FROM stdin;
+COPY public.tags (id, experience_id, value) FROM stdin;
 \.
 
 
