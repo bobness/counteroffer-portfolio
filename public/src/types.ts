@@ -1,15 +1,16 @@
 export interface Fact {
-  // id: number;
+  id: number;
   key: string;
   value: string;
 }
 
 export interface Tag {
+  id: number;
   value: string;
 }
 
 export interface Experience {
-  // id: number;
+  id: number;
   title: string;
   company: string;
   startdate: Date;

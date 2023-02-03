@@ -25,11 +25,13 @@ const ExperienceRow = ({ data }: Props) => {
         <h2>{data.company}</h2>
         {startDate} - {endDate}
         <div>{data.summary}</div>
-        {/* <ul className="tag-list">
-          {data.tags.map((tag) => (
-            <li className="tag-item">{tag.value}</li>
+        <ul className="tag-list">
+          {data.tags.map((tag, i) => (
+            <li className="tag-item" key={`tag ${data.id} - ${i}`}>
+              {tag.value}
+            </li>
           ))}
-        </ul> */}
+        </ul>
       </>
     </div>
   );

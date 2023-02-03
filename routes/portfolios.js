@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const getTagsForExperience = (req, experience_id) =>
+  req.client
+    .query({
+      text: "select value from tags where experience_id = $1::integer",
+      values: [Number(experience_id)],
+    })
+    .then((response) => response.rows);
+
 router.get("/:user_id", async (req, res, next) => {
-  console.log("*** in /portfolios/" + req.params.user_id);
   const userId = Number(req.params.user_id);
   const userResult = await req.client.query({
     text: "select * from users where id = $1::integer",
@@ -20,6 +27,12 @@ router.get("/:user_id", async (req, res, next) => {
       values: [userId],
     });
     const experiences = experiencesResult.rows;
+    await Promise.all(
+      experiences.map(async (e) => {
+        const tags = await getTagsForExperience(req, e.id);
+        e.tags = tags;
+      })
+    );
     return res.json({
       name: user.username,
       facts,

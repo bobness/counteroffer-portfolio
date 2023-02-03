@@ -7,7 +7,6 @@ interface Props {
 }
 
 const usePortfolio = ({ user_id }: Props) => {
-  // FIXME: get from server
   const [portfolio, setPortfolio] = useState<Portfolio | undefined>();
 
   const api = useApi();
