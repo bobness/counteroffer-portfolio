@@ -24,3 +24,23 @@ export interface Portfolio {
   facts: Fact[];
   experiences: Experience[];
 }
+
+export interface OpportunityMessage {
+  id: number;
+  text: string;
+  sender: any;
+  required: boolean;
+  value: string;
+}
+
+export interface OpportunityTag {
+  id: number;
+  selected: boolean;
+  name: string;
+}
+
+export interface Opportunity {
+  id: number;
+  messages: OpportunityMessage[];
+  tags: OpportunityTag[];
+}

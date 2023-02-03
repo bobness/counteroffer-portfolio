@@ -4,6 +4,7 @@ import ExperienceRow from "./ExperienceRow";
 import Facts from "./Facts";
 import Histogram from "./Histogram";
 import Navigation from "./Navigation";
+import Survey from "./Survey";
 
 interface Props {
   user_id: number;
@@ -41,7 +42,9 @@ const Portfolio = ({ user_id }: Props) => {
               ))}
             </>
           </div>
-          <div key="Contact">(Contact)</div>
+          <div key="Contact">
+            <Survey />
+          </div>
         </Navigation>
       </div>
     );
