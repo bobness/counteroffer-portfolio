@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Experience } from "../types";
 
 interface TagCount {
@@ -7,23 +7,63 @@ interface TagCount {
 }
 
 interface Props {
-  data: Experience[];
+  experiences: Experience[];
+  onTagSelected: (tag?: string) => void;
 }
 
-const Histogram = ({ data }: Props) => {
+const Histogram = ({ experiences, onTagSelected }: Props) => {
   const [filter, setFilter] = useState<string>("");
-  const tagCounts = [] as TagCount[];
+  const [selectedTag, setSelectedTag] = useState<string | undefined>();
 
-  // TODO: parse experiences to create a histogram
+  const tagCounts = useMemo(() => {
+    return experiences
+      .reduce<TagCount[]>((counts, experience) => {
+        experience.tags.forEach((tag) => {
+          if (!counts.find((c) => c.name === tag.value)) {
+            counts.push({ name: tag.value, count: 0 });
+          }
+          const tc = counts.find((c) => c.name === tag.value);
+          if (tc) {
+            const end = experience.enddate
+              ? new Date(experience.enddate)
+              : new Date();
+            const start = new Date(experience.startdate);
+            const time = end.getTime() - start.getTime();
+            const years = Math.round(time / (1000 * 60 * 60 * 24 * 365));
+            tc.count += years;
+          }
+        });
+        return counts;
+      }, [])
+      .sort((a, b) => b.count - a.count);
+  }, [experiences]);
+
+  useEffect(() => {
+    onTagSelected(selectedTag);
+  }, [selectedTag]);
 
   return (
-    <div style={{ display: "inline-block", width: "100%" }}>
+    <div
+      style={{
+        display: "inline-block",
+        width: "100%",
+        maxHeight: "300px",
+        overflowY: "scroll",
+        border: "1px black solid",
+        borderRadius: "5px",
+      }}
+    >
       <div style={{ textAlign: "center", padding: "5px" }}>
         <strong style={{ float: "left" }}>
           Click one or more bars to filter the experiences below
         </strong>
         <div style={{ float: "right" }}>
-          <input type="text" ng-model="filter" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Filter tags"
+            value={filter}
+            onChange={(event) => setFilter(event.target.value)}
+          />
           <span
             className="glyphicon glyphicon-remove-circle"
             aria-hidden="true"
@@ -34,7 +74,9 @@ const Histogram = ({ data }: Props) => {
       </div>
       <div style={{ clear: "both" }}>
         {tagCounts
-          .filter((tc) => tc.name.includes(filter))
+          .filter((tc) =>
+            tc.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+          )
           .map((tc) => (
             <span
               style={{
@@ -44,21 +86,29 @@ const Histogram = ({ data }: Props) => {
                 margin: "15px",
                 fontSize: "smaller",
               }}
+              key={`histogram span for ${tc.name}`}
             >
               <div style={{ textOverflow: "ellipsis", overflow: "hidden" }}>
                 {tc.name}
               </div>
               <div
-                className="tagBar"
                 style={{
-                  height: tc.count * 15,
                   color: "white",
+                  height: tc.count * 15,
                   textAlign: "center",
                   verticalAlign: "bottom",
                   cursor: "pointer",
                 }}
-                ng-class="{ danger : isSelected(tag) }"
-                ng-click="selectTag(tag)"
+                className={
+                  "tagBar " + (selectedTag === tc.name ? "danger" : "")
+                }
+                onClick={() => {
+                  if (selectedTag === tc.name) {
+                    setSelectedTag(undefined);
+                  } else {
+                    setSelectedTag(tc.name);
+                  }
+                }}
               >
                 {tc.count}
               </div>
