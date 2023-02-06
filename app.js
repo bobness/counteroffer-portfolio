@@ -50,8 +50,10 @@ app.use(async (req, res, next) => {
 
 const index = require("./routes/index");
 const portfolios = require("./routes/portfolios");
+const surveys = require("./routes/surveys");
 app.use("/", index);
 app.use("/portfolios", portfolios);
+app.use("/surveys", surveys);
 
 const server = http.createServer(app);
 server.listen(process.env.PORT || 5000);

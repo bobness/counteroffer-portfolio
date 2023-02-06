@@ -16,8 +16,12 @@ const useApi = () => {
 
   const getPortfolio = (user_id: number) =>
     instance.get("/portfolios/" + user_id);
+
+  const getQuestions = (user_id: number) => instance.get("/surveys/" + user_id);
+
   return {
     getPortfolio,
+    getQuestions,
   };
 };
 

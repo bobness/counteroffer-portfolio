@@ -9,9 +9,10 @@ interface TagCount {
 interface Props {
   experiences: Experience[];
   onTagSelected: (tag?: string) => void;
+  setTags: (tags: string[]) => void;
 }
 
-const Histogram = ({ experiences, onTagSelected }: Props) => {
+const Histogram = ({ experiences, onTagSelected, setTags }: Props) => {
   const [filter, setFilter] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
 
@@ -37,6 +38,11 @@ const Histogram = ({ experiences, onTagSelected }: Props) => {
       }, [])
       .sort((a, b) => b.count - a.count);
   }, [experiences]);
+
+  useEffect(() => {
+    const tags = tagCounts.map((tc) => tc.name);
+    setTags(tags);
+  }, [tagCounts]);
 
   useEffect(() => {
     onTagSelected(selectedTag);

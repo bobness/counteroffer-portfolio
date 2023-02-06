@@ -25,11 +25,18 @@ export interface Portfolio {
   experiences: Experience[];
 }
 
-export interface OpportunityMessage {
+export interface Question {
   id: number;
-  text: string;
-  sender: any;
+  user_id: number;
+  question: string;
+  type: string;
   required: boolean;
+}
+
+export interface Message {
+  id: number;
+  question_id: number;
+  sender: any;
   value: string;
 }
 
@@ -41,6 +48,6 @@ export interface OpportunityTag {
 
 export interface Opportunity {
   id: number;
-  messages: OpportunityMessage[];
+  messages: Message[];
   tags: OpportunityTag[];
 }

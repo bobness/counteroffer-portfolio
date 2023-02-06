@@ -1,26 +1,61 @@
-import React, { useState } from "react";
-import { Opportunity, OpportunityMessage, OpportunityTag } from "../types";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { resolveTypeReferenceDirective } from "typescript";
+import useApi from "../hooks/useApi";
+import { Opportunity, Message, OpportunityTag, Question } from "../types";
 
-const Survey = () => {
+interface Props {
+  user_id: number;
+  tags?: string[];
+}
+
+const Survey = ({ user_id, tags: portfolioTags }: Props) => {
+  const { getQuestions } = useApi();
   const [jobs, setJobs] = useState<Opportunity[]>([]);
-  const [selectedJob, setSelectedJob] = useState<Opportunity>({
+  // const [selectedJob, setSelectedJob] = useState<Opportunity>();
+  const selectedJob = {
     id: 1,
-    messages: [],
-    tags: [],
-  });
+    messages: [] as Message[],
+    tags: [] as OpportunityTag[],
+  };
+  const [questions, setQuestions] = useState<Question[] | undefined>();
+  const emailQuestion = useMemo(
+    () => ({
+      value: "",
+    }),
+    []
+  );
+  const responses = useMemo(() => {
+    if (questions) {
+      return questions.map(
+        (q) =>
+          ({
+            question_id: q.id,
+            sender: emailQuestion.value,
+            value: "",
+          } as Message)
+      );
+    }
+  }, [questions]);
+
+  useEffect(() => {
+    getQuestions(user_id).then((response) => {
+      setQuestions(response.data);
+    });
+  }, [user_id]);
 
   const newMessage = {
     value: "",
-  } as OpportunityMessage;
+  } as Message;
 
-  const progress = () => {
-    // TODO
-    return 0;
-  };
+  const requiredResponses = useMemo(() => {
+    if (questions && responses) {
+      return responses.filter((r, i) => questions[i].required);
+    }
+    return [];
+  }, [questions, responses]);
 
-  const emailQuestion = {
-    value: "",
-  };
+  const progress = (answeredResponses: Message[]) =>
+    (answeredResponses.length / requiredResponses.length) * 100;
 
   const getJobs = (email: string) => {
     // TODO
@@ -30,23 +65,38 @@ const Survey = () => {
     // TODO
   };
 
-  const getPanelClass = (message: any) => {
-    // TODO
-    return "";
+  const getPanelClass = (question: Question) => {
+    if (question.required) {
+      return "panel-primary";
+    }
+    return "panel-secondary";
   };
 
-  const selectTag = (message: OpportunityMessage, tag: OpportunityTag) => {
+  const toggleTag = (response: Message, tag: string) => {
+    const tags = response.value ? response.value.split(",") : [];
+    if (tags.includes(tag)) {
+      const index = tags.indexOf(tag);
+      tags.splice(index, 1);
+    } else {
+      tags.push(tag);
+    }
+    response.value = tags.join(",");
+  };
+
+  const sendMessage = (message: Message, job: Opportunity) => {
     // TODO
   };
 
-  const sendMessage = (message: OpportunityMessage, job: Opportunity) => {
+  const submit = () => {
     // TODO
   };
 
   return (
     <div className="panel panel-default" id="survey">
-      <div className="panel-heading">Contact Bob</div>
-      <div className="panel-body">
+      <div className="panel-heading" key="survey-heading">
+        Contact Bob
+      </div>
+      <div className="panel-body" key="survey-body">
         <p>
           To talk with Bob about job opportunities, please fill out the
           following details below.
@@ -60,9 +110,14 @@ const Survey = () => {
             <div
               className="progress-bar"
               role="progressbar"
-              style={{ width: progress() + "%" }}
+              style={{
+                width:
+                  progress(requiredResponses.filter((r) => !!r.value)) + "%",
+              }}
             >
-              <span className="sr-only">{progress()}% Complete</span>
+              <span className="sr-only">
+                {progress(requiredResponses.filter((r) => !!r.value))}% Complete
+              </span>
             </div>
           </div>
         </div>
@@ -73,12 +128,19 @@ const Survey = () => {
         {/* <div ng-show="state === 'error'" className="panel-danger">
       Sorry, there was an error submitting this survey. Please notify Bob.
     </div> */}
+
         <div>
           <div className="panel question">
             <div className="panel-heading">Your email address: *</div>
             <div className="panel-body">
               <span>
-                <input type="text" value={emailQuestion.value} />
+                <input
+                  type="text"
+                  value={emailQuestion.value}
+                  onChange={(event) =>
+                    (emailQuestion.value = event.target.value)
+                  }
+                />
                 {/* <button
                   className="btn btn-sm btn-default"
                   onClick={() => getJobs(emailQuestion.value)}
@@ -97,7 +159,7 @@ const Survey = () => {
           </span> */}
             </div>
           </div>
-          <ul className="nav nav-pills" style={{ display: "inline-block" }}>
+          {/* <ul className="nav nav-pills" style={{ display: "inline-block" }}>
             {jobs?.map((job) => (
               <li className={selectedJob.id === job.id ? "active" : ""}>
                 <a
@@ -108,7 +170,7 @@ const Survey = () => {
                 </a>
               </li>
             ))}
-          </ul>
+          </ul> */}
           {/* <button className="btn btn-sm btn-default panel" ng-click="addJob()">
             <span
               className="glyphicon glyphicon-plus"
@@ -138,56 +200,65 @@ const Survey = () => {
               New Job
             </div>
             <div className="panel-body">
-              {selectedJob.messages.map((message) => (
-                <div className={"panel question" + getPanelClass(message)}>
-                  <div className="panel-heading">
-                    {message.text || message.sender}{" "}
-                    {message.required ? "*" : ""}
-                  </div>
-                  <div className="panel-body">
-                    <div ng-if="message.type === 'text'">
-                      <span
-                        ng-show="savedEmail && currentJob.id"
-                        ng-bind-html="getHTML(message.value || '(No value)')"
-                      ></span>
-                      <input
-                        type="text"
-                        ng-model="message.value"
-                        ng-show="!savedEmail || !currentJob.id"
-                      />
+              {questions &&
+                responses &&
+                questions.map((question, i) => (
+                  <div className={"panel question " + getPanelClass(question)}>
+                    <div className="panel-heading">
+                      {question.question} {question.required ? "*" : ""}
                     </div>
-                    <div ng-if="message.type === 'skills'">
-                      <span ng-show="savedEmail && currentJob.id">
-                        {message.value}
-                      </span>
-                      {selectedJob.tags.map((tag) => (
-                        // ng-show="!savedEmail || !currentJob.id"
+                    <div className="panel-body">
+                      {question.type === "text" && (
                         <div>
-                          <label>
-                            <input
-                              type="checkbox"
-                              value={tag.selected ? 1 : 0}
-                              onChange={() => selectTag(message, tag)}
-                            />
-                            {tag.name}
-                          </label>
+                          <input
+                            type="text"
+                            value={responses[i].value}
+                            onChange={(event) =>
+                              (responses[i].value = event.target.value)
+                            }
+                          />
                         </div>
-                      ))}
-                    </div>
-                    <div ng-if="message.type === 'textarea'">
-                      <span
-                        ng-show="savedEmail && currentJob.id"
-                        ng-bind-html="getHTML(message.value || '(No value)')"
-                      ></span>
-                      <textarea
-                        style={{ width: "500px", height: "200px" }}
-                        value={message.value}
-                      ></textarea>
-                      {/* ng-show="!savedEmail || !currentJob.id" */}
+                      )}
+                      {question.type === "skills" && (
+                        <div>
+                          <span>{responses[i].value}</span>
+                          {portfolioTags &&
+                            portfolioTags.map((tag) => (
+                              <div>
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    value={
+                                      responses[i].value
+                                        .split(",")
+                                        .includes(tag)
+                                        ? 1
+                                        : 0
+                                    }
+                                    onChange={() => {
+                                      toggleTag(responses[i], tag);
+                                    }}
+                                  />{" "}
+                                  {tag}
+                                </label>
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                      {question.type === "textarea" && (
+                        <div>
+                          <textarea
+                            style={{ width: "500px", height: "200px" }}
+                            value={responses[i].value}
+                            onChange={(event) =>
+                              (responses[i].value = event.target.value)
+                            }
+                          ></textarea>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
               {/* ng-show="savedEmail && currentJob.id" */}
               {/* <div className="panel question panel-primary">
                 <div className="panel-heading">Respond:</div>
@@ -213,9 +284,10 @@ const Survey = () => {
         <div>
           <button
             className="btn btn-sm btn-default"
-            ng-click="submit({data: data})"
-            ng-show="currentJob && !currentJob.id"
-            ng-disabled="progress() !== 100"
+            onClick={() => submit()}
+            disabled={
+              progress(requiredResponses.filter((r) => !!r.value)) !== 100
+            }
           >
             <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             Submit

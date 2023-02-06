@@ -11,6 +11,7 @@ interface Props {
 }
 
 const Portfolio = ({ user_id }: Props) => {
+  const [tags, setTags] = useState<string[] | undefined>();
   const [tagFilter, setTagFilter] = useState<string | undefined>();
   const portfolio = usePortfolio({ user_id });
   const filteredExperiences = useMemo(() => {
@@ -33,6 +34,7 @@ const Portfolio = ({ user_id }: Props) => {
         <Histogram
           experiences={portfolio.experiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
+          setTags={setTags}
         />
         <Navigation items={["Experiences", "Contact"]}>
           <div key="Experiences">
@@ -43,7 +45,7 @@ const Portfolio = ({ user_id }: Props) => {
             </>
           </div>
           <div key="Contact">
-            <Survey />
+            <Survey user_id={user_id} tags={tags} />
           </div>
         </Navigation>
       </div>
