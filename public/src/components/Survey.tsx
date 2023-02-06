@@ -47,11 +47,17 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
     if (questions && responses) {
       return responses.filter((r, i) => questions[i].required);
     }
-    return [];
   }, [questions, responses]);
 
-  const progress = (answeredResponses: Message[]) =>
-    (answeredResponses.length / requiredResponses.length) * 100;
+  const [answeredResponsesLength, setAnsweredResponsesLength] =
+    useState<number>(0);
+
+  const progress = useMemo(() => {
+    if (requiredResponses) {
+      return (answeredResponsesLength / requiredResponses.length) * 100;
+    }
+    return 0;
+  }, [answeredResponsesLength, requiredResponses?.length]);
 
   const getJobs = (email: string) => {
     // TODO
@@ -89,13 +95,10 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
               className="progress-bar"
               role="progressbar"
               style={{
-                width:
-                  progress(requiredResponses.filter((r) => !!r.value)) + "%",
+                width: progress + "%",
               }}
             >
-              <span className="sr-only">
-                {progress(requiredResponses.filter((r) => !!r.value))}% Complete
-              </span>
+              <span className="sr-only">{progress}% Complete</span>
             </div>
           </div>
         </div>
@@ -185,9 +188,12 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
                     question={question}
                     // response={responses[i]}
                     onResponseChange={(response?: string) => {
-                      if (response) {
-                        responses[i].value = response;
+                      if (!!responses[i].value && !response) {
+                        setAnsweredResponsesLength(answeredResponsesLength - 1);
+                      } else if (!responses[i].value && !!response) {
+                        setAnsweredResponsesLength(answeredResponsesLength + 1);
                       }
+                      responses[i].value = response ?? "";
                     }}
                     portfolioTags={portfolioTags}
                   />
@@ -218,9 +224,7 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
           <button
             className="btn btn-sm btn-default"
             onClick={() => submit()}
-            disabled={
-              progress(requiredResponses.filter((r) => !!r.value)) !== 100
-            }
+            disabled={progress !== 100}
           >
             <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             Submit
