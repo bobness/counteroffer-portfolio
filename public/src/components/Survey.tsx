@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { resolveTypeReferenceDirective } from "typescript";
 import useApi from "../hooks/useApi";
 import { Opportunity, Message, OpportunityTag, Question } from "../types";
+import SurveyQuestion from "./SurveyQuestion";
 
 interface Props {
   user_id: number;
@@ -18,19 +19,14 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
     tags: [] as OpportunityTag[],
   };
   const [questions, setQuestions] = useState<Question[] | undefined>();
-  const emailQuestion = useMemo(
-    () => ({
-      value: "",
-    }),
-    []
-  );
+  const [email, setEmail] = useState<string | undefined>();
   const responses = useMemo(() => {
     if (questions) {
       return questions.map(
         (q) =>
           ({
             question_id: q.id,
-            sender: emailQuestion.value,
+            sender: email,
             value: "",
           } as Message)
       );
@@ -63,24 +59,6 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
 
   const loadJobURL = (job: any) => {
     // TODO
-  };
-
-  const getPanelClass = (question: Question) => {
-    if (question.required) {
-      return "panel-primary";
-    }
-    return "panel-secondary";
-  };
-
-  const toggleTag = (response: Message, tag: string) => {
-    const tags = response.value ? response.value.split(",") : [];
-    if (tags.includes(tag)) {
-      const index = tags.indexOf(tag);
-      tags.splice(index, 1);
-    } else {
-      tags.push(tag);
-    }
-    response.value = tags.join(",");
   };
 
   const sendMessage = (message: Message, job: Opportunity) => {
@@ -136,10 +114,10 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
               <span>
                 <input
                   type="text"
-                  value={emailQuestion.value}
-                  onChange={(event) =>
-                    (emailQuestion.value = event.target.value)
-                  }
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
                 />
                 {/* <button
                   className="btn btn-sm btn-default"
@@ -203,61 +181,16 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
               {questions &&
                 responses &&
                 questions.map((question, i) => (
-                  <div className={"panel question " + getPanelClass(question)}>
-                    <div className="panel-heading">
-                      {question.question} {question.required ? "*" : ""}
-                    </div>
-                    <div className="panel-body">
-                      {question.type === "text" && (
-                        <div>
-                          <input
-                            type="text"
-                            value={responses[i].value}
-                            onChange={(event) =>
-                              (responses[i].value = event.target.value)
-                            }
-                          />
-                        </div>
-                      )}
-                      {question.type === "skills" && (
-                        <div>
-                          <span>{responses[i].value}</span>
-                          {portfolioTags &&
-                            portfolioTags.map((tag) => (
-                              <div>
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    value={
-                                      responses[i].value
-                                        .split(",")
-                                        .includes(tag)
-                                        ? 1
-                                        : 0
-                                    }
-                                    onChange={() => {
-                                      toggleTag(responses[i], tag);
-                                    }}
-                                  />{" "}
-                                  {tag}
-                                </label>
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                      {question.type === "textarea" && (
-                        <div>
-                          <textarea
-                            style={{ width: "500px", height: "200px" }}
-                            value={responses[i].value}
-                            onChange={(event) =>
-                              (responses[i].value = event.target.value)
-                            }
-                          ></textarea>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <SurveyQuestion
+                    question={question}
+                    // response={responses[i]}
+                    onResponseChange={(response?: string) => {
+                      if (response) {
+                        responses[i].value = response;
+                      }
+                    }}
+                    portfolioTags={portfolioTags}
+                  />
                 ))}
               {/* ng-show="savedEmail && currentJob.id" */}
               {/* <div className="panel question panel-primary">

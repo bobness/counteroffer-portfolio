@@ -29,7 +29,7 @@ export interface Question {
   id: number;
   user_id: number;
   question: string;
-  type: string;
+  type: "text" | "textarea" | "skills";
   required: boolean;
 }
 
