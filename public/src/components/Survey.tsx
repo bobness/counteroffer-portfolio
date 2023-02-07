@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Survey = ({ user_id, tags: portfolioTags }: Props) => {
-  const { getQuestions } = useApi();
+  const { getQuestions, postResponses } = useApi();
   const [jobs, setJobs] = useState<Opportunity[]>([]);
   // const [selectedJob, setSelectedJob] = useState<Opportunity>();
   const selectedJob = {
@@ -71,8 +71,18 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
     // TODO
   };
 
-  const submit = () => {
-    // TODO
+  const submit = async () => {
+    // progress === 100 means there are responses
+    if (progress === 100 && email) {
+      responses!.forEach((response) => {
+        response.sender = email;
+      });
+      await postResponses(user_id, responses!);
+      window.location.reload();
+      alert(
+        "Your survey responses have been sent. Please monitor your email inbox for follow-ups from the candidate."
+      );
+    }
   };
 
   return (
@@ -86,9 +96,11 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
           following details below.
         </p>
 
+        <p>* indicates required</p>
+
         <div>
           <p>
-            <strong>Progress:</strong>
+            <strong>Progress on required items:</strong>
           </p>
           <div className="progress">
             <div
@@ -178,7 +190,7 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
                 </div>
               )} */}
               {/* {selectedJob.id ? "Job #" + selectedJob.id : "New Job"} */}
-              New Job
+              Survey Questions
             </div>
             <div className="panel-body">
               {questions &&
@@ -188,10 +200,16 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
                     question={question}
                     // response={responses[i]}
                     onResponseChange={(response?: string) => {
-                      if (!!responses[i].value && !response) {
-                        setAnsweredResponsesLength(answeredResponsesLength - 1);
-                      } else if (!responses[i].value && !!response) {
-                        setAnsweredResponsesLength(answeredResponsesLength + 1);
+                      if (question.required) {
+                        if (!!responses[i].value && !response) {
+                          setAnsweredResponsesLength(
+                            answeredResponsesLength - 1
+                          );
+                        } else if (!responses[i].value && !!response) {
+                          setAnsweredResponsesLength(
+                            answeredResponsesLength + 1
+                          );
+                        }
                       }
                       responses[i].value = response ?? "";
                     }}
@@ -224,7 +242,7 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
           <button
             className="btn btn-sm btn-default"
             onClick={() => submit()}
-            disabled={progress !== 100}
+            disabled={progress !== 100 || !email}
           >
             <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             Submit

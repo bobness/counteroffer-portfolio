@@ -16,10 +16,13 @@ const SurveyQuestion = ({
   const [responseValue, setResponseValue] = useState<string | undefined>();
 
   const getPanelClass = (question: Question) => {
-    if (question.required) {
-      return "panel-primary";
+    if (responseValue) {
+      return "panel-success";
     }
-    return "panel-secondary";
+    if (question.required) {
+      return "panel-danger";
+    }
+    return "panel-warning";
   };
 
   const toggleTag = useCallback(

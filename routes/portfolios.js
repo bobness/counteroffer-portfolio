@@ -33,12 +33,14 @@ router.get("/:user_id", async (req, res, next) => {
         e.tags = tags;
       })
     );
+    req.client.release();
     return res.json({
       name: user.username,
       facts,
       experiences,
     });
   } else {
+    req.client.release();
     return res.sendStatus(404);
   }
 });
