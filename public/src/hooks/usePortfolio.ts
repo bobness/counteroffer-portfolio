@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Experience, Fact, Portfolio } from "../types";
+import { Portfolio } from "../types";
 import useApi from "./useApi";
 
 interface Props {

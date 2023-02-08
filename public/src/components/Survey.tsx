@@ -88,12 +88,12 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
   return (
     <div className="panel panel-default" id="survey">
       <div className="panel-heading" key="survey-heading">
-        Contact Bob
+        Contact Candidate
       </div>
       <div className="panel-body" key="survey-body">
         <p>
-          To talk with Bob about job opportunities, please fill out the
-          following details below.
+          To talk with the candidate about job opportunities, please fill out
+          the following details below.
         </p>
 
         <p>* indicates required</p>

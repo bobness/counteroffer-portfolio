@@ -12,6 +12,8 @@ interface Props {
   setTags: (tags: string[]) => void;
 }
 
+export const EXPERIENCE_YEAR_HEIGHT = 15;
+
 const Histogram = ({ experiences, onTagSelected, setTags }: Props) => {
   const [filter, setFilter] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
@@ -100,7 +102,7 @@ const Histogram = ({ experiences, onTagSelected, setTags }: Props) => {
               <div
                 style={{
                   color: "white",
-                  height: tc.count * 15,
+                  height: tc.count * EXPERIENCE_YEAR_HEIGHT,
                   textAlign: "center",
                   verticalAlign: "bottom",
                   cursor: "pointer",

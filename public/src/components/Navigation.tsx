@@ -8,10 +8,6 @@ interface Props {
 const Navigation = ({ items, children }: Props) => {
   const [currentPage, setCurrentPage] = useState<string>(items[0]);
 
-  const goToPage = (page: string) => {
-    setCurrentPage(page);
-  };
-
   return (
     <>
       <div style={{ textAlign: "center", margin: "1em" }} id="navLinks">
@@ -21,7 +17,10 @@ const Navigation = ({ items, children }: Props) => {
               className={currentPage === item ? "active" : ""}
               key={`navigation.li for ${item}`}
             >
-              <a onClick={() => goToPage(item)} style={{ cursor: "pointer" }}>
+              <a
+                onClick={() => setCurrentPage(item)}
+                style={{ cursor: "pointer" }}
+              >
                 {item}
               </a>
             </li>
