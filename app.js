@@ -1,10 +1,16 @@
-const express = require("express"),
-  path = require("path"),
-  logger = require("morgan"),
-  bodyParser = require("body-parser"),
-  app = express(),
-  http = require("http"),
-  { Pool } = require("pg");
+const express = require("express");
+const path = require("path");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const http = require("http");
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+
+dotenv.config();
 
 app.use("/", (req, res, next) => next(), express.static("public"));
 
@@ -23,10 +29,10 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // 0 (no timeout!) is default
 });
 
-pool.on("error", (err) => {
-  console.error("pg pool error: ", err);
-  process.exit();
-});
+// pool.on("error", (err) => {
+//   console.error("pg pool error: ", err);
+//   process.exit();
+// });
 
 app.use(async (req, res, next) => {
   try {
@@ -42,8 +48,12 @@ app.use(async (req, res, next) => {
   }
 });
 
-const index = require("./routes/index");
-app.use("/", index);
+const indexRouter = require("./routes/index");
+const portfoliosRouter = require("./routes/portfolios");
+const surveysRouter = require("./routes/surveys");
+app.use("/", indexRouter);
+app.use("/portfolios", portfoliosRouter);
+app.use("/surveys", surveysRouter);
 
 const server = http.createServer(app);
 server.listen(process.env.PORT || 5000);
@@ -52,7 +62,7 @@ server.on("listening", () => {
 });
 
 app.use((err, req, res, next) => {
-  console.log("error! " + err);
+  // console.log("error! " + err);
   return res.status(err.status || 500).json({
     message: err.message,
     error: err,
