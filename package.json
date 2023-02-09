@@ -5,6 +5,12 @@
   "scripts": {
     "test": "nyc --check-coverage mocha"
   },
+  "nyc": {
+    "functions": "80",
+    "branches": "0",
+    "lines": "0",
+    "statements": "0"
+  },
   "dependencies": {
     "body-parser": "~1.17.1",
     "chai": "^4.3.7",
