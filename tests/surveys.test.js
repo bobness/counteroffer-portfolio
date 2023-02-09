@@ -60,5 +60,6 @@ describe("Surveys.js", () => {
 
   afterEach(() => {
     poolStub.restore();
+    process.exit(); // because it's the last alphabetically
   });
 });

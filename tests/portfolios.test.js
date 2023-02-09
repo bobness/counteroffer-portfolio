@@ -62,6 +62,7 @@ describe("Portfolios.js", () => {
 
     afterEach(() => {
       poolStub.restore();
+      // process.exit();
     });
   });
 });
