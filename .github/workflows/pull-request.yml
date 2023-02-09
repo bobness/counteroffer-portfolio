@@ -18,4 +18,5 @@ jobs:
         working-directory: ./public
         run: yarn
       - name: Run jest tests
+        working-directory: ./public
         run: yarn jest ./src/tests
