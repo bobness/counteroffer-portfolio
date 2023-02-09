@@ -31,7 +31,6 @@ router.post("/:user_id", async (req, res, next) => {
       .then((result) => result.rows);
     const questionIds = questions.map((q) => Number(q.id));
     const responses = req.body;
-    console.log("*** got responses: ", responses);
     // TODO: even better, it should be 1-to-1
     const responsesMatchQuestions = responses.reduce(
       (matchingResult, response) => {

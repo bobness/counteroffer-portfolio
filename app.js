@@ -48,12 +48,12 @@ app.use(async (req, res, next) => {
   }
 });
 
-const index = require("./routes/index");
-const portfolios = require("./routes/portfolios");
-const surveys = require("./routes/surveys");
-app.use("/", index);
-app.use("/portfolios", portfolios);
-app.use("/surveys", surveys);
+const indexRouter = require("./routes/index");
+const portfoliosRouter = require("./routes/portfolios");
+const surveysRouter = require("./routes/surveys");
+app.use("/", indexRouter);
+app.use("/portfolios", portfoliosRouter);
+app.use("/surveys", surveysRouter);
 
 const server = http.createServer(app);
 server.listen(process.env.PORT || 5000);
