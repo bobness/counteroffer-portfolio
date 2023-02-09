@@ -2,7 +2,9 @@
   "name": "counteroffer-portfolio",
   "version": "0.0.0",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "test": "nyc --check-coverage mocha"
+  },
   "dependencies": {
     "body-parser": "~1.17.1",
     "chai": "^4.3.7",
@@ -19,6 +21,7 @@
     "morgan": "~1.8.1",
     "nodemailer": "^4.6.5",
     "nodemailer-smtp-transport": "^2.7.4",
+    "nyc": "^15.1.0",
     "pg": "^8.6.0",
     "sinon": "^15.0.1",
     "supertest": "^6.3.3",

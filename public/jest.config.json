@@ -1,3 +1,9 @@
 {
-  "testEnvironment": "jsdom"
+  "testEnvironment": "jsdom",
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "functions": 100
+    }
+  }
 }
