@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: 14
       - name: Install dependencies
+        working-directory: ./public
         run: yarn
       - name: Run jest tests
-        run: yarn jest ./public/src/tests
+        run: yarn jest ./src/tests
