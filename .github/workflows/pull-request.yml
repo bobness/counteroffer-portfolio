@@ -14,9 +14,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
-      - name: Install dependencies
+      - name: Install root dependencies
+        run: yarn
+      - name: Run root mocha tests
+        run: yarn mocha ./tests
+      - name: Install public dependencies
         working-directory: ./public
         run: yarn
-      - name: Run jest tests
+      - name: Run public jest tests
         working-directory: ./public
         run: yarn jest ./src/tests
