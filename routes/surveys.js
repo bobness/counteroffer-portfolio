@@ -44,14 +44,23 @@ router.post("/:user_id", async (req, res, next) => {
       req.client.release();
       return res.sendStatus(400);
     }
+    const newJob = await req.client.query({
+      text: "insert into jobs (user_id, email) values ($1::integer, $2::text) returning *",
+      values: [Number(user.id)],
+    });
     await Promise.all(
       responses
         .sort((a, b) => Number(b.question_id) - Number(a.question_id))
         .map(
           async (r) =>
             await req.client.query({
-              text: "insert into messages (question_id, value, sender) values ($1::integer, $2::text, $3::text)",
-              values: [Number(r.question_id), r.value, r.sender],
+              text: "insert into messages (job_id, question_id, value, sender) values ($1::integer, $1::integer, $3::text, $4::text)",
+              values: [
+                Number(newJob.id),
+                Number(r.question_id),
+                r.value,
+                r.sender,
+              ],
             })
         )
     );
