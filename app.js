@@ -6,9 +6,12 @@ const http = require("http");
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
+const aws = require("@aws-sdk/client-ses");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 
 const app = express();
-app.use(cors());
+app.use(cors()); // FIXME: why would I need CORS? /public is on the same host
 
 dotenv.config();
 
@@ -17,6 +20,17 @@ app.use("/", (req, res, next) => next(), express.static("public"));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+const ses = new aws.SES({
+  apiVersion: "2010-12-01",
+  region: "us-east-2",
+  credentials: {
+    accessKeyId: "AKIATHV3XCGRX3MRFNDJ",
+    secretAccessKey: "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",
+    // sessionToken
+  },
+  defaultProvider,
+});
 
 const pool = new Pool({
   user: process.env.DATABASE_USER,
@@ -45,6 +59,23 @@ app.use(async (req, res, next) => {
     console.error("*** waitingCount", pool.waitingCount);
     console.error("*** so, restarting server...");
     process.exit();
+  }
+});
+
+// app.use((req, res, next) => {
+//   console.log(`*** requesting: , ${req.url}`);
+//   next();
+// });
+
+app.use((req, res, next) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      SES: { ses, aws },
+    });
+    req.smtp = transporter;
+    next();
+  } catch (err) {
+    next(err);
   }
 });
 

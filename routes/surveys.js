@@ -10,6 +10,19 @@ router.get("/:user_id", async (req, res, next) => {
   return res.json(result.rows);
 });
 
+const renderEmail = (questions, sortedResponses) => {
+  return sortedResponses
+    .map((response) => {
+      const question = questions.find((q) => q.id === response.question_id);
+      // TODO: format response.value based on question.type
+      return `
+      <p><strong>${question.question}</strong></p>
+      <p>${response.value}</p>
+      `;
+    })
+    .join("\n");
+};
+
 router.post("/:user_id", async (req, res, next) => {
   const user = await req.client
     .query({
@@ -25,13 +38,12 @@ router.post("/:user_id", async (req, res, next) => {
   if (user) {
     const questions = await req.client
       .query({
-        text: "select id from questions where user_id = $1::integer",
+        text: "select * from questions where user_id = $1::integer",
         values: [Number(user.id)],
       })
       .then((result) => result.rows);
     const questionIds = questions.map((q) => Number(q.id));
     const responses = req.body;
-    // TODO: even better, it should be 1-to-1
     const responsesMatchQuestions = responses.reduce(
       (matchingResult, response) => {
         return (
@@ -44,27 +56,39 @@ router.post("/:user_id", async (req, res, next) => {
       req.client.release();
       return res.sendStatus(400);
     }
-    const newJob = await req.client.query({
-      text: "insert into jobs (user_id, email) values ($1::integer, $2::text) returning *",
-      values: [Number(user.id)],
-    });
+    // TODO: send email in req.body instead of response.sender?
+    const senderEmail = String(responses[0].sender); // assuming they are all the same
+    const newJob = await req.client
+      .query({
+        text: "insert into jobs (user_id, email) values ($1::integer, $2::text) returning *",
+        values: [Number(user.id), senderEmail],
+      })
+      .then((result) => result.rows[0]);
+    const sortedResponses = responses.sort(
+      (a, b) => Number(a.question_id) - Number(b.question_id)
+    );
     await Promise.all(
-      responses
-        .sort((a, b) => Number(b.question_id) - Number(a.question_id))
-        .map(
-          async (r) =>
-            await req.client.query({
-              text: "insert into messages (job_id, question_id, value, sender) values ($1::integer, $1::integer, $3::text, $4::text)",
-              values: [
-                Number(newJob.id),
-                Number(r.question_id),
-                r.value,
-                r.sender,
-              ],
-            })
-        )
+      sortedResponses.map(
+        async (r) =>
+          await req.client.query({
+            text: "insert into messages (job_id, question_id, value, sender) values ($1::integer, $2::integer, $3::text, $4::text)",
+            values: [
+              Number(newJob.id),
+              Number(r.question_id),
+              r.value,
+              r.sender,
+            ],
+          })
+      )
     );
     req.client.release();
+    await req.smtp.sendMail({
+      from: `"${senderEmail}" <hit-reply@datagotchi.net>`,
+      replyTo: senderEmail,
+      to: user.email,
+      subject: "Counteroffer Survey Response",
+      html: renderEmail(questions, sortedResponses),
+    });
     res.sendStatus(201);
   } else {
     req.client.release();
