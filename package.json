@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {},
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.267.0",
+    "@aws-sdk/credential-provider-node": "^3.267.0",
     "body-parser": "~1.17.1",
     "chai": "^4.3.7",
     "cors": "^2.8.5",
@@ -17,7 +19,7 @@
     "md5": "^2.2.1",
     "mocha": "^10.2.0",
     "morgan": "~1.8.1",
-    "nodemailer": "^4.6.5",
+    "nodemailer": "^6.9.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "pg": "^8.6.0",
     "sinon": "^15.0.1",
