@@ -2,8 +2,8 @@ import axios from "axios";
 import { useMemo } from "react";
 import { Message } from "../types";
 
-// const baseUrl = "https://counteroffer.datagotchi.net";
-const baseUrl = "http://localhost:5000";
+const baseUrl = "http://localhost";
+// const baseUrl = "http://localhost:5000";
 
 const useApi = () => {
   const instance = useMemo(
