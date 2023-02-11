@@ -31,6 +31,7 @@ describe("Portfolios.js", () => {
   describe("Get /:user_id", () => {
     let poolStub;
     beforeEach(() => {
+      // FIXME: mock so I can spy on methods
       poolStub = sinon.stub(Pool.prototype, "connect").callsFake(async () => {
         return {
           query: async ({ text }) => {
@@ -62,7 +63,10 @@ describe("Portfolios.js", () => {
 
     afterEach(() => {
       poolStub.restore();
-      // process.exit();
+    });
+
+    after(() => {
+      // process.exit(); // if only testing this file
     });
   });
 });
