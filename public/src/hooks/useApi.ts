@@ -13,8 +13,8 @@ const useApi = () => {
     []
   );
 
-  const getPortfolio = (user_id: number) =>
-    instance.get("/portfolios/" + user_id);
+  const getPortfolio = (username: string) =>
+    instance.get("/portfolios/" + username);
 
   const getQuestions = (user_id: number) => instance.get("/surveys/" + user_id);
 

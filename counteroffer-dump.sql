@@ -266,7 +266,8 @@ CREATE TABLE public.users (
     email character varying NOT NULL,
     hashed_password character varying NOT NULL,
     current_session character varying,
-    name character varying(255)
+    name character varying(255),
+    username character varying(255)
 );
 
 
@@ -383,8 +384,8 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, hashed_password, current_session, name) FROM stdin;
-1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Bob Stark
+COPY public.users (id, email, hashed_password, current_session, name, username) FROM stdin;
+1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Bob Stark	bob.stark
 \.
 
 
@@ -494,11 +495,19 @@ ALTER TABLE ONLY public.jobs
 
 
 --
+-- Name: users unique_email; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT unique_email UNIQUE (email);
+
+
+--
 -- Name: users unique_username; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT unique_username UNIQUE (email);
+    ADD CONSTRAINT unique_username UNIQUE (username);
 
 
 --
@@ -545,10 +554,17 @@ CREATE INDEX ix_questions_user_id ON public.questions USING btree (user_id);
 
 
 --
+-- Name: ix_users_email; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX ix_users_email ON public.users USING btree (email);
+
+
+--
 -- Name: ix_users_username; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX ix_users_username ON public.users USING btree (email);
+CREATE INDEX ix_users_username ON public.users USING btree (username);
 
 
 --

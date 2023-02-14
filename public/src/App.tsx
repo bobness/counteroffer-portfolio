@@ -3,7 +3,7 @@ import React from "react";
 import Portfolio from "./components/Portfolio";
 
 function App() {
-  return <Portfolio user_id={1} />;
+  return <Portfolio />;
 }
 
 export default App;

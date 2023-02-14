@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import useLocationPath from "../hooks/useLocationPath";
 import usePortfolio from "../hooks/usePortfolio";
 import ExperienceRow from "./ExperienceRow";
 import Facts from "./Facts";
@@ -6,14 +7,11 @@ import Histogram from "./Histogram";
 import Navigation from "./Navigation";
 import Survey from "./Survey";
 
-interface Props {
-  user_id: number;
-}
-
-const Portfolio = ({ user_id }: Props) => {
+const Portfolio = () => {
+  const path = useLocationPath();
   const [tags, setTags] = useState<string[] | undefined>();
   const [tagFilter, setTagFilter] = useState<string | undefined>();
-  const portfolio = usePortfolio({ user_id });
+  const portfolio = usePortfolio(path);
   const filteredExperiences = useMemo(() => {
     if (portfolio?.experiences) {
       if (tagFilter) {
