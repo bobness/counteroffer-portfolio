@@ -11,7 +11,8 @@ const app = require("../app");
 
 const mockUser = {
   id: 1,
-  email: "user email",
+  email: "test email",
+  username: "test username",
 };
 
 const mockQuestions = [
@@ -73,7 +74,7 @@ describe("Surveys.js", () => {
   describe("Get /:user_id", () => {
     it("Returns the correct questions", async () => {
       const res = await supertest(app)
-        .get(`/surveys/${mockUser.id}`)
+        .get(`/surveys/${mockUser.username}`)
         .expect(200);
       mockClient.query.calledOnceWith({
         text: "select * from questions where user_id = $1::integer",
@@ -88,7 +89,7 @@ describe("Surveys.js", () => {
   describe("Post /:user_id", () => {
     it("Successfully adds responses to the database", async () => {
       await supertest(app)
-        .post(`/surveys/${mockUser.id}`)
+        .post(`/surveys/${mockUser.username}`)
         .send(mockResponses)
         .expect(201);
       mockClient.query.calledOnceWith({

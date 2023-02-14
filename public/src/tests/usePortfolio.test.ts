@@ -16,7 +16,7 @@ describe("usePortfolio", () => {
       returnedPortfolio = one.result.current;
       expect(returnedPortfolio?.name).toEqual(mockPortfolio.name);
       expect(returnedPortfolio?.facts).toEqual(mockPortfolio.facts);
-      // TODO: the startdate time is ~1 second off
+      // TODO: the experience startdate time is ~1 second off
       // expect(returnedPortfolio?.experiences).toEqual(mockPortfolio.experiences);
     });
   });

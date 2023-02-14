@@ -34,13 +34,9 @@ export const mockPortfolio = {
 };
 
 // TODO: can't export this and expect() against it for some reason
-const mockGetPortfolio = jest.fn((user_id: number) => {
+const mockGetPortfolio = jest.fn((username: string) => {
   return new Promise((resolve, reject) => {
-    if (user_id === 1) {
-      resolve({ data: mockPortfolio });
-    } else {
-      reject();
-    }
+    resolve({ data: mockPortfolio });
   });
 });
 
@@ -65,13 +61,9 @@ export const mockQuestions = [
   },
 ];
 
-const mockGetQuestions = jest.fn((user_id: number) => {
+const mockGetQuestions = jest.fn((username: string) => {
   return new Promise((resolve, reject) => {
-    if (user_id === 1) {
-      resolve({ data: mockQuestions });
-    } else {
-      reject();
-    }
+    resolve({ data: mockQuestions });
   });
 });
 

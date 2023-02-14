@@ -18,7 +18,7 @@ const usePortfolio = (username?: string) => {
         })
         .finally(() => setLoading(false));
     }
-  }, [api, username, portfolio]);
+  }, [api, username, portfolio, loading]);
 
   return portfolio;
 };
