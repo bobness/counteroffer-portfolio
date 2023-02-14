@@ -43,7 +43,7 @@ const Portfolio = () => {
             </>
           </div>
           <div key="Contact">
-            <Survey user_id={user_id} tags={tags} />
+            {path && <Survey username={path} tags={tags} />}
           </div>
         </Navigation>
       </div>

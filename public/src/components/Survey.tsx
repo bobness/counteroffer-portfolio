@@ -5,11 +5,11 @@ import { Opportunity, Message, OpportunityTag, Question } from "../types";
 import SurveyQuestion from "./SurveyQuestion";
 
 interface Props {
-  user_id: number;
+  username: string;
   tags?: string[];
 }
 
-const Survey = ({ user_id, tags: portfolioTags }: Props) => {
+const Survey = ({ username, tags: portfolioTags }: Props) => {
   const { getQuestions, postResponses } = useApi();
   const [jobs, setJobs] = useState<Opportunity[]>([]);
   // const [selectedJob, setSelectedJob] = useState<Opportunity>();
@@ -34,10 +34,10 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
   }, [questions]);
 
   useEffect(() => {
-    getQuestions(user_id).then((response) => {
+    getQuestions(username).then((response) => {
       setQuestions(response.data);
     });
-  }, [user_id]);
+  }, [username]);
 
   const newMessage = {
     value: "",
@@ -77,7 +77,7 @@ const Survey = ({ user_id, tags: portfolioTags }: Props) => {
       responses!.forEach((response) => {
         response.sender = email;
       });
-      await postResponses(user_id, responses!);
+      await postResponses(username, responses!);
       window.location.reload();
       alert(
         "Your survey responses have been sent. Please monitor your email inbox for follow-ups from the candidate."
