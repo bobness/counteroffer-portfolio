@@ -35,7 +35,7 @@ router.get("/:user_id", async (req, res, next) => {
     );
     req.client.release();
     return res.json({
-      name: user.username,
+      name: user.name,
       facts,
       experiences,
     });
