@@ -2,14 +2,12 @@ import axios from "axios";
 import { useMemo } from "react";
 import { Message } from "../types";
 
-const baseUrl = "http://localhost";
 // const baseUrl = "http://localhost:5000";
 
 const useApi = () => {
   const instance = useMemo(
     () =>
       axios.create({
-        baseURL: baseUrl,
         headers: { "Content-Type": "application/json" },
       }),
     []
