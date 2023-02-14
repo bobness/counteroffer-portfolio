@@ -2,26 +2,26 @@ import axios from "axios";
 import { useMemo } from "react";
 import { Message } from "../types";
 
-const baseUrl = "http://localhost";
 // const baseUrl = "http://localhost:5000";
 
 const useApi = () => {
   const instance = useMemo(
     () =>
       axios.create({
-        baseURL: baseUrl,
+        // baseURL: baseUrl,
         headers: { "Content-Type": "application/json" },
       }),
     []
   );
 
-  const getPortfolio = (user_id: number) =>
-    instance.get("/portfolios/" + user_id);
+  const getPortfolio = (username: string) =>
+    instance.get("/portfolios/" + username);
 
-  const getQuestions = (user_id: number) => instance.get("/surveys/" + user_id);
+  const getQuestions = (username: string) =>
+    instance.get("/surveys/" + username);
 
-  const postResponses = (user_id: number, responses: Message[]) =>
-    instance.post("/surveys/" + user_id, responses);
+  const postResponses = (username: string, responses: Message[]) =>
+    instance.post("/surveys/" + username, responses);
 
   return {
     getPortfolio,

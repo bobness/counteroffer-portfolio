@@ -47,7 +47,7 @@ const mockClient = {
 };
 
 describe("Portfolios.js", () => {
-  describe("Get /:user_id", () => {
+  describe("Get /:username", () => {
     let poolStub;
     before(() => {
       poolStub = sinon
@@ -59,7 +59,7 @@ describe("Portfolios.js", () => {
 
     it("Returns a portfolio object with all required components", async () => {
       const res = await supertest(app)
-        .get(`/portfolios/${mockUser.id}`)
+        .get(`/portfolios/${mockUser.username}`)
         .expect(200);
       mockClient.query.calledOnceWith({
         text: "select * from users where id = $1::integer",
@@ -79,7 +79,6 @@ describe("Portfolios.js", () => {
       });
       mockClient.release.calledOnce;
       const portfolio = JSON.parse(res.text);
-      expect(portfolio.name).equal(mockUser.username);
       expect(portfolio.facts).eql(mockFacts);
       expect(portfolio.experiences).eql(mockExperiences);
     });

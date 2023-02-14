@@ -9,14 +9,15 @@ const getTagsForExperience = (req, experience_id) =>
     })
     .then((response) => response.rows);
 
-router.get("/:user_id", async (req, res, next) => {
-  const userId = Number(req.params.user_id);
+router.get("/:username", async (req, res, next) => {
+  const username = req.params.username;
   const userResult = await req.client.query({
-    text: "select * from users where id = $1::integer",
-    values: [userId],
+    text: "select * from users where username = $1::text",
+    values: [username],
   });
   if (userResult.rows.length === 1) {
     const user = userResult.rows[0];
+    const userId = Number(user.id);
     const factsResult = await req.client.query({
       text: "select * from facts where user_id = $1::integer",
       values: [userId],
@@ -35,7 +36,7 @@ router.get("/:user_id", async (req, res, next) => {
     );
     req.client.release();
     return res.json({
-      name: user.username,
+      name: user.name,
       facts,
       experiences,
     });

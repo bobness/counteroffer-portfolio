@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/:user_id", async (req, res, next) => {
+router.get("/:username", async (req, res, next) => {
+  const userResult = await req.client.query({
+    text: "select id from users where username = $1::text",
+    values: [req.params.username],
+  });
+  const userId = Number(userResult.rows[0].id);
   const result = await req.client.query({
     text: "select * from questions where user_id = $1::integer",
-    values: [Number(req.params.user_id)],
+    values: [userId],
   });
   req.client.release();
   return res.json(result.rows);
@@ -23,11 +28,11 @@ const renderEmail = (questions, sortedResponses) => {
     .join("\n");
 };
 
-router.post("/:user_id", async (req, res, next) => {
+router.post("/:username", async (req, res, next) => {
   const user = await req.client
     .query({
-      text: "select * from users where id = $1::integer",
-      values: [Number(req.params.user_id)],
+      text: "select * from users where username = $1::text",
+      values: [req.params.username],
     })
     .then((result) => {
       if (result.rows.length === 1) {
