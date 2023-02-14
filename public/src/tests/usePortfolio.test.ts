@@ -10,7 +10,7 @@ afterAll(() => jest.clearAllMocks());
 
 describe("usePortfolio", () => {
   test("Returns the mock portfolio object", async () => {
-    const one = renderHook(() => usePortfolio({ user_id: 1 }));
+    const one = renderHook(() => usePortfolio("test username"));
     let returnedPortfolio: Portfolio | undefined;
     await waitFor(() => {
       returnedPortfolio = one.result.current;

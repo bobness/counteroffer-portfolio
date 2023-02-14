@@ -62,10 +62,9 @@ const SurveyQuestion = ({
         )}
         {question.type === "skills" && (
           <div>
-            {/* <span>{responseValue}</span> */}
             {portfolioTags &&
               portfolioTags.map((tag) => (
-                <div>
+                <div key={`skill "${tag}"`}>
                   <label>
                     <input
                       type="checkbox"

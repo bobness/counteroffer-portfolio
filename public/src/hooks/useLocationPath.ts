@@ -13,7 +13,7 @@ const useLocationPath = () => {
       // substring(1) to remove "#" character
       setHash(hash.substring(1));
     }
-  }, [hash, window.location]);
+  }, [hash]);
 
   return hash;
 };

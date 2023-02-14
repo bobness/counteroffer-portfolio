@@ -9,16 +9,18 @@ import useApi from "../hooks/useApi";
 jest.mock("../hooks/useApi");
 afterAll(() => jest.clearAllMocks());
 
+const mockUsername = "test username";
+
 describe("Survey", () => {
   test("Renders header", async () => {
-    render(<Survey user_id={1} />);
+    render(<Survey username={mockUsername} />);
     const headerElement = await screen.findByText("Contact Candidate");
     expect(headerElement).toBeInTheDocument();
     expect(headerElement.tagName.toLowerCase()).toEqual("div");
   });
 
   test("Renders mock questions", async () => {
-    render(<Survey user_id={1} />);
+    render(<Survey username={mockUsername} />);
     const questionsHeader = await screen.findByText("Survey Questions");
     expect(questionsHeader).toBeInTheDocument();
     expect(questionsHeader.tagName.toLowerCase()).toEqual("div");

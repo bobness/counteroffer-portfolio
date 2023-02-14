@@ -28,7 +28,7 @@ export const mockExperiences = [
 ];
 
 export const mockPortfolio = {
-  name: "Bob Stark",
+  name: "name",
   facts: mockFacts,
   experiences: mockExperiences,
 };
