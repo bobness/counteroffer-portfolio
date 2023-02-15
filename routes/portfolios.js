@@ -4,7 +4,7 @@ const router = express.Router();
 const getTagsForExperience = (req, experience_id) =>
   req.client
     .query({
-      text: "select value from tags where experience_id = $1::integer",
+      text: "select value from tags where experience_id = $1::integer order by value asc",
       values: [Number(experience_id)],
     })
     .then((response) => response.rows);
@@ -24,7 +24,9 @@ router.get("/:username", async (req, res, next) => {
     });
     const facts = factsResult.rows;
     const experiencesResult = await req.client.query({
-      text: "select * from experiences where user_id = $1::integer",
+      text: `select * from experiences 
+      where user_id = $1::integer 
+      order by enddate desc, startdate desc`,
       values: [userId],
     });
     const experiences = experiencesResult.rows;
