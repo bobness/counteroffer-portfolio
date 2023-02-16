@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.4
--- Dumped by pg_dump version 14.4
+-- Dumped from database version 13.7
+-- Dumped by pg_dump version 13.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -321,7 +321,21 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 COPY public.experiences (id, user_id, title, company, startdate, enddate, summary) FROM stdin;
 1	1	Founder	Datagotchi Labs	2018-01-01	\N	R&D on data-driven UIs to solve wicked social problems, including the job market and news reliability
-2	1	Staff R&D Engineer	Tanium	2020-06-01	2022-06-01	Researched ways to improve user experiences using data, AI, ML, etc.
+2	1	Staff R&D Engineer	Tanium	2020-06-01	2022-06-01	Researched ways to improve user experiences across the platform
+3	1	Senior Software Engineer	Tanium	2016-08-01	2018-06-01	Team lead for the platform's main UI at a late-stage startup providing a network management platform
+5	1	Senior UX Engineer	Driven Inc.	2015-07-01	2016-03-01	Lead of the frontend development team in an early-stage startup providing an application performance management (APM) tool
+4	1	Product Manager	Driven Inc.	2016-03-01	2016-08-01	Internal, or UX-driven, product lead/manager working with the frontend development team
+6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	Consulted on user research, how it informs product strategy and UX design, and startup best practices
+7	1	Senior UX Engineer	Collusion	2013-12-01	2014-11-01	Product lead and developer of an early-stage startup providing a platform for team collaboration
+8	1	Data Analytics Engineer	Exaptive	2013-03-01	2013-10-01	Data analytics and visualizations developer & data scientist at an early-stage startup providing a data science/bioinformatics platform
+9	1	Research Scientist	Charles River Analytics	2010-10-01	2013-03-01	Researcher, product lead, UX designer, and engineer in a small government R&D firm
+10	1	Data Scientist & UX Engineer	BBN Technologies	2008-08-01	2010-10-01	Data scientist, full-stack engineer, UX designer, and internal UX consultant in a med-sized government R&D firm (acquired by Raytheon)
+11	1	Data Scientist (Graduate Intern)	ScanScout	2008-05-01	2008-08-01	Data science intern in small/med startup in the video advertising space (acquired by Tremor Video)
+12	1	Graduate Research Assistant	Penn State University (College of Information Sciences and Technology)	2007-09-01	2008-05-01	Researched decision recommendation, decision tree induction, and visualizations
+13	1	Software Engineer (Intern)	IBM	2007-05-01	2007-08-01	Developed renderer for Eclipse's Standard Widget Toolkit fo ran XML GUI markup language
+14	1	Software Engineer (Intern)	IBM	2005-01-01	2005-08-01	Led team that designed and implemented XML-based debugging tool for developers 
+15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	Designed and developed e-commerce website that hooked into an enterprise resource planning (ERP) system
+16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	Tutored students on descriptive and inferential statistics, and machine learning models
 \.
 
 
@@ -331,7 +345,7 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 
 COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
 1	1	Job Search Stage	Passively open to new opportunities	\N
-2	1	Objective	To apply my passion in human-machine collaboration (the UX of AI), utilizing my skills in full-stack engineering, machine learning, data visualization, UX, and team leadership	\N
+2	1	Objective	To help others with softare engineering, UX, or machine learning while working on my starutp -- or a full-time job if it's the right fit	\N
 \.
 
 
@@ -340,6 +354,7 @@ COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
 --
 
 COPY public.jobs (id, user_id, email, company, archived) FROM stdin;
+13	1	bob@datagotchi.net	\N	f
 \.
 
 
@@ -348,6 +363,9 @@ COPY public.jobs (id, user_id, email, company, archived) FROM stdin;
 --
 
 COPY public.messages (id, value, question_id, sender, job_id, datetime) FROM stdin;
+25	Javascript,Typescript	1	bob@datagotchi.net	13	\N
+26		2	bob@datagotchi.net	13	\N
+27		3	bob@datagotchi.net	13	\N
 \.
 
 
@@ -358,7 +376,8 @@ COPY public.messages (id, value, question_id, sender, job_id, datetime) FROM std
 COPY public.questions (id, user_id, question, type, required) FROM stdin;
 1	1	Which of my skills are most useful for the opportunity?	skills	t
 3	1	Other details about the opportunity	textarea	f
-2	1	What other skills are required/desired for the opportunity?	textarea	f
+2	1	What other skills are required/desired for the opportunity?	textarea	t
+4	1	Is this opportunity part-time/contracting?	text	t
 \.
 
 
@@ -368,15 +387,114 @@ COPY public.questions (id, user_id, question, type, required) FROM stdin;
 
 COPY public.tags (id, experience_id, value) FROM stdin;
 1	1	Javascript
-2	1	Typescript
 3	1	NodeJS
 4	1	React
-5	2	Javascript
-6	2	Typescript
-7	2	React
 8	1	React Native
-9	2	NodeJS
-10	2	Go
+11	3	AngularJS
+12	3	Javascript
+13	3	Typescript
+14	3	NodeJS
+15	4	Product Strategy
+16	4	Roadmaps
+17	4	User Stories
+24	6	User Research
+25	1	User Research
+26	6	Product Strategy
+27	1	Product Strategy
+28	6	UX Design
+30	1	UX Design
+31	6	Javascript
+32	6	D3
+33	6	AngularJS
+34	6	NodeJS
+43	1	User Stories
+44	8	Javascript
+45	8	D3
+46	8	PHP
+47	8	Python
+48	8	User Stories
+49	8	User Research
+50	9	User Research
+51	9	User Stories
+52	9	UX Design
+53	9	Java
+54	9	Proposals
+56	9	Bayesian Networks
+57	9	Intelligent Agents
+58	9	Machine Learning
+59	9	Data Visualization
+60	8	Data Visualization
+61	6	Data Visualization
+63	10	Data Science
+64	10	UX Design
+65	10	Java
+66	10	Matlab
+67	10	R Statistical Environment
+68	8	R Statistical Environment
+69	10	Python
+70	10	ASP.NET
+71	10	C#.NET
+72	10	Javascript
+73	10	User Research
+74	11	R Statistical Environment
+75	11	Data Science
+76	12	R Statistical Environment
+77	12	Machine Learning
+78	12	Java
+81	9	Project Lead
+84	3	Team Lead
+86	13	Java
+87	14	Team Lead
+88	14	Java
+89	15	PHP
+90	15	FileMaker
+91	1	Roadmaps
+92	10	Machine Learning
+93	14	User Research
+94	15	Javascript
+95	16	Data Science
+96	16	Machine Learning
+97	11	Machine Learning
+101	4	User Research
+102	4	UX Design
+103	8	Data Science
+104	9	Product Lead
+105	4	Product Lead
+106	16	SciKit-Learn
+107	16	NumPy
+108	16	Python
+109	16	Pandas
+110	16	iPython/Jupyter Notebook
+113	6	Prototyping
+115	8	Prototyping
+116	9	Prototyping
+117	10	Prototyping
+118	11	Prototyping
+119	12	Prototyping
+120	13	Prototyping
+121	14	Prototyping
+122	2	Go
+123	2	NodeJS
+124	2	Typescript
+125	2	User Research
+126	2	UX Design
+127	5	AngularJS
+128	5	D3
+129	5	Data Visualization
+130	5	Javascript
+131	5	Machine Learning
+132	5	Product Analytics
+133	5	Team Lead
+134	5	User Research
+135	5	UX Design
+136	7	Javascript
+137	7	NodeJS
+138	7	Objective-C
+139	7	PHP
+140	7	Product Analytics
+142	7	User Stories
+143	7	UX Design
+141	7	User Research
 \.
 
 
@@ -393,7 +511,7 @@ COPY public.users (id, email, hashed_password, current_session, name, username) 
 -- Name: experiences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.experiences_id_seq', 2, true);
+SELECT pg_catalog.setval('public.experiences_id_seq', 16, true);
 
 
 --
@@ -407,28 +525,28 @@ SELECT pg_catalog.setval('public.facts_id_seq', 2, true);
 -- Name: jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.jobs_id_seq', 12, true);
+SELECT pg_catalog.setval('public.jobs_id_seq', 13, true);
 
 
 --
 -- Name: messages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.messages_id_seq', 24, true);
+SELECT pg_catalog.setval('public.messages_id_seq', 27, true);
 
 
 --
 -- Name: questions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.questions_id_seq', 3, true);
+SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 
 
 --
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 10, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 143, true);
 
 
 --
