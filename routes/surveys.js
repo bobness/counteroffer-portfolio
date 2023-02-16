@@ -8,7 +8,9 @@ router.get("/:username", async (req, res, next) => {
   });
   const userId = Number(userResult.rows[0].id);
   const result = await req.client.query({
-    text: "select * from questions where user_id = $1::integer",
+    text: `select * from questions 
+    where user_id = $1::integer 
+    order by required desc, id asc`,
     values: [userId],
   });
   req.client.release();
