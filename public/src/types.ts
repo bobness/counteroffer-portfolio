@@ -51,3 +51,9 @@ export interface Opportunity {
   messages: Message[];
   tags: OpportunityTag[];
 }
+
+export interface Suggestion {
+  text: string;
+  reason: string;
+  selected?: boolean;
+}

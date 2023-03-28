@@ -1,11 +1,12 @@
-import React, { useMemo } from "react";
-import { Experience } from "../types";
+import React, { useMemo, useState } from "react";
+import { Experience, Suggestion, Tag } from "../types";
 
 interface Props {
   data: Experience;
+  selectedSuggestions?: Suggestion[];
 }
 
-const ExperienceRow = ({ data }: Props) => {
+const ExperienceRow = ({ data, selectedSuggestions }: Props) => {
   const startDate = useMemo(() => {
     const date = new Date(data.startdate);
     return date.toLocaleDateString("en-US");
@@ -18,9 +19,29 @@ const ExperienceRow = ({ data }: Props) => {
     }
     return "";
   }, [data?.enddate]);
+
+  const [addedTags, setAddedTags] = useState<Tag[]>([]);
+
   return (
     <div>
-      <>
+      <div style={{ display: "inline-block", width: 30 }}>
+        {selectedSuggestions && selectedSuggestions.length > 0 && (
+          <button
+            onClick={() => {
+              setAddedTags([
+                ...addedTags,
+                ...selectedSuggestions.map((s) => ({
+                  id: 0,
+                  value: s.text,
+                })),
+              ]);
+            }}
+          >
+            +
+          </button>
+        )}
+      </div>
+      <div style={{ display: "inline-block" }}>
         <h1>{data.title}</h1>
         <h2>{data.company}</h2>
         {startDate} - {endDate}
@@ -31,8 +52,16 @@ const ExperienceRow = ({ data }: Props) => {
               {tag.value}
             </li>
           ))}
+          {addedTags?.map((tag, i) => (
+            <li
+              className="tag-item"
+              key={`tag ${data.id} - ${data.tags.length + i}`}
+            >
+              {tag.value}
+            </li>
+          ))}
         </ul>
-      </>
+      </div>
     </div>
   );
 };
