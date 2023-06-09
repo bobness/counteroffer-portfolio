@@ -1,12 +1,14 @@
 module.exports = {
-  apps : [{
-    name   : "counteroffer",
-    script : "./app.js",
-    env: {
-      "PORT": 80
+  apps: [
+    {
+      name: "counteroffer-portfolio",
+      script: "./app.js",
+      env: {
+        PORT: 80,
+      },
+      interpreter: "/usr/bin/node",
+      exec_mode: "cluster",
+      instances: "max",
     },
-    interpreter: "/usr/bin/node",
-    exec_mode: "cluster",
-    instances: "max"
-  }]
-}
+  ],
+};

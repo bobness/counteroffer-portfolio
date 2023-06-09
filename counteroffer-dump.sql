@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.7
--- Dumped by pg_dump version 13.7
+-- Dumped from database version 13.4
+-- Dumped by pg_dump version 14.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -344,8 +344,8 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 --
 
 COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
-1	1	Job Search Stage	Passively open to new opportunities	\N
 2	1	Objective	To help others with softare engineering, UX, or machine learning while working on my starutp -- or a full-time job if it's the right fit	\N
+1	1	Job Search Stage	Looking for consulting opportunities	\N
 \.
 
 

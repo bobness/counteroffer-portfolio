@@ -12,7 +12,7 @@ interface Props {
   setTags: (tags: string[]) => void;
 }
 
-export const EXPERIENCE_YEAR_HEIGHT = 15;
+export const EXPERIENCE_YEAR_HEIGHT = 10;
 
 const Histogram = ({ experiences, onTagSelected, setTags }: Props) => {
   const [filter, setFilter] = useState<string>("");
