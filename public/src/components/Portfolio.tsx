@@ -25,11 +25,11 @@ const Portfolio = () => {
     }
     return [];
   }, [portfolio?.experiences, tagFilter]);
-  const suggestions = useSuggestions({ id: path, type: "portfolio" });
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [selectedSuggestions, setSelectedSuggestions] = useState<
-    Suggestion[] | undefined
-  >();
+  // const suggestions = useSuggestions({ id: path, type: "portfolio" });
+  // const [showSuggestions, setShowSuggestions] = useState(false);
+  // const [selectedSuggestions, setSelectedSuggestions] = useState<
+  //   Suggestion[] | undefined
+  // >();
 
   if (portfolio) {
     return (
@@ -44,7 +44,7 @@ const Portfolio = () => {
         <Navigation items={["Experiences", "Contact"]}>
           <div key="Experiences">
             <div>
-              <div>
+              {/* <div>
                 <button
                   style={{
                     display: "inline-block",
@@ -126,12 +126,12 @@ const Portfolio = () => {
                       </div>
                     </>
                   ))}
-              </div>
+              </div> */}
               {filteredExperiences.map((e, i) => (
                 <ExperienceRow
                   data={e}
                   key={`ExperienceRow #${i}`}
-                  selectedSuggestions={selectedSuggestions}
+                  // selectedSuggestions={selectedSuggestions}
                 />
               ))}
             </div>
