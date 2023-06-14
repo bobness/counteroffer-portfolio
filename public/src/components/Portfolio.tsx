@@ -20,9 +20,6 @@ const Portfolio = () => {
     if (portfolio?.themes) {
       items.unshift(...portfolio.themes.map((theme) => theme.name));
     }
-    // else {
-    //   items.unshift("Experiences");
-    // }
     return items;
   }, [portfolio?.themes]);
 
@@ -34,18 +31,11 @@ const Portfolio = () => {
   }, [portfolio?.themes, currentPage]);
   const themedExperiences = useMemo(() => {
     if (currentTheme && portfolio?.experiences) {
-      return portfolio.experiences.filter((exp) => {
-        console.log("Experience: ", exp.company);
-        console.log("Experience tags: ", exp.tags);
-        console.log("Theme tags: ", currentTheme.tags);
-        const ret = currentTheme.tags.some((tag) =>
+      return portfolio.experiences.filter((exp) =>
+        currentTheme.tags.some((tag) =>
           exp.tags.map((t) => t.value).includes(tag)
-        );
-
-        console.log("some() result: ", ret);
-        console.log("*********");
-        return ret;
-      });
+        )
+      );
     }
   }, [currentTheme, portfolio?.experiences]);
   const filteredExperiences = useMemo(() => {
@@ -71,11 +61,14 @@ const Portfolio = () => {
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
-        <Facts data={portfolio.facts} />
+        <div id="facts">
+          <Facts data={portfolio.facts} />
+        </div>
         <Histogram
           experiences={themedExperiences ?? portfolio.experiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
+          themeSelectedTags={currentTheme?.tags}
         />
         <Navigation
           items={navigationItems}
