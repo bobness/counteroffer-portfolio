@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
@@ -7,8 +7,14 @@ import Navigation from "../components/Navigation";
 // import useApi from "../hooks/useApi";
 // jest.mock("../hooks/useApi");
 
+const [currentPage, setCurrentPage] = useState("one");
+
 const mockNavigation = (
-  <Navigation items={["one", "two"]}>
+  <Navigation
+    items={["one", "two"]}
+    currentPage={currentPage}
+    setCurrentPage={setCurrentPage}
+  >
     <div key="one">oneBody</div>
     <div key="two">twoBody</div>
   </Navigation>

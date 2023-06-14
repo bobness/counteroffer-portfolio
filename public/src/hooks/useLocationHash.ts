@@ -4,7 +4,7 @@ export interface QueryParam {
   [key: string]: string;
 }
 
-const useLocationPath = () => {
+const useLocationHash = () => {
   const [hash, setHash] = useState<string | undefined>();
 
   useEffect(() => {
@@ -18,4 +18,4 @@ const useLocationPath = () => {
   return hash;
 };
 
-export default useLocationPath;
+export default useLocationHash;

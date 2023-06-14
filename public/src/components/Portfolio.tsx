@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useLocationPath from "../hooks/useLocationPath";
+import useLocationHash from "../hooks/useLocationHash";
 import usePortfolio from "../hooks/usePortfolio";
 import useSuggestions from "../hooks/useSuggestions";
 import { Suggestion } from "../types";
@@ -10,21 +10,57 @@ import Navigation from "./Navigation";
 import Survey from "./Survey";
 
 const Portfolio = () => {
-  const path = useLocationPath();
+  const hash = useLocationHash();
   const [tags, setTags] = useState<string[] | undefined>();
   const [tagFilter, setTagFilter] = useState<string | undefined>();
-  const portfolio = usePortfolio(path);
+  const portfolio = usePortfolio(hash);
+
+  const navigationItems = useMemo(() => {
+    let items = ["All Experiences", "Contact"];
+    if (portfolio?.themes) {
+      items.unshift(...portfolio.themes.map((theme) => theme.name));
+    }
+    // else {
+    //   items.unshift("Experiences");
+    // }
+    return items;
+  }, [portfolio?.themes]);
+
+  const [currentPage, setCurrentPage] = useState(navigationItems[0]);
+  const currentTheme = useMemo(() => {
+    if (portfolio?.themes && currentPage) {
+      return portfolio.themes.find((theme) => theme.name === currentPage);
+    }
+  }, [portfolio?.themes, currentPage]);
+  const themedExperiences = useMemo(() => {
+    if (currentTheme && portfolio?.experiences) {
+      return portfolio.experiences.filter((exp) => {
+        console.log("Experience: ", exp.company);
+        console.log("Experience tags: ", exp.tags);
+        console.log("Theme tags: ", currentTheme.tags);
+        const ret = currentTheme.tags.some((tag) =>
+          exp.tags.map((t) => t.value).includes(tag)
+        );
+
+        console.log("some() result: ", ret);
+        console.log("*********");
+        return ret;
+      });
+    }
+  }, [currentTheme, portfolio?.experiences]);
   const filteredExperiences = useMemo(() => {
-    if (portfolio?.experiences) {
+    const experiences = themedExperiences ?? portfolio?.experiences;
+    if (experiences) {
       if (tagFilter) {
-        return portfolio.experiences.filter((e) =>
+        return experiences.filter((e) =>
           e.tags.map((t) => t.value).includes(tagFilter)
         );
       }
-      return portfolio.experiences;
+      return experiences;
     }
     return [];
-  }, [portfolio?.experiences, tagFilter]);
+  }, [themedExperiences, portfolio?.experiences, tagFilter]);
+
   // const suggestions = useSuggestions({ id: path, type: "portfolio" });
   // const [showSuggestions, setShowSuggestions] = useState(false);
   // const [selectedSuggestions, setSelectedSuggestions] = useState<
@@ -37,12 +73,16 @@ const Portfolio = () => {
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
         <Facts data={portfolio.facts} />
         <Histogram
-          experiences={portfolio.experiences}
+          experiences={themedExperiences ?? portfolio.experiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
         />
-        <Navigation items={["Experiences", "Contact"]}>
-          <div key="Experiences">
+        <Navigation
+          items={navigationItems}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        >
+          <div key="All Experiences">
             <div>
               {/* <div>
                 <button
@@ -127,17 +167,27 @@ const Portfolio = () => {
                     </>
                   ))}
               </div> */}
-              {filteredExperiences.map((e, i) => (
+              {filteredExperiences.map((exp, i) => (
                 <ExperienceRow
-                  data={e}
+                  data={exp}
                   key={`ExperienceRow #${i}`}
                   // selectedSuggestions={selectedSuggestions}
                 />
               ))}
             </div>
           </div>
+          <div key="Frontend">
+            {filteredExperiences.map((exp, i) => (
+              <ExperienceRow
+                data={exp}
+                key={`ExperienceRow #${i}`}
+                selectedTags={currentTheme?.tags}
+                // selectedSuggestions={selectedSuggestions}
+              />
+            ))}
+          </div>
           <div key="Contact">
-            {path && <Survey username={path} tags={tags} />}
+            {hash && <Survey username={hash} tags={tags} />}
           </div>
         </Navigation>
       </div>
