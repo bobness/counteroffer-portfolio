@@ -5,6 +5,19 @@
     <title>Illuminate by Datagotchi Labs</title>
 
     <style>
+      @media print {
+        .tag-item {
+          color: white !important;
+          background-color: #337ab7 !important;
+          print-color-adjust: exact;
+        }
+
+        .danger {
+          background-color: #dc3545 !important;
+          print-color-adjust: exact;
+        }
+      }
+
       body {
         margin: 50px;
       }
