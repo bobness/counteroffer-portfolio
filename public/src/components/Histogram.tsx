@@ -19,7 +19,7 @@ const Histogram = ({
   experiences,
   onTagSelected,
   setTags,
-  themeSelectedTags,
+  themeSelectedTags: selectedThemeTags,
 }: Props) => {
   const [filter, setFilter] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
@@ -134,7 +134,7 @@ const Histogram = ({
                   className={
                     "tagBar " +
                     (selectedTag === tc.name ||
-                    themeSelectedTags?.includes(tc.name)
+                    selectedThemeTags?.includes(tc.name)
                       ? "danger"
                       : "")
                   }
