@@ -70,11 +70,7 @@ const Portfolio = () => {
           setTags={setTags}
           themeSelectedTags={currentTheme?.tags}
         />
-        <Navigation
-          items={navigationItems}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        >
+        <Navigation items={navigationItems}>
           <div key="All Experiences">
             <div>
               {/* <div>

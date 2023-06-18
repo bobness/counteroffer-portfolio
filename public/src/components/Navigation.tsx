@@ -2,18 +2,11 @@ import React, { Children, useMemo, useState } from "react";
 
 interface Props {
   items: string[];
-  currentPage: string;
-  setCurrentPage: (p: string) => void;
   children: JSX.Element[];
 }
 
-const Navigation = ({
-  items,
-  currentPage,
-  setCurrentPage,
-  children,
-}: Props) => {
-  // const [currentPage, setCurrentPage] = useState<string>(items[0]);
+const Navigation = ({ items, children }: Props) => {
+  const [currentPage, setCurrentPage] = useState<string>(items[0]);
 
   return (
     <>
