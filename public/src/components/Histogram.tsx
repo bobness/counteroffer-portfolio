@@ -10,7 +10,7 @@ interface Props {
   experiences: Experience[];
   onTagSelected: (tag?: string) => void;
   setTags: (tags: string[]) => void;
-  themeSelectedTags?: string[];
+  selectedThemeTags?: string[];
 }
 
 export const EXPERIENCE_YEAR_HEIGHT = 10;
@@ -19,7 +19,7 @@ const Histogram = ({
   experiences,
   onTagSelected,
   setTags,
-  themeSelectedTags: selectedThemeTags,
+  selectedThemeTags,
 }: Props) => {
   const [filter, setFilter] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();

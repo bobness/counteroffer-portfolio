@@ -68,7 +68,7 @@ const Portfolio = () => {
           experiences={themedExperiences ?? portfolio.experiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
-          themeSelectedTags={currentTheme?.tags}
+          selectedThemeTags={currentTheme?.tags}
         />
         <Navigation items={navigationItems}>
           <div key="All Experiences">
