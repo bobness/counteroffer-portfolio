@@ -36,11 +36,17 @@ router.get("/:username", async (req, res, next) => {
         e.tags = tags;
       })
     );
+    const themesResult = await req.client.query({
+      text: "select * from themes where user_id = $1::integer",
+      values: [userId],
+    });
+    const themes = themesResult.rows;
     req.client.release();
     return res.json({
       name: user.name,
       facts,
       experiences,
+      themes,
     });
   } else {
     req.client.release();

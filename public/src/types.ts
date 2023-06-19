@@ -19,10 +19,18 @@ export interface Experience {
   tags: Tag[];
 }
 
+export interface Theme {
+  id: number;
+  user_id: number;
+  name: string;
+  tags: string[];
+}
+
 export interface Portfolio {
   name: string;
   facts: Fact[];
   experiences: Experience[];
+  themes: Theme[];
 }
 
 export interface Question {

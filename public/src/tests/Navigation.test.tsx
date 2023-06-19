@@ -4,9 +4,6 @@ import "@testing-library/jest-dom";
 
 import Navigation from "../components/Navigation";
 
-// import useApi from "../hooks/useApi";
-// jest.mock("../hooks/useApi");
-
 const mockNavigation = (
   <Navigation items={["one", "two"]}>
     <div key="one">oneBody</div>

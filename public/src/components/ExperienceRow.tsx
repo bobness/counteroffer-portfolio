@@ -3,10 +3,11 @@ import { Experience, Suggestion, Tag } from "../types";
 
 interface Props {
   data: Experience;
+  selectedTags?: string[];
   selectedSuggestions?: Suggestion[];
 }
 
-const ExperienceRow = ({ data, selectedSuggestions }: Props) => {
+const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
   const startDate = useMemo(() => {
     const date = new Date(data.startdate);
     return date.toLocaleDateString("en-US");
@@ -24,7 +25,7 @@ const ExperienceRow = ({ data, selectedSuggestions }: Props) => {
 
   return (
     <div>
-      <div style={{ display: "inline-block", width: 30 }}>
+      {/* <div style={{ display: "inline-block", width: 30 }}>
         {selectedSuggestions && selectedSuggestions.length > 0 && (
           <button
             onClick={() => {
@@ -40,7 +41,7 @@ const ExperienceRow = ({ data, selectedSuggestions }: Props) => {
             +
           </button>
         )}
-      </div>
+      </div> */}
       <div style={{ display: "inline-block" }}>
         <h1>{data.title}</h1>
         <h2>{data.company}</h2>
@@ -48,18 +49,25 @@ const ExperienceRow = ({ data, selectedSuggestions }: Props) => {
         <div>{data.summary}</div>
         <ul className="tag-list">
           {data.tags.map((tag, i) => (
-            <li className="tag-item" key={`tag ${data.id} - ${i}`}>
+            <li
+              className={
+                selectedTags?.includes(tag.value)
+                  ? "tag-item danger"
+                  : "tag-item"
+              }
+              key={`tag ${data.id} - ${i}`}
+            >
               {tag.value}
             </li>
           ))}
-          {addedTags?.map((tag, i) => (
+          {/* {addedTags?.map((tag, i) => (
             <li
               className="tag-item"
               key={`tag ${data.id} - ${data.tags.length + i}`}
             >
               {tag.value}
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </div>

@@ -5,6 +5,23 @@
     <title>Illuminate by Datagotchi Labs</title>
 
     <style>
+      @media print {
+        .tag-item {
+          color: white !important;
+          background-color: #337ab7 !important;
+          print-color-adjust: exact;
+        }
+
+        .danger {
+          background-color: #dc3545 !important;
+          print-color-adjust: exact;
+        }
+
+        #facts {
+          display: none !important;
+        }
+      }
+
       body {
         margin: 50px;
       }
@@ -45,6 +62,10 @@
         background-color: #337ab7;
         color: white;
         font-weight: bold;
+      }
+
+      .danger {
+        background-color: #dc3545;
       }
 
       survey {
