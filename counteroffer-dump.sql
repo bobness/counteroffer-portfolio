@@ -244,6 +244,42 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
+-- Name: themes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.themes (
+    id integer NOT NULL,
+    user_id integer,
+    name text,
+    tags text[]
+);
+
+
+ALTER TABLE public.themes OWNER TO postgres;
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.themes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.themes_id_seq OWNER TO postgres;
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
+
+
+--
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -316,6 +352,13 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
+-- Name: themes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
+
+
+--
 -- Data for Name: experiences; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -344,8 +387,9 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 --
 
 COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
-2	1	Objective	To help others with softare engineering, UX, or machine learning while working on my starutp -- or a full-time job if it's the right fit	\N
-1	1	Job Search Stage	Looking for consulting opportunities	\N
+2	1	Objective	To help others with software engineering, UX, or machine learning while working on my company -- or a full-time job if it's the right fit	\N
+1	1	Job Search Stage	Passively open to new opportunities	\N
+3	1	Location	I live in Petaluma, CA currently, so REMOTE would be best	\N
 \.
 
 
@@ -354,7 +398,7 @@ COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
 --
 
 COPY public.jobs (id, user_id, email, company, archived) FROM stdin;
-13	1	bob@datagotchi.net	\N	f
+15	1	bob@datagotchi.net	\N	f
 \.
 
 
@@ -366,6 +410,10 @@ COPY public.messages (id, value, question_id, sender, job_id, datetime) FROM std
 25	Javascript,Typescript	1	bob@datagotchi.net	13	\N
 26		2	bob@datagotchi.net	13	\N
 27		3	bob@datagotchi.net	13	\N
+28	Product Strategy	1	bob@datagotchi.net	15	\N
+29	asdf	2	bob@datagotchi.net	15	\N
+30	asdf	3	bob@datagotchi.net	15	\N
+31	asdf	4	bob@datagotchi.net	15	\N
 \.
 
 
@@ -495,6 +543,26 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 142	7	User Stories
 143	7	UX Design
 141	7	User Research
+144	2	React
+145	3	React
+146	1	Typescript
+147	1	Wireframing
+148	2	Wireframing
+149	3	Wireframing
+150	4	Wireframing
+151	5	Wireframing
+152	9	Wireframing
+153	3	Code Review
+154	5	Code Review
+\.
+
+
+--
+-- Data for Name: themes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.themes (id, user_id, name, tags) FROM stdin;
+1	1	Frontend	{React,"React Native",Typescript,"UX Design","User Research",Wireframing,"Code Review"}
 \.
 
 
@@ -518,21 +586,21 @@ SELECT pg_catalog.setval('public.experiences_id_seq', 16, true);
 -- Name: facts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.facts_id_seq', 2, true);
+SELECT pg_catalog.setval('public.facts_id_seq', 3, true);
 
 
 --
 -- Name: jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.jobs_id_seq', 13, true);
+SELECT pg_catalog.setval('public.jobs_id_seq', 15, true);
 
 
 --
 -- Name: messages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.messages_id_seq', 27, true);
+SELECT pg_catalog.setval('public.messages_id_seq', 31, true);
 
 
 --
@@ -546,7 +614,14 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 143, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 154, true);
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.themes_id_seq', 1, true);
 
 
 --
