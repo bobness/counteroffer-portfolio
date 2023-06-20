@@ -50,11 +50,11 @@ const Histogram = ({
   useEffect(() => {
     const tags = tagCounts.map((tc) => tc.name);
     setTags(tags);
-  }, [tagCounts]);
+  }, [tagCounts, setTags]);
 
   useEffect(() => {
     onTagSelected(selectedTag);
-  }, [selectedTag]);
+  }, [selectedTag, onTagSelected]);
 
   return (
     <>

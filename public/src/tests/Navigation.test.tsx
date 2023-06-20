@@ -15,7 +15,7 @@ describe("Navigation", () => {
   const expectNavigationLink = async (text: string) => {
     const element = await screen.findByText(text);
     expect(element).toBeInTheDocument();
-    expect(element.tagName.toLowerCase()).toBe("a");
+    expect(element.tagName.toLowerCase()).toBe("button");
     expect(element.innerHTML).toEqual(text);
   };
   test("Renders the navigation links", async () => {

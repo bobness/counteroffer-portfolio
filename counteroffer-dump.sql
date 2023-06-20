@@ -379,6 +379,10 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 14	1	Software Engineer (Intern)	IBM	2005-01-01	2005-08-01	Led team that designed and implemented XML-based debugging tool for developers 
 15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	Designed and developed e-commerce website that hooked into an enterprise resource planning (ERP) system
 16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	Tutored students on descriptive and inferential statistics, and machine learning models
+17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
+18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE)
+19	1	Founder & Developer	Illuminate	2017-01-01	\N	A data analytics platform for hiring to help both recruiters and candidates
+20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
 \.
 
 
@@ -554,6 +558,21 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 152	9	Wireframing
 153	3	Code Review
 154	5	Code Review
+155	17	PHP
+156	17	MySQL
+157	17	VPS Administration
+158	18	PHP
+159	18	MySQL
+160	18	J2EE
+161	18	Javascript
+162	19	Javascript
+163	19	PHP
+166	19	Typescript
+167	19	PostgreSQL
+168	20	PHP
+169	20	PostgreSQL
+170	20	Javascript
+171	20	Shoutcast Radio
 \.
 
 
@@ -562,7 +581,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 --
 
 COPY public.themes (id, user_id, name, tags) FROM stdin;
-1	1	Frontend	{React,"React Native",Typescript,"UX Design","User Research",Wireframing,"Code Review"}
+1	1	Frontend	{React,"React Native",Typescript,"UX Design","User Research",Wireframing,"Code Review",Javascript}
 \.
 
 
@@ -579,7 +598,7 @@ COPY public.users (id, email, hashed_password, current_session, name, username) 
 -- Name: experiences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.experiences_id_seq', 16, true);
+SELECT pg_catalog.setval('public.experiences_id_seq', 20, true);
 
 
 --
@@ -614,7 +633,7 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 154, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 171, true);
 
 
 --

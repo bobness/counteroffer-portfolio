@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useLocationHash from "../hooks/useLocationHash";
 import usePortfolio from "../hooks/usePortfolio";
-import useSuggestions from "../hooks/useSuggestions";
-import { Suggestion } from "../types";
+// import useSuggestions from "../hooks/useSuggestions";
+// import { Suggestion } from "../types";
 import ExperienceRow from "./ExperienceRow";
 import Facts from "./Facts";
 import Histogram from "./Histogram";
@@ -23,23 +23,32 @@ const Portfolio = () => {
     return items;
   }, [portfolio?.themes]);
 
-  const [currentPage, setCurrentPage] = useState(navigationItems[0]);
-  const currentTheme = useMemo(() => {
-    if (portfolio?.themes && currentPage) {
-      return portfolio.themes.find((theme) => theme.name === currentPage);
+  const [currentThemeName, setCurrentThemeName] = useState<string>();
+
+  useEffect(() => {
+    setCurrentThemeName(navigationItems[0]);
+  }, [navigationItems]);
+
+  const currentThemeObject = useMemo(() => {
+    if (portfolio?.themes && currentThemeName) {
+      return portfolio.themes.find((theme) => theme.name === currentThemeName);
     }
-  }, [portfolio?.themes, currentPage]);
+  }, [portfolio?.themes, currentThemeName]);
+
   const themedExperiences = useMemo(() => {
-    if (currentTheme && portfolio?.experiences) {
+    if (currentThemeName && portfolio?.experiences) {
       return portfolio.experiences.filter((exp) =>
-        currentTheme.tags.some((tag) =>
+        currentThemeObject?.tags.some((tag) =>
           exp.tags.map((t) => t.value).includes(tag)
         )
       );
     }
-  }, [currentTheme, portfolio?.experiences]);
+  }, [currentThemeName, currentThemeObject, portfolio?.experiences]);
   const filteredExperiences = useMemo(() => {
-    const experiences = themedExperiences ?? portfolio?.experiences;
+    let experiences = portfolio?.experiences;
+    if (currentThemeObject) {
+      experiences = themedExperiences;
+    }
     if (experiences) {
       if (tagFilter) {
         return experiences.filter((e) =>
@@ -49,7 +58,12 @@ const Portfolio = () => {
       return experiences;
     }
     return [];
-  }, [themedExperiences, portfolio?.experiences, tagFilter]);
+  }, [
+    themedExperiences,
+    portfolio?.experiences,
+    currentThemeObject,
+    tagFilter,
+  ]);
 
   // const suggestions = useSuggestions({ id: path, type: "portfolio" });
   // const [showSuggestions, setShowSuggestions] = useState(false);
@@ -65,12 +79,15 @@ const Portfolio = () => {
           <Facts data={portfolio.facts} />
         </div>
         <Histogram
-          experiences={themedExperiences ?? portfolio.experiences}
+          experiences={filteredExperiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
-          selectedThemeTags={currentTheme?.tags}
+          selectedThemeTags={currentThemeObject?.tags}
         />
-        <Navigation items={navigationItems}>
+        <Navigation
+          items={navigationItems}
+          onThemeChange={(newTheme: string) => setCurrentThemeName(newTheme)}
+        >
           <div key="All Experiences">
             <div>
               {/* <div>
@@ -170,7 +187,7 @@ const Portfolio = () => {
               <ExperienceRow
                 data={exp}
                 key={`ExperienceRow #${i}`}
-                selectedTags={currentTheme?.tags}
+                selectedTags={currentThemeObject?.tags}
                 // selectedSuggestions={selectedSuggestions}
               />
             ))}
