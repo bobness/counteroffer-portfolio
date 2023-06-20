@@ -1,12 +1,13 @@
-import React, { Children, useMemo, useState } from "react";
+import React, { useState } from "react";
 
 interface Props {
   items: string[];
+  onThemeChange?: (newTheme: string) => void;
   children: JSX.Element[];
 }
 
-const Navigation = ({ items, children }: Props) => {
-  const [currentPage, setCurrentPage] = useState<string>(items[0]);
+const Navigation = ({ items, children, onThemeChange }: Props) => {
+  const [currentTheme, setCurrentTheme] = useState<string>(items[0]);
 
   return (
     <>
@@ -14,20 +15,28 @@ const Navigation = ({ items, children }: Props) => {
         <ul className="nav nav-pills" style={{ display: "inline-block" }}>
           {items.map((item) => (
             <li
-              className={currentPage === item ? "active" : ""}
+              className={currentTheme === item ? "active" : ""}
               key={`navigation.li for ${item}`}
             >
-              <a
-                onClick={() => setCurrentPage(item)}
-                style={{ cursor: "pointer" }}
+              <button
+                onClick={() => {
+                  setCurrentTheme(item);
+                  if (onThemeChange) {
+                    onThemeChange(item);
+                  }
+                }}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: currentTheme === item ? "#999" : "#ddd",
+                }}
               >
                 {item}
-              </a>
+              </button>
             </li>
           ))}
         </ul>
       </div>
-      {children.find((c) => c.key === currentPage)}
+      {children.find((c) => c.key === currentTheme)}
     </>
   );
 };
