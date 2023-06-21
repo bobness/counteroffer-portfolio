@@ -71,6 +71,9 @@ const Portfolio = () => {
   //   Suggestion[] | undefined
   // >();
 
+  // TODO: figure out how to successfully use calc() or something
+  const histogramHeight = "80vh";
+
   if (portfolio) {
     return (
       <div style={{ margin: "50px" }}>
@@ -83,6 +86,7 @@ const Portfolio = () => {
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
           selectedThemeTags={currentThemeObject?.tags}
+          printStyle={`#container { max-height: ${histogramHeight} !important; }`}
         />
         <Navigation
           items={navigationItems}

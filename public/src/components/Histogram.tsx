@@ -11,6 +11,7 @@ interface Props {
   onTagSelected: (tag?: string) => void;
   setTags: (tags: string[]) => void;
   selectedThemeTags?: string[];
+  printStyle?: string;
 }
 
 export const EXPERIENCE_YEAR_HEIGHT = 10;
@@ -20,6 +21,7 @@ const Histogram = ({
   onTagSelected,
   setTags,
   selectedThemeTags,
+  printStyle,
 }: Props) => {
   const [filter, setFilter] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
@@ -59,7 +61,6 @@ const Histogram = ({
   return (
     <>
       <style>{`@media print { 
-        #container { max-height: none !important; }
         #histogram_header { display: none; }
         .tagBar { 
           color: white !important;
@@ -70,7 +71,9 @@ const Histogram = ({
           background-color: #dc3545 !important;
           print-color-adjust: exact;
         }
-      }`}</style>
+        ${printStyle}
+      }
+      `}</style>
       <div
         id="container"
         style={{
