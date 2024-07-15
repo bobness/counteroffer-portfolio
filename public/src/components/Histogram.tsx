@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Experience } from "../types";
+import { Experience, Tag } from "../types";
 
 interface TagCount {
   name: string;
@@ -14,7 +14,7 @@ interface Props {
   printStyle?: string;
 }
 
-export const EXPERIENCE_YEAR_HEIGHT = 10;
+export const EXPERIENCE_YEAR_HEIGHT = 3;
 
 const Histogram = ({
   experiences,
@@ -29,21 +29,25 @@ const Histogram = ({
   const tagCounts = useMemo(() => {
     return experiences
       .reduce<TagCount[]>((counts, experience) => {
-        experience.tags.forEach((tag) => {
-          if (!counts.find((c) => c.name === tag.value)) {
-            counts.push({ name: tag.value, count: 0 });
-          }
-          const tc = counts.find((c) => c.name === tag.value);
-          if (tc) {
-            const end = experience.enddate
-              ? new Date(experience.enddate)
-              : new Date();
-            const start = new Date(experience.startdate);
-            const time = end.getTime() - start.getTime();
-            const years = Math.round(time / (1000 * 60 * 60 * 24 * 365));
-            tc.count += years;
-          }
-        });
+        experience.tags
+          .filter((tag: Tag) =>
+            selectedThemeTags ? selectedThemeTags?.includes(tag.value) : true
+          )
+          .forEach((tag: Tag) => {
+            if (!counts.find((c) => c.name === tag.value)) {
+              counts.push({ name: tag.value, count: 0 });
+            }
+            const tc = counts.find((c) => c.name === tag.value);
+            if (tc) {
+              const end = experience.enddate
+                ? new Date(experience.enddate)
+                : new Date();
+              const start = new Date(experience.startdate);
+              const time = end.getTime() - start.getTime();
+              const years = Math.round(time / (1000 * 60 * 60 * 24 * 365));
+              tc.count += years;
+            }
+          });
         return counts;
       }, [])
       .sort((a, b) => b.count - a.count);
@@ -63,6 +67,7 @@ const Histogram = ({
       <style>{`@media print { 
         #histogram_header { display: none; }
         .tagBar { 
+          min-height: 15px !important;
           color: white !important;
           background-color: #337ab7 !important;
           print-color-adjust: exact;
@@ -79,7 +84,7 @@ const Histogram = ({
         style={{
           display: "inline-block",
           width: "100%",
-          maxHeight: "300px",
+          maxHeight: "350px",
           overflowY: "scroll",
           border: "1px black solid",
           borderRadius: "5px",
@@ -118,7 +123,7 @@ const Histogram = ({
                   display: "inline-block",
                   width: "70px",
                   verticalAlign: "bottom",
-                  margin: "15px",
+                  margin: "5px",
                   fontSize: "smaller",
                 }}
                 key={`histogram span for ${tc.name}`}
@@ -135,11 +140,7 @@ const Histogram = ({
                     cursor: "pointer",
                   }}
                   className={
-                    "tagBar " +
-                    (selectedTag === tc.name ||
-                    selectedThemeTags?.includes(tc.name)
-                      ? "danger"
-                      : "")
+                    "tagBar " + (selectedTag === tc.name ? "danger" : "")
                   }
                   onClick={() => {
                     if (selectedTag === tc.name) {

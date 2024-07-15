@@ -46,20 +46,30 @@ const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
         <h1>{data.title}</h1>
         <h2>{data.company}</h2>
         {startDate} - {endDate}
-        <div>{data.summary}</div>
+        <div className="summary">{data.summary}</div>
         <ul className="tag-list">
-          {data.tags.map((tag, i) => (
-            <li
-              className={
-                selectedTags?.includes(tag.value)
-                  ? "tag-item danger"
-                  : "tag-item"
+          {data.tags
+            .sort((a: Tag, b: Tag) => {
+              if (b.value < a.value) {
+                return 1;
               }
-              key={`tag ${data.id} - ${i}`}
-            >
-              {tag.value}
-            </li>
-          ))}
+              if (a.value < b.value) {
+                return -1;
+              }
+              return 0;
+            })
+            .map((tag, i) => (
+              <li
+                className={
+                  selectedTags?.includes(tag.value)
+                    ? "tag-item danger"
+                    : "tag-item"
+                }
+                key={`tag ${data.id} - ${i}`}
+              >
+                {tag.value}
+              </li>
+            ))}
           {/* {addedTags?.map((tag, i) => (
             <li
               className="tag-item"

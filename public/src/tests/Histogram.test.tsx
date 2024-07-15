@@ -20,6 +20,7 @@ describe("Histogram", () => {
     render(
       <Histogram
         experiences={mockExperiences}
+        selectedThemeTags={[]}
         onTagSelected={(tag?: string) => {}}
         setTags={jest.fn()}
       />

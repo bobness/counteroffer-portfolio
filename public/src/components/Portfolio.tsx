@@ -44,6 +44,7 @@ const Portfolio = () => {
       );
     }
   }, [currentThemeName, currentThemeObject, portfolio?.experiences]);
+
   const filteredExperiences = useMemo(() => {
     let experiences = portfolio?.experiences;
     if (currentThemeObject) {
@@ -186,7 +187,7 @@ const Portfolio = () => {
               ))}
             </div>
           </div>
-          <div key="Frontend">
+          <div key="https://boards.greenhouse.io/raft/jobs/5231218004">
             {filteredExperiences.map((exp, i) => (
               <ExperienceRow
                 data={exp}

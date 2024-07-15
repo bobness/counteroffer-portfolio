@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 13.4
--- Dumped by pg_dump version 14.4
+-- Dumped by pg_dump version 14.12 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -363,26 +363,24 @@ ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.theme
 --
 
 COPY public.experiences (id, user_id, title, company, startdate, enddate, summary) FROM stdin;
-1	1	Founder	Datagotchi Labs	2018-01-01	\N	R&D on data-driven UIs to solve wicked social problems, including the job market and news reliability
-2	1	Staff R&D Engineer	Tanium	2020-06-01	2022-06-01	Researched ways to improve user experiences across the platform
-3	1	Senior Software Engineer	Tanium	2016-08-01	2018-06-01	Team lead for the platform's main UI at a late-stage startup providing a network management platform
-5	1	Senior UX Engineer	Driven Inc.	2015-07-01	2016-03-01	Lead of the frontend development team in an early-stage startup providing an application performance management (APM) tool
-4	1	Product Manager	Driven Inc.	2016-03-01	2016-08-01	Internal, or UX-driven, product lead/manager working with the frontend development team
-6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	Consulted on user research, how it informs product strategy and UX design, and startup best practices
-7	1	Senior UX Engineer	Collusion	2013-12-01	2014-11-01	Product lead and developer of an early-stage startup providing a platform for team collaboration
-8	1	Data Analytics Engineer	Exaptive	2013-03-01	2013-10-01	Data analytics and visualizations developer & data scientist at an early-stage startup providing a data science/bioinformatics platform
-9	1	Research Scientist	Charles River Analytics	2010-10-01	2013-03-01	Researcher, product lead, UX designer, and engineer in a small government R&D firm
-10	1	Data Scientist & UX Engineer	BBN Technologies	2008-08-01	2010-10-01	Data scientist, full-stack engineer, UX designer, and internal UX consultant in a med-sized government R&D firm (acquired by Raytheon)
-11	1	Data Scientist (Graduate Intern)	ScanScout	2008-05-01	2008-08-01	Data science intern in small/med startup in the video advertising space (acquired by Tremor Video)
-12	1	Graduate Research Assistant	Penn State University (College of Information Sciences and Technology)	2007-09-01	2008-05-01	Researched decision recommendation, decision tree induction, and visualizations
-13	1	Software Engineer (Intern)	IBM	2007-05-01	2007-08-01	Developed renderer for Eclipse's Standard Widget Toolkit fo ran XML GUI markup language
-14	1	Software Engineer (Intern)	IBM	2005-01-01	2005-08-01	Led team that designed and implemented XML-based debugging tool for developers 
-15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	Designed and developed e-commerce website that hooked into an enterprise resource planning (ERP) system
-16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	Tutored students on descriptive and inferential statistics, and machine learning models
-17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
-18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE)
-19	1	Founder & Developer	Illuminate	2017-01-01	\N	A data analytics platform for hiring to help both recruiters and candidates
-20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
+12	1	MS in Information Science	Pennsylvania State University	2007-09-01	2010-05-01	● Relevant Classes: Pattern Recognition, Human-Computer Interaction, Information Management, Organizational Informatics.\n● Research: Decision tree induction machine learning using R.\n● Thesis: Hand gesture recognition using machine learning for immersive training systems in Java.\n● Honors: Jordan H. Rednor Graduate Fellowship.
+11	1	Data Scientist (Graduate Intern)	ScanScout	2008-05-01	2008-08-01	● Analyzed behavioral data mining system to optimize video ad placement (in R)\n● Developed optimizer evaluation system using statistical significance measures (in R embedded in LaTeX)
+13	1	Software Engineering Team Lead (Intern)	IBM	2007-05-01	2007-08-01	● Led team that developed a web renderer for IBM’s XML dialect for user interfaces (Abstract User Interface Markup Language, AUIML)
+9	1	Government R&D Scientist & Project Lead	Charles River Analytics	2010-10-01	2013-03-01	● Technical lead for over 5 government R&D projects involving data visualizations and machine learning.\n● Published peer-reviewed research papers project outcomes.\n● Managed the development and maintenance of a Bayesian network machine learning toolkit.
+10	1	Government R&D Engineer	BBN Technologies	2008-08-01	2010-10-01	● Developed & user-tested gesture recognition system using hidden Markov Models (Java, Matlab)\n● Designed & developed a distributed natural language processing pipeline (Python)\n● Developed a web app for team collaboration (ASP/C# .NET, HTML, CSS, JS)
+3	1	Lead Frontend Engineer	Tanium	2016-08-01	2018-06-01	● Led the frontend engineering team for the core administrative product, working with design.\n● Managed SOAP-based backend request flow to optimize tech stack performance.\n● Provided expert guidance through code reviews, ensuring alignment with project goals.\n● Implemented CI/CD practices and and Agile methodology to enhance development efficiency.
+4	1	Lead UX Engineer & Product Manager	Driven Inc.	2015-07-01	2016-08-01	● Led frontend engineering team and supported backend development to boost system performance, utilizing Agile methodology.\n● Enhanced user experience through user research, product analytics, and intuitive feature flows.\n● Directed a strategic pivot targeting cluster operators/administrators, collaborating with sales, marketing, and executives.
+14	1	Software Engineering Team Lead (Intern)	IBM	2005-01-01	2005-08-01	● Started out developing software with SQL-embedded C using IBM’s DB2 database system\n● Was promoted to lead a summer team to create a tool to aid bug-fixing these applications\n● Interviewed developer “customers” to determine their software development habits and needs
+1	1	Founder	Datagotchi Labs	2018-01-01	\N	● Addressing the trustworthy AI problem by comparing Bayesian networks to deep neural networks on output quality, ease of development, and training costs.\n● Enabling sharing of online news summaries with a social app and data analytics to increase reader engagement in a two-sided marketplace solution to the news reliability problem.\n● Improving candidate-job fit with a skill visualization app and data analytics to target candidates in a two-sided marketplace solution to the candidate-recruiter discovery problem.
+16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	● Tutored students on descriptive and inferential statistics—data analysis, and machine learning models (linear and logistic regression, k-nearest neighbors, decision trees/random forests, latent dirichlet allocation/LDA, and time series autocorrelation).\n● Mastered Python technologies (SK Learn, NumPy, Pandas, iPython/Jupyter Notebook).
+18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	● A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE).
+15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	● Worked part-time (full-time in summers) while in high school and early college.\n● Created an ERP system that tracked all aspects of the business, including printing inventory, purchase orders, and payments.\n● Implemented with FileMaker Pro database and later hooked up to a custom PHP ecommerce website so customers could place orders in the system.
+7	1	Lead UX Engineer	Collusion	2013-12-01	2014-11-01	● Led frontend team and supported middle-tier and back-end development to ensure a high-performing application stack.\n● Deployed a responsive web interface to complement the iOS app, ensuring cross-platform compatibility.
+6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	● Assisted user research of and solutions to clients’ problems.\n● Led the development of front-end prototypes with Javascript (D3.js) data visualizations.\n● Developed comprehensive dashboards integrating user research data, feature roadmaps, and evaluation results for product managers and startup founders.
+8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.
+20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
+21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	\N
+17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
 \.
 
 
@@ -391,9 +389,7 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 --
 
 COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
-2	1	Objective	To help others with software engineering, UX, or machine learning while working on my company -- or a full-time job if it's the right fit	\N
-1	1	Job Search Stage	Passively open to new opportunities	\N
-3	1	Location	I live in Petaluma, CA currently, so REMOTE would be best	\N
+4	1	Application to Raft	Senior UX Engineer	\N
 \.
 
 
@@ -449,24 +445,18 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 15	4	Product Strategy
 16	4	Roadmaps
 17	4	User Stories
-24	6	User Research
-25	1	User Research
 26	6	Product Strategy
 27	1	Product Strategy
 28	6	UX Design
 30	1	UX Design
 31	6	Javascript
-32	6	D3
 33	6	AngularJS
 34	6	NodeJS
 43	1	User Stories
 44	8	Javascript
-45	8	D3
 46	8	PHP
 47	8	Python
 48	8	User Stories
-49	8	User Research
-50	9	User Research
 51	9	User Stories
 52	9	UX Design
 53	9	Java
@@ -487,7 +477,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 70	10	ASP.NET
 71	10	C#.NET
 72	10	Javascript
-73	10	User Research
 74	11	R Statistical Environment
 75	11	Data Science
 76	12	R Statistical Environment
@@ -502,12 +491,10 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 90	15	FileMaker
 91	1	Roadmaps
 92	10	Machine Learning
-93	14	User Research
 94	15	Javascript
 95	16	Data Science
 96	16	Machine Learning
 97	11	Machine Learning
-101	4	User Research
 102	4	UX Design
 103	8	Data Science
 104	9	Product Lead
@@ -528,17 +515,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 122	2	Go
 123	2	NodeJS
 124	2	Typescript
-125	2	User Research
 126	2	UX Design
-127	5	AngularJS
-128	5	D3
-129	5	Data Visualization
-130	5	Javascript
-131	5	Machine Learning
-132	5	Product Analytics
-133	5	Team Lead
-134	5	User Research
-135	5	UX Design
 136	7	Javascript
 137	7	NodeJS
 138	7	Objective-C
@@ -546,7 +523,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 140	7	Product Analytics
 142	7	User Stories
 143	7	UX Design
-141	7	User Research
 144	2	React
 145	3	React
 146	1	Typescript
@@ -554,16 +530,13 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 148	2	Wireframing
 149	3	Wireframing
 150	4	Wireframing
-151	5	Wireframing
 152	9	Wireframing
 153	3	Code Review
-154	5	Code Review
 155	17	PHP
 156	17	MySQL
 157	17	VPS Administration
 158	18	PHP
 159	18	MySQL
-160	18	J2EE
 161	18	Javascript
 162	19	Javascript
 163	19	PHP
@@ -573,6 +546,100 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 169	20	PostgreSQL
 170	20	Javascript
 171	20	Shoutcast Radio
+172	1	HTML
+173	1	CSS
+24	6	UX Research
+25	1	UX Research
+49	8	UX Research
+50	9	UX Research
+73	10	UX Research
+93	14	UX Research
+101	4	UX Research
+125	2	UX Research
+32	6	D3.js
+141	7	UX Research
+174	1	Cloud-Native Environment
+175	1	Gradle Dependency Manager
+176	1	Yarn Package Manager
+177	1	Java
+178	1	Customer-Obsessed Mindset
+179	1	Microservices
+180	1	Responsive Design
+181	2	Microservices
+182	3	Microservices
+183	3	HTML
+184	3	CSS
+185	3	UX Design
+186	3	Yarn Package Manager
+187	3	NPM Package Manager
+188	3	Go
+189	3	Customer-Obsessed Mindset
+190	3	Public-Sector Modernization
+191	3	Designer Collaboration
+45	8	D3.js
+128	4	D3.js
+160	18	Java
+192	3	Engineer Collaboration
+127	4	AngularJS
+129	4	Data Visualization
+130	4	Javascript
+131	4	Machine Learning
+132	4	Product Analytics
+133	4	Team Lead
+154	4	Code Review
+193	4	HTML
+194	4	CSS
+195	4	Cloud-Native Environment
+196	4	NPM Package Manager
+197	4	Java
+198	4	Customer-Obsessed Mindset
+199	4	Engineering Collaboration
+200	4	Founder Collaboration
+201	4	Streaming Tools
+202	4	Microservices
+203	4	Event-Driven Architecture
+204	16	Map-Based UIs
+205	6	HTML
+206	6	CSS
+207	6	NPM Package Manager
+208	6	Customer-Obsessed Mindset
+209	6	Microservices
+210	7	HTML
+211	7	CSS
+212	7	Responsive Design
+213	7	Cloud-Native Environment
+214	7	NPM Package Manager
+215	7	Customer-Obsessed Mindset
+216	7	Microservices
+218	8	CSS
+219	8	HTML
+220	8	UX Design
+221	8	Cloud-Native Environment
+222	8	Map-Based UIs
+223	8	Customer-Obsessed Mindset
+224	8	Microservices
+225	9	Gradle Dependency Manager
+226	9	Secret Clearance
+227	9	Map-Based UIs
+228	9	Customer-Obsessed Mindset
+229	9	Public-Sector Modernization
+230	9	Designer Collaboration
+231	9	Engineering Collaboration
+232	9	Event-Driven Architecture
+233	10	HTML
+234	10	CSS
+235	10	ASP/C#.NET
+236	10	Gradle Dependency Manager
+237	10	Map-Based UIs
+238	10	Customer-Obsessed Mindset
+239	10	Public-Sector Modernization
+240	10	Event-Driven Architecture
+241	12	STEM
+242	12	UX Education
+243	13	Team Lead
+244	13	HTML
+245	13	CSS
+246	14	Customer-Obsessed Mindset
 \.
 
 
@@ -581,7 +648,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 --
 
 COPY public.themes (id, user_id, name, tags) FROM stdin;
-1	1	Frontend	{React,"React Native",Typescript,"UX Design","User Research",Wireframing,"Code Review",Javascript}
+3	1	https://boards.greenhouse.io/raft/jobs/5231218004	{HTML,CSS,React,Javascript,Typescript,D3.js,"UX Research","UX Design","Responsive Design","Cloud-Native Environment","Gradle Dependency Manager","NPM Package Manager","Yarn Package Manager","Secret Clearance","Map-Based UIs",Java,Python,Go,"Customer-Obsessed Mindset","Public-Sector Modernization",Microservices,"Streaming Tools",STEM,"UX Education"}
 \.
 
 
@@ -598,14 +665,14 @@ COPY public.users (id, email, hashed_password, current_session, name, username) 
 -- Name: experiences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.experiences_id_seq', 20, true);
+SELECT pg_catalog.setval('public.experiences_id_seq', 21, true);
 
 
 --
 -- Name: facts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.facts_id_seq', 3, true);
+SELECT pg_catalog.setval('public.facts_id_seq', 4, true);
 
 
 --
@@ -633,14 +700,14 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 171, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 246, true);
 
 
 --
 -- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.themes_id_seq', 1, true);
+SELECT pg_catalog.setval('public.themes_id_seq', 3, true);
 
 
 --
