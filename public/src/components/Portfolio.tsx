@@ -89,7 +89,7 @@ const Portfolio = () => {
           {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
         </h2>
         <Histogram
-          experiences={filteredExperiences}
+          experiences={themedExperiences ?? []}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
           selectedThemeTags={currentThemeObject?.tags}
@@ -102,7 +102,7 @@ const Portfolio = () => {
         </h2>
         <Navigation
           items={navigationItems}
-          currentTheme={currentThemeName || undefined}
+          currentThemeInput={currentThemeName || undefined}
           onThemeChange={(newTheme: string) => setCurrentThemeName(newTheme)}
         >
           <div key="All Experiences">
