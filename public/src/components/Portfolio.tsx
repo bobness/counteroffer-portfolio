@@ -79,9 +79,10 @@ const Portfolio = () => {
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
-        <div id="facts">
+        {/* <div id="facts">
           <Facts data={portfolio.facts} />
-        </div>
+        </div> */}
+        <h2>Skills from the Job Listing</h2>
         <Histogram
           experiences={filteredExperiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
@@ -89,6 +90,7 @@ const Portfolio = () => {
           selectedThemeTags={currentThemeObject?.tags}
           printStyle={`#container { max-height: ${histogramHeight} !important; }`}
         />
+        <h2>Experiences With Those Skills</h2>
         <Navigation
           items={navigationItems}
           onThemeChange={(newTheme: string) => setCurrentThemeName(newTheme)}
@@ -187,7 +189,7 @@ const Portfolio = () => {
               ))}
             </div>
           </div>
-          <div key="https://boards.greenhouse.io/raft/jobs/5231218004">
+          <div key="Raft">
             {filteredExperiences.map((exp, i) => (
               <ExperienceRow
                 data={exp}

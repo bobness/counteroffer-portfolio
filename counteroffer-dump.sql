@@ -371,7 +371,7 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 3	1	Lead Frontend Engineer	Tanium	2016-08-01	2018-06-01	● Led the frontend engineering team for the core administrative product, working with design.\n● Managed SOAP-based backend request flow to optimize tech stack performance.\n● Provided expert guidance through code reviews, ensuring alignment with project goals.\n● Implemented CI/CD practices and and Agile methodology to enhance development efficiency.
 4	1	Lead UX Engineer & Product Manager	Driven Inc.	2015-07-01	2016-08-01	● Led frontend engineering team and supported backend development to boost system performance, utilizing Agile methodology.\n● Enhanced user experience through user research, product analytics, and intuitive feature flows.\n● Directed a strategic pivot targeting cluster operators/administrators, collaborating with sales, marketing, and executives.
 14	1	Software Engineering Team Lead (Intern)	IBM	2005-01-01	2005-08-01	● Started out developing software with SQL-embedded C using IBM’s DB2 database system\n● Was promoted to lead a summer team to create a tool to aid bug-fixing these applications\n● Interviewed developer “customers” to determine their software development habits and needs
-1	1	Founder	Datagotchi Labs	2018-01-01	\N	● Addressing the trustworthy AI problem by comparing Bayesian networks to deep neural networks on output quality, ease of development, and training costs.\n● Enabling sharing of online news summaries with a social app and data analytics to increase reader engagement in a two-sided marketplace solution to the news reliability problem.\n● Improving candidate-job fit with a skill visualization app and data analytics to target candidates in a two-sided marketplace solution to the candidate-recruiter discovery problem.
+21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	● Relevant Classes: Discrete Structures, Data Structures, Intro to Operating Systems, Object-Oriented Design, Advanced Artificial Intelligence, Real Analysis, Regression Analysis.\n● Research: Temporal data mining for computer architecture simulation results; machine learning for “expert” Go playing data; evolutionary algorithms for relational database optimization.\n● Activities: Workshop on Data Visualization and its Role in the Practice of Statistics, Phi Kappa Phi Honor Society, Upsilon Pi Epsilon Honor Society chapter president.\n● Honors: Upsilon Pi Epsilon Honor Society Jim Nolen Scholarship, Mathematics Department Certificate of Merit, Board of Controls Merit Scholarship.
 16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	● Tutored students on descriptive and inferential statistics—data analysis, and machine learning models (linear and logistic regression, k-nearest neighbors, decision trees/random forests, latent dirichlet allocation/LDA, and time series autocorrelation).\n● Mastered Python technologies (SK Learn, NumPy, Pandas, iPython/Jupyter Notebook).
 18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	● A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE).
 15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	● Worked part-time (full-time in summers) while in high school and early college.\n● Created an ERP system that tracked all aspects of the business, including printing inventory, purchase orders, and payments.\n● Implemented with FileMaker Pro database and later hooked up to a custom PHP ecommerce website so customers could place orders in the system.
@@ -379,8 +379,8 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	● Assisted user research of and solutions to clients’ problems.\n● Led the development of front-end prototypes with Javascript (D3.js) data visualizations.\n● Developed comprehensive dashboards integrating user research data, feature roadmaps, and evaluation results for product managers and startup founders.
 8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.
 20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
-21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	\N
 17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
+1	1	Self-Employed R&D Scientist and Engineer	Datagotchi Labs	2018-01-01	\N	● Addressing the trustworthy AI problem by comparing Bayesian networks to deep neural networks on output quality, ease of development, and training costs.\n● Enabling sharing of online news summaries with a social app and data analytics to increase reader engagement in a two-sided marketplace solution to the news reliability problem.\n● Improving candidate-job fit with a skill visualization app and data analytics to target candidates in a two-sided marketplace solution to the candidate-recruiter discovery problem.
 \.
 
 
@@ -389,7 +389,6 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 --
 
 COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
-4	1	Application to Raft	Senior UX Engineer	\N
 \.
 
 
@@ -640,6 +639,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 244	13	HTML
 245	13	CSS
 246	14	Customer-Obsessed Mindset
+247	21	STEM
 \.
 
 
@@ -657,7 +657,7 @@ COPY public.themes (id, user_id, name, tags) FROM stdin;
 --
 
 COPY public.users (id, email, hashed_password, current_session, name, username) FROM stdin;
-1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Bob Stark	bob.stark
+1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Robert Stark	bob.stark
 \.
 
 
@@ -700,7 +700,7 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 246, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 247, true);
 
 
 --

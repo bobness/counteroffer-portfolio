@@ -43,8 +43,8 @@ const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
         )}
       </div> */}
       <div style={{ display: "inline-block" }}>
-        <h1>{data.title}</h1>
-        <h2>{data.company}</h2>
+        <h3>{data.title}</h3>
+        <h4>{data.company}</h4>
         {startDate} - {endDate}
         <div className="summary">{data.summary}</div>
         <ul className="tag-list">

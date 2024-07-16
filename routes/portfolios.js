@@ -30,7 +30,6 @@ router.get("/:username", async (req, res, next) => {
       values: [userId],
     });
     const experiences = experiencesResult.rows;
-    console.log("*** experiences: ", experiences);
     await Promise.all(
       experiences.map(async (e) => {
         const tags = await getTagsForExperience(req, e.id);

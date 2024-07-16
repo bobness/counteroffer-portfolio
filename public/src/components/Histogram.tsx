@@ -121,16 +121,14 @@ const Histogram = ({
               <span
                 style={{
                   display: "inline-block",
-                  width: "70px",
+                  width: "80px",
                   verticalAlign: "bottom",
                   margin: "5px",
                   fontSize: "smaller",
                 }}
                 key={`histogram span for ${tc.name}`}
               >
-                <div style={{ textOverflow: "ellipsis", overflow: "hidden" }}>
-                  {tc.name}
-                </div>
+                <div>{tc.name}</div>
                 <div
                   style={{
                     color: "white",
