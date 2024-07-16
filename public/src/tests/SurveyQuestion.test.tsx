@@ -4,9 +4,9 @@ import "@testing-library/jest-dom";
 
 import SurveyQuestion from "../components/SurveyQuestion";
 
-import { mockQuestions } from "../hooks/__mocks__/useApi";
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
+import { mockQuestions } from "../hooks/__mocks__/axios";
+import axios from "axios";
+jest.mock("axios");
 afterAll(() => jest.clearAllMocks());
 
 describe("SurveyQuestion", () => {

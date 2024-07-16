@@ -4,14 +4,10 @@ import "@testing-library/jest-dom";
 
 import Histogram, { EXPERIENCE_YEAR_HEIGHT } from "../components/Histogram";
 
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
-afterAll(() => jest.clearAllMocks());
-
 import {
   mockExperiences,
   MOCK_EXPERIENCE_LENGTH_YEARS,
-} from "../hooks/__mocks__/useApi";
+} from "../hooks/__mocks__/axios";
 const mockExperienceHeight =
   MOCK_EXPERIENCE_LENGTH_YEARS * EXPERIENCE_YEAR_HEIGHT;
 
@@ -20,7 +16,7 @@ describe("Histogram", () => {
     render(
       <Histogram
         experiences={mockExperiences}
-        selectedThemeTags={[]}
+        // selectedThemeTags={[]}
         onTagSelected={(tag?: string) => {}}
         setTags={jest.fn()}
       />
