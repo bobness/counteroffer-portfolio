@@ -68,7 +68,7 @@ CREATE TABLE public.facts (
     user_id integer NOT NULL,
     key text NOT NULL,
     value text NOT NULL,
-    job_id integer
+    theme_id integer
 );
 
 
@@ -388,7 +388,11 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 -- Data for Name: facts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.facts (id, user_id, key, value, job_id) FROM stdin;
+COPY public.facts (id, user_id, key, value, theme_id) FROM stdin;
+8	1	Job Listing	https://boards.greenhouse.io/materialbank/jobs/6046168003	4
+6	1	Email	bobness@gmail.com	\N
+7	1	Phone	510-882-3319	\N
+5	1	Location	Grand Rapids, MI	\N
 \.
 
 
@@ -434,13 +438,11 @@ COPY public.questions (id, user_id, question, type, required) FROM stdin;
 
 COPY public.tags (id, experience_id, value) FROM stdin;
 1	1	Javascript
-3	1	NodeJS
 4	1	React
 8	1	React Native
 11	3	AngularJS
 12	3	Javascript
 13	3	Typescript
-14	3	NodeJS
 15	4	Product Strategy
 16	4	Roadmaps
 17	4	User Stories
@@ -450,7 +452,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 30	1	UX Design
 31	6	Javascript
 33	6	AngularJS
-34	6	NodeJS
 43	1	User Stories
 44	8	Javascript
 46	8	PHP
@@ -512,11 +513,9 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 120	13	Prototyping
 121	14	Prototyping
 122	2	Go
-123	2	NodeJS
 124	2	Typescript
 126	2	UX Design
 136	7	Javascript
-137	7	NodeJS
 138	7	Objective-C
 139	7	PHP
 140	7	Product Analytics
@@ -574,11 +573,15 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 188	3	Go
 189	3	Customer-Obsessed Mindset
 190	3	Public-Sector Modernization
-191	3	Designer Collaboration
 45	8	D3.js
 128	4	D3.js
 160	18	Java
-192	3	Engineer Collaboration
+191	3	Design Collaboration
+3	1	Node.js
+14	3	Node.js
+34	6	Node.js
+123	2	Node.js
+137	7	Node.js
 127	4	AngularJS
 129	4	Data Visualization
 130	4	Javascript
@@ -593,7 +596,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 197	4	Java
 198	4	Customer-Obsessed Mindset
 199	4	Engineering Collaboration
-200	4	Founder Collaboration
 201	4	Streaming Tools
 202	4	Microservices
 203	4	Event-Driven Architecture
@@ -622,7 +624,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 227	9	Map-Based UIs
 228	9	Customer-Obsessed Mindset
 229	9	Public-Sector Modernization
-230	9	Designer Collaboration
 231	9	Engineering Collaboration
 232	9	Event-Driven Architecture
 233	10	HTML
@@ -640,6 +641,114 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 245	13	CSS
 246	14	Customer-Obsessed Mindset
 247	21	STEM
+248	18	HTML
+249	18	CSS
+250	15	HTML
+251	15	CSS
+252	17	HTML
+253	17	CSS
+254	20	HTML
+255	20	CSS
+257	4	Front-End Engineering
+258	1	Front-End Engineering
+259	3	Front-End Engineering
+260	6	Front-End Engineering
+261	7	Front-End Engineering
+262	10	Front-End Engineering
+263	20	Front-End Engineering
+264	17	Front-End Engineering
+265	15	Front-End Engineering
+266	18	Front-End Engineering
+267	8	Front-End Engineering
+268	8	Executive Engagement
+270	7	Executive Engagement
+200	4	Executive Engagement
+192	3	Engineering Collaboration
+230	9	Design Collaboration
+271	7	Product Collaboration
+272	4	Product Collaboration
+273	8	Product Collaboration
+274	10	Product Collaboration
+275	9	Product Collaboration
+276	15	Product Collaboration
+277	13	Product Collaboration
+278	14	Product Collaboration
+279	4	Design Collaboration
+280	6	Design Collaboration
+281	7	Design Collaboration
+282	8	Design Collaboration
+283	9	Design Collaboration
+284	4	QA Collaboration
+285	7	Wireframing
+286	3	Accessibility
+287	9	Technical Documentation
+288	10	Technical Documentation
+289	3	Technical Documentation
+290	1	Technical Documentation
+291	3	E2E Testing
+292	3	Unit Testing
+293	1	Unit Testing
+294	3	Web Analytics
+295	4	Web Analytics
+296	6	Web Analytics
+297	7	Web Analytics
+298	7	Engineering Collaboration
+299	8	Engineering Collaboration
+300	14	Engineering Collaboration
+301	13	Engineering Collaboration
+302	1	Back-End Engineering
+303	3	Back-End Engineering
+304	4	Back-End Engineering
+305	6	Back-End Engineering
+306	7	Back-End Engineering
+307	8	Back-End Engineering
+309	10	Back-End Engineering
+310	20	Back-End Engineering
+311	17	Back-End Engineering
+312	18	Back-End Engineering
+313	21	Computer Science
+314	12	Computer Science
+315	12	Management Science
+316	12	Psychology
+317	15	E-Commerce
+318	1	Project Management
+319	3	Project Management
+320	4	Project Management
+321	6	Project Management
+322	7	Project Management
+323	8	Project Management
+324	9	Project Management
+325	13	Project Management
+326	14	Project Management
+327	20	Project Management
+328	17	Project Management
+329	18	Project Management
+332	7	Prototyping
+333	21	Prototyping
+334	20	Prototyping
+335	17	Prototyping
+336	18	Prototyping
+256	4	CSS Preprocessors
+337	1	Technology Tradeoffs
+338	6	Technology Tradeoffs
+339	8	Technology Tradeoffs
+340	10	Technology Tradeoffs
+341	12	Technology Tradeoffs
+342	20	Technology Tradeoffs
+343	17	Technology Tradeoffs
+344	18	Technology Tradeoffs
+330	3	Performance Optimization
+331	4	Performance Optimization
+345	18	Cross-Browser Compatibility
+346	17	Cross-Browser Compatibility
+347	20	Cross-Browser Compatibility
+348	3	Cross-Browser Compatibility
+349	4	Cross-Browser Compatibility
+350	7	Cross-Browser Compatibility
+351	3	Startup Environment
+352	4	Startup Environment
+353	7	Startup Environment
+354	8	Startup Environment
 \.
 
 
@@ -648,7 +757,8 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 --
 
 COPY public.themes (id, user_id, name, tags) FROM stdin;
-3	1	https://boards.greenhouse.io/raft/jobs/5231218004	{HTML,CSS,React,Javascript,Typescript,D3.js,"UX Research","UX Design","Responsive Design","Cloud-Native Environment","Gradle Dependency Manager","NPM Package Manager","Yarn Package Manager","Secret Clearance","Map-Based UIs",Java,Python,Go,"Customer-Obsessed Mindset","Public-Sector Modernization",Microservices,"Streaming Tools",STEM,"UX Education"}
+4	1	Material Bank	{HTML,CSS,React,"CSS Preprocessors","Front-End Engineering","Executive Engagement","Product Collaboration","Design Collaboration","QA Collaboration",Wireframing,"Responsive Design",Accessibility,"UX Design","Technical Documentation","E2E Testing",Node.js,"Web Analytics","Engineering Collaboration","Back-End Engineering","Computer Science",E-Commerce,"Project Management","Performance Optimization","Technology Tradeoffs","Cross-Browser Compatibility","Startup Environment"}
+3	1	Raft	{HTML,CSS,React,Javascript,Typescript,D3.js,"UX Research","UX Design","Responsive Design","Cloud-Native Environment","Gradle Dependency Manager","NPM Package Manager","Yarn Package Manager","Secret Clearance","Map-Based UIs",Java,Python,Go,"Customer-Obsessed Mindset","Public-Sector Modernization",Microservices,"Streaming Tools",STEM,"UX Education"}
 \.
 
 
@@ -672,7 +782,7 @@ SELECT pg_catalog.setval('public.experiences_id_seq', 21, true);
 -- Name: facts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.facts_id_seq', 4, true);
+SELECT pg_catalog.setval('public.facts_id_seq', 8, true);
 
 
 --
@@ -700,14 +810,14 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 247, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 354, true);
 
 
 --
 -- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.themes_id_seq', 3, true);
+SELECT pg_catalog.setval('public.themes_id_seq', 4, true);
 
 
 --
