@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { Experience, Suggestion, Tag } from "../types";
+import { Experience, Tag } from "../types";
 
 interface Props {
   data: Experience;
   selectedTags?: string[];
-  selectedSuggestions?: Suggestion[];
 }
 
-const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
+const ExperienceRow = ({ data, selectedTags }: Props) => {
   const startDate = useMemo(() => {
     const date = new Date(data.startdate);
     return date.toLocaleDateString("en-US");
@@ -25,23 +24,6 @@ const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
 
   return (
     <div>
-      {/* <div style={{ display: "inline-block", width: 30 }}>
-        {selectedSuggestions && selectedSuggestions.length > 0 && (
-          <button
-            onClick={() => {
-              setAddedTags([
-                ...addedTags,
-                ...selectedSuggestions.map((s) => ({
-                  id: 0,
-                  value: s.text,
-                })),
-              ]);
-            }}
-          >
-            +
-          </button>
-        )}
-      </div> */}
       <div style={{ display: "inline-block" }}>
         <h3>{data.title}</h3>
         <h4>{data.company}</h4>
