@@ -80,16 +80,25 @@ const Portfolio = () => {
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
         <div id="facts">
           <Facts
-            data={portfolio.facts.filter(
-              (fact) => fact.theme_id === currentThemeObject?.id
-            )}
+            data={
+              currentThemeObject?.id
+                ? portfolio.facts.filter(
+                    (fact) =>
+                      !fact.theme_id || fact.theme_id === currentThemeObject?.id
+                  )
+                : portfolio.facts.filter((fact) => !fact.theme_id)
+            }
           />
         </div>
         <h2>
           {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
         </h2>
         <Histogram
-          experiences={themedExperiences ?? []}
+          experiences={
+            themedExperiences && themedExperiences.length > 0
+              ? themedExperiences
+              : filteredExperiences
+          }
           onTagSelected={(tag?: string) => setTagFilter(tag)}
           setTags={setTags}
           selectedThemeTags={currentThemeObject?.tags}
