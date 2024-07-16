@@ -9,6 +9,9 @@ interface Props {
 const Navigation = ({ items, children, onThemeChange }: Props) => {
   const [currentTheme, setCurrentTheme] = useState<string>(items[0]);
 
+  // TODO: use a left navigation list rather than horizonal buttons
+  // TODO: and integrate it into the opportunity dashboard
+
   return (
     <>
       <div style={{ textAlign: "center", margin: "1em" }} id="navLinks">

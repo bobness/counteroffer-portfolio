@@ -16,18 +16,15 @@ const Portfolio = () => {
   const portfolio = usePortfolio(hash);
 
   const navigationItems = useMemo(() => {
-    let items = ["All Experiences", "Contact"];
+    // let items = ["All Experiences", "Contact"]; // TODO: when I work on the survey
+    let items = ["All Experiences"];
     if (portfolio?.themes) {
-      items.unshift(...portfolio.themes.map((theme) => theme.name));
+      items.push(...portfolio.themes.map((theme) => theme.name));
     }
     return items;
   }, [portfolio?.themes]);
 
   const [currentThemeName, setCurrentThemeName] = useState<string>();
-
-  useEffect(() => {
-    setCurrentThemeName(navigationItems[0]);
-  }, [navigationItems]);
 
   const currentThemeObject = useMemo(() => {
     if (portfolio?.themes && currentThemeName) {
@@ -75,6 +72,8 @@ const Portfolio = () => {
   // TODO: figure out how to successfully use calc() or something
   const histogramHeight = "80vh";
 
+  // TODO: add more information to the h1: location, email, phone #, (ideally fuck linkedin)
+
   if (portfolio) {
     return (
       <div style={{ margin: "50px" }}>
@@ -82,7 +81,9 @@ const Portfolio = () => {
         {/* <div id="facts">
           <Facts data={portfolio.facts} />
         </div> */}
-        <h2>Skills from the Job Listing</h2>
+        <h2>
+          {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
+        </h2>
         <Histogram
           experiences={filteredExperiences}
           onTagSelected={(tag?: string) => setTagFilter(tag)}
@@ -90,7 +91,11 @@ const Portfolio = () => {
           selectedThemeTags={currentThemeObject?.tags}
           printStyle={`#container { max-height: ${histogramHeight} !important; }`}
         />
-        <h2>Experiences With Those Skills</h2>
+        <h2>
+          {currentThemeObject
+            ? "Experiences With Those Skills"
+            : "My Experiences"}
+        </h2>
         <Navigation
           items={navigationItems}
           onThemeChange={(newTheme: string) => setCurrentThemeName(newTheme)}
