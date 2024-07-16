@@ -69,7 +69,9 @@ export const create = () => {
     },
     post: (url: string, body: any) => {
       if (url.includes("surveys")) {
-        // TODO
+        return new Promise((resolve, reject) => {
+          resolve({ data: mockQuestions });
+        });
       }
     },
   };

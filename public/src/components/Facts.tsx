@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Facts = ({ data }: Props) => {
-  console.log("*** data: ", data);
   return (
     <table
       id="facts"

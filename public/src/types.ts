@@ -1,5 +1,6 @@
 export interface Fact {
   id: number;
+  theme_id?: number;
   key: string;
   value: string;
 }

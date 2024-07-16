@@ -7,14 +7,22 @@ import Histogram from "./Histogram";
 import Navigation from "./Navigation";
 import Survey from "./Survey";
 
+const CURRENT_THEME_KEY = "current_theme";
+
 const Portfolio = () => {
+  const currentThemeNameFromStorage = sessionStorage.getItem(CURRENT_THEME_KEY);
+
   const hash = useLocationHash();
   const [tags, setTags] = useState<string[] | undefined>();
   const [tagFilter, setTagFilter] = useState<string | undefined>();
+  const [currentThemeName, setCurrentThemeName] = useState<string | null>(
+    currentThemeNameFromStorage
+  );
+
   const portfolio = usePortfolio(hash);
 
   const navigationItems = useMemo(() => {
-    // let items = ["All Experiences", "Contact"]; // TODO: when I work on the survey
+    // let items = ["All Experiences", "Contact"]; // TODO: when I work on the survey again
     let items = ["All Experiences"];
     if (portfolio?.themes) {
       items.push(...portfolio.themes.map((theme) => theme.name));
@@ -22,7 +30,9 @@ const Portfolio = () => {
     return items;
   }, [portfolio?.themes]);
 
-  const [currentThemeName, setCurrentThemeName] = useState<string>();
+  useEffect(() => {
+    sessionStorage.setItem(CURRENT_THEME_KEY, currentThemeName ?? "");
+  }, [currentThemeName]);
 
   const currentThemeObject = useMemo(() => {
     if (portfolio?.themes && currentThemeName) {
@@ -61,18 +71,20 @@ const Portfolio = () => {
     tagFilter,
   ]);
 
-  // TODO: figure out how to successfully use calc() or something
+  // TODO: figure out how to mimic calc()
   const histogramHeight = "80vh";
-
-  // TODO: add more information to the h1: location, email, phone #, (ideally fuck linkedin)
 
   if (portfolio) {
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
-        {/* <div id="facts">
-          <Facts data={portfolio.facts} />
-        </div> */}
+        <div id="facts">
+          <Facts
+            data={portfolio.facts.filter(
+              (fact) => fact.theme_id === currentThemeObject?.id
+            )}
+          />
+        </div>
         <h2>
           {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
         </h2>
@@ -90,6 +102,7 @@ const Portfolio = () => {
         </h2>
         <Navigation
           items={navigationItems}
+          currentTheme={currentThemeName || undefined}
           onThemeChange={(newTheme: string) => setCurrentThemeName(newTheme)}
         >
           <div key="All Experiences">
@@ -100,6 +113,15 @@ const Portfolio = () => {
             </div>
           </div>
           <div key="Raft">
+            {filteredExperiences.map((exp, i) => (
+              <ExperienceRow
+                data={exp}
+                key={`ExperienceRow #${i}`}
+                selectedTags={currentThemeObject?.tags}
+              />
+            ))}
+          </div>
+          <div key="Material Bank">
             {filteredExperiences.map((exp, i) => (
               <ExperienceRow
                 data={exp}
