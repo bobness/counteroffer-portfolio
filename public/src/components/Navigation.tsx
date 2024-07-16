@@ -4,17 +4,18 @@ interface Props {
   items: string[];
   onThemeChange?: (newTheme: string) => void;
   children: JSX.Element[];
-  currentTheme?: string;
+  currentThemeInput?: string;
 }
 
 const Navigation = ({
   items,
   children,
-  currentTheme,
+  currentThemeInput,
   onThemeChange,
 }: Props) => {
-  // const [currentTheme, setCurrentTheme] = useState<string>(items[0]);
-  currentTheme = currentTheme || items[0];
+  const [currentTheme, setCurrentTheme] = useState<string>(
+    currentThemeInput ?? items[0]
+  );
 
   // TODO: use a left navigation list rather than horizonal buttons
   // TODO: and integrate it into the opportunity dashboard
@@ -30,8 +31,7 @@ const Navigation = ({
             >
               <button
                 onClick={() => {
-                  // setCurrentTheme(item);
-                  currentTheme = item;
+                  setCurrentTheme(item);
                   if (onThemeChange) {
                     onThemeChange(item);
                   }

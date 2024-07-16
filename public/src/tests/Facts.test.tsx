@@ -6,8 +6,6 @@ import Facts from "../components/Facts";
 
 import { mockFacts } from "../hooks/__mocks__/axios";
 
-console.log("*** mockFacts: ", mockFacts);
-
 describe("Facts", () => {
   test("Renders mock facts", async () => {
     render(<Facts data={mockFacts} />);
