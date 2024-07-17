@@ -76,6 +76,9 @@ const Histogram = ({
           background-color: #dc3545 !important;
           print-color-adjust: exact;
         }
+        #container {
+          height: auto !important;
+        }
         ${printStyle}
       }
       `}</style>
@@ -84,7 +87,7 @@ const Histogram = ({
         style={{
           display: "inline-block",
           width: "100%",
-          maxHeight: "350px",
+          height: "200px",
           overflowY: "scroll",
           border: "1px black solid",
           borderRadius: "5px",

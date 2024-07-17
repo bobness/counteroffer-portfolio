@@ -75,20 +75,15 @@ const Portfolio = () => {
   const histogramHeight = "80vh";
 
   if (portfolio) {
+    const genericFacts = portfolio.facts.filter((fact) => !fact.theme_id);
+    const themeFacts = portfolio.facts.filter(
+      (fact) => fact.theme_id === currentThemeObject?.id
+    );
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
         <div id="facts">
-          <Facts
-            data={
-              currentThemeObject?.id
-                ? portfolio.facts.filter(
-                    (fact) =>
-                      !fact.theme_id || fact.theme_id === currentThemeObject?.id
-                  )
-                : portfolio.facts.filter((fact) => !fact.theme_id)
-            }
-          />
+          <Facts data={[...genericFacts, ...themeFacts]} />
         </div>
         <h2>
           {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}

@@ -20,15 +20,13 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
     return "";
   }, [data?.enddate]);
 
-  const [addedTags, setAddedTags] = useState<Tag[]>([]);
-
   return (
-    <div>
-      <div style={{ display: "inline-block" }}>
-        <h3>{data.title}</h3>
-        <h4>{data.company}</h4>
-        {startDate} - {endDate}
-        <div className="summary">{data.summary}</div>
+    <div style={{ display: "inline-block" }}>
+      <h3>{data.title}</h3>
+      <h4>{data.company}</h4>
+      {startDate} - {endDate}
+      <div className="summary">{data.summary}</div>
+      <div>
         <ul className="tag-list">
           {data.tags
             .sort((a: Tag, b: Tag) => {
@@ -52,14 +50,6 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
                 {tag.value}
               </li>
             ))}
-          {/* {addedTags?.map((tag, i) => (
-            <li
-              className="tag-item"
-              key={`tag ${data.id} - ${data.tags.length + i}`}
-            >
-              {tag.value}
-            </li>
-          ))} */}
         </ul>
       </div>
     </div>
