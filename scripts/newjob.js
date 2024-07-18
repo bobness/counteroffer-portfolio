@@ -1,5 +1,6 @@
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
+// const { execSync } = require("child_process");
 
 dotenv.config({ path: "../.env" });
 
@@ -26,29 +27,24 @@ async function main() {
     console.error("*** so, exiting!");
     process.exit();
   }
-  // TODO: create new theme with specified name and skills (tags)
-  if (process.argv.length < 5) {
+  if (process.argv.length < 4) {
     console.log("Usage: node newjob.js [themeName] [...skills]");
   }
   const name = process.argv[2];
-  const url = process.argv[3];
-  const tags = process.argv.slice(4);
+  const tags = process.argv.slice(3);
   try {
-    await client
-      .query({
-        text: `insert into themes (user_id, name, tags) 
+    await client.query({
+      text: `insert into themes (user_id, name, tags) 
           values ($1::integer, $2::text, $3::text[]) 
           returning id`,
-        values: [1, name, tags],
-      })
-      .then(async (results) => {
-        const { id: themeId } = results.rows[0];
-        await client.query({
-          text: `insert into facts (user_id, theme_id, key, value) 
-          values ($1::integer, $2::integer, 'Job Listing', $3::text)`,
-          values: [1, themeId, url],
-        });
-      });
+      values: [1, name, tags],
+    });
+    // FIXME: dump command doesn't work
+    // execSync(`pg_dump
+    //   -U postgres
+    //   -p ${process.env.DATABASE_PASSWORD}
+    //   counteroffer
+    //   > ../counteroffer-dump.sql`);
   } catch (err) {
     console.error(err);
   }
