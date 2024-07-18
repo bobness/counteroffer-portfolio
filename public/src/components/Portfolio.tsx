@@ -83,11 +83,7 @@ const Portfolio = () => {
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
         <p style={{ textAlign: "center" }}>
-          {portfolio.location} ·{" "}
-          <a href="mailto:${portfolio.email}" target="_blank">
-            {portfolio.email}
-          </a>{" "}
-          · ${portfolio.phone}
+          {portfolio.location} · {portfolio.email} · {portfolio.phone}
         </p>
         {/* <div id="facts">
           <Facts data={[...genericFacts, ...themeFacts]} />
