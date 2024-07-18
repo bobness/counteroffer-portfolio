@@ -44,6 +44,9 @@ router.get("/:username", async (req, res, next) => {
     req.client.release();
     return res.json({
       name: user.name,
+      email: user.email,
+      location: user.location,
+      phone: user.phone,
       facts,
       experiences,
       themes,

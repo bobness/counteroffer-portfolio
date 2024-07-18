@@ -32,6 +32,9 @@ export interface Portfolio {
   facts: Fact[];
   experiences: Experience[];
   themes: Theme[];
+  email: string;
+  location: string;
+  phone: string;
 }
 
 export interface Question {

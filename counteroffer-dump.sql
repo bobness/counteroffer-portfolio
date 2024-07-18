@@ -303,7 +303,9 @@ CREATE TABLE public.users (
     hashed_password character varying NOT NULL,
     current_session character varying,
     name character varying(255),
-    username character varying(255)
+    username character varying(255),
+    location text,
+    phone text
 );
 
 
@@ -393,6 +395,9 @@ COPY public.facts (id, user_id, key, value, theme_id) FROM stdin;
 6	1	Email	bobness@gmail.com	\N
 7	1	Phone	510-882-3319	\N
 5	1	Location	Grand Rapids, MI	\N
+9	1	Job Listing	https://jobs.smartrecruiters.com/SigmaSoftware2/743999999830506-middle-front-end-developer-social-shopping-platform-	6
+10	1	Job Listing	https://jobs.smartrecruiters.com/SigmaSoftware2/743999999830506-middle-front-end-developer-social-shopping-platform-	7
+11	1	Job Listing	https://jobs.smartrecruiters.com/Square/743999999675802-staff-frontend-software-engineer-remote-device-management	8
 \.
 
 
@@ -444,12 +449,9 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 12	3	Javascript
 13	3	Typescript
 15	4	Product Strategy
-16	4	Roadmaps
 17	4	User Stories
 26	6	Product Strategy
 27	1	Product Strategy
-28	6	UX Design
-30	1	UX Design
 31	6	Javascript
 33	6	AngularJS
 43	1	User Stories
@@ -458,7 +460,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 47	8	Python
 48	8	User Stories
 51	9	User Stories
-52	9	UX Design
 53	9	Java
 54	9	Proposals
 56	9	Bayesian Networks
@@ -468,7 +469,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 60	8	Data Visualization
 61	6	Data Visualization
 63	10	Data Science
-64	10	UX Design
 65	10	Java
 66	10	Matlab
 67	10	R Statistical Environment
@@ -489,13 +489,11 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 88	14	Java
 89	15	PHP
 90	15	FileMaker
-91	1	Roadmaps
 92	10	Machine Learning
 94	15	Javascript
 95	16	Data Science
 96	16	Machine Learning
 97	11	Machine Learning
-102	4	UX Design
 103	8	Data Science
 104	9	Product Lead
 105	4	Product Lead
@@ -514,13 +512,11 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 121	14	Prototyping
 122	2	Go
 124	2	Typescript
-126	2	UX Design
 136	7	Javascript
 138	7	Objective-C
 139	7	PHP
 140	7	Product Analytics
 142	7	User Stories
-143	7	UX Design
 144	2	React
 145	3	React
 146	1	Typescript
@@ -546,32 +542,29 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 171	20	Shoutcast Radio
 172	1	HTML
 173	1	CSS
-24	6	UX Research
-25	1	UX Research
-49	8	UX Research
-50	9	UX Research
-73	10	UX Research
-93	14	UX Research
-101	4	UX Research
-125	2	UX Research
+28	6	Product Design
+30	1	Product Design
+52	9	Product Design
+64	10	Product Design
+102	4	Product Design
+126	2	Product Design
+143	7	Product Design
+185	3	Product Design
 32	6	D3.js
-141	7	UX Research
+16	4	Product Roadmaps
 174	1	Cloud-Native Environment
 175	1	Gradle Dependency Manager
 176	1	Yarn Package Manager
 177	1	Java
-178	1	Customer-Obsessed Mindset
 179	1	Microservices
 180	1	Responsive Design
 181	2	Microservices
 182	3	Microservices
 183	3	HTML
 184	3	CSS
-185	3	UX Design
 186	3	Yarn Package Manager
 187	3	NPM Package Manager
 188	3	Go
-189	3	Customer-Obsessed Mindset
 190	3	Public-Sector Modernization
 45	8	D3.js
 128	4	D3.js
@@ -582,6 +575,16 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 34	6	Node.js
 123	2	Node.js
 137	7	Node.js
+178	1	Stakeholder Engagement
+189	3	Stakeholder Engagement
+24	6	User Research & Analysis
+25	1	User Research & Analysis
+49	8	User Research & Analysis
+50	9	User Research & Analysis
+73	10	User Research & Analysis
+93	14	User Research & Analysis
+101	4	User Research & Analysis
+91	1	Product Roadmaps
 127	4	AngularJS
 129	4	Data Visualization
 130	4	Javascript
@@ -594,7 +597,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 195	4	Cloud-Native Environment
 196	4	NPM Package Manager
 197	4	Java
-198	4	Customer-Obsessed Mindset
 199	4	Engineering Collaboration
 201	4	Streaming Tools
 202	4	Microservices
@@ -603,26 +605,21 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 205	6	HTML
 206	6	CSS
 207	6	NPM Package Manager
-208	6	Customer-Obsessed Mindset
 209	6	Microservices
 210	7	HTML
 211	7	CSS
 212	7	Responsive Design
 213	7	Cloud-Native Environment
 214	7	NPM Package Manager
-215	7	Customer-Obsessed Mindset
 216	7	Microservices
 218	8	CSS
 219	8	HTML
-220	8	UX Design
 221	8	Cloud-Native Environment
 222	8	Map-Based UIs
-223	8	Customer-Obsessed Mindset
 224	8	Microservices
 225	9	Gradle Dependency Manager
 226	9	Secret Clearance
 227	9	Map-Based UIs
-228	9	Customer-Obsessed Mindset
 229	9	Public-Sector Modernization
 231	9	Engineering Collaboration
 232	9	Event-Driven Architecture
@@ -631,7 +628,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 235	10	ASP/C#.NET
 236	10	Gradle Dependency Manager
 237	10	Map-Based UIs
-238	10	Customer-Obsessed Mindset
 239	10	Public-Sector Modernization
 240	10	Event-Driven Architecture
 241	12	STEM
@@ -639,7 +635,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 243	13	Team Lead
 244	13	HTML
 245	13	CSS
-246	14	Customer-Obsessed Mindset
 247	21	STEM
 248	18	HTML
 249	18	CSS
@@ -677,7 +672,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 280	6	Design Collaboration
 281	7	Design Collaboration
 282	8	Design Collaboration
-283	9	Design Collaboration
 284	4	QA Collaboration
 285	7	Wireframing
 286	3	Accessibility
@@ -688,10 +682,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 291	3	E2E Testing
 292	3	Unit Testing
 293	1	Unit Testing
-294	3	Web Analytics
-295	4	Web Analytics
-296	6	Web Analytics
-297	7	Web Analytics
 298	7	Engineering Collaboration
 299	8	Engineering Collaboration
 300	14	Engineering Collaboration
@@ -723,6 +713,10 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 327	20	Project Management
 328	17	Project Management
 329	18	Project Management
+198	4	Stakeholder Engagement
+220	8	Product Design
+294	3	Product Analytics
+296	6	Product Analytics
 332	7	Prototyping
 333	21	Prototyping
 334	20	Prototyping
@@ -749,6 +743,98 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 352	4	Startup Environment
 353	7	Startup Environment
 354	8	Startup Environment
+208	6	Stakeholder Engagement
+215	7	Stakeholder Engagement
+223	8	Stakeholder Engagement
+228	9	Stakeholder Engagement
+238	10	Stakeholder Engagement
+246	14	Stakeholder Engagement
+355	1	Product Management
+356	4	Product Management
+357	7	Product Management
+358	8	Product Management
+359	9	Product Management
+360	20	Product Management
+361	18	Product Management
+362	3	Cross-Functional Collaboration
+363	4	Cross-Functional Collaboration
+364	6	Cross-Functional Collaboration
+365	7	Cross-Functional Collaboration
+366	8	Cross-Functional Collaboration
+367	9	Cross-Functional Collaboration
+368	10	Cross-Functional Collaboration
+369	1	Data Analysis
+370	4	Data Analysis
+371	16	Data Analysis
+372	6	Data Analysis
+373	7	Data Analysis
+374	8	Data Analysis
+375	9	Data Analysis
+376	10	Data Analysis
+377	20	Data Analysis
+378	17	Data Analysis
+379	18	Data Analysis
+380	1	SQL
+381	3	SQL
+382	4	SQL
+383	16	SQL
+384	7	SQL
+385	8	SQL
+386	9	SQL
+387	20	SQL
+388	17	SQL
+389	18	SQL
+390	1	Spreadsheets
+391	7	Spreadsheets
+392	8	Spreadsheets
+393	9	Spreadsheets
+394	1	Product Development
+395	3	Product Development
+396	4	Product Development
+397	6	Product Development
+398	7	Product Development
+399	8	Product Development
+400	9	Product Development
+401	10	Product Development
+402	20	Product Development
+403	18	Product Development
+404	1	Data Visualization
+405	1	Market Research & Analysis
+406	20	Market Research & Analysis
+407	17	Market Research & Analysis
+408	18	Market Research & Analysis
+409	4	Market Research & Analysis
+410	8	Market Research & Analysis
+411	9	Market Research & Analysis
+125	2	User Research & Analysis
+141	7	User Research & Analysis
+412	6	Product Dashboards & Reports
+413	7	Product Dashboards & Reports
+414	7	Product Roadmaps
+415	8	Product Roadmaps
+416	9	Product Roadmaps
+417	1	Product Backlogs
+418	3	Product Backlogs
+419	4	Product Backlogs
+420	7	Product Backlogs
+421	8	Product Backlogs
+422	1	Proposals
+423	6	Company Operations
+424	1	Company Operations
+425	20	Company Operations
+426	17	Company Operations
+427	18	Company Operations
+431	7	Product Strategy
+432	8	Product Strategy
+433	9	Product Strategy
+434	20	Product Strategy
+435	18	Product Strategy
+436	1	Product Experiments
+437	4	Product Experiments
+438	7	Product Experiments
+439	6	Product Experiments
+440	8	Product Experiments
+441	9	Product Experiments
 \.
 
 
@@ -758,6 +844,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 
 COPY public.themes (id, user_id, name, tags) FROM stdin;
 4	1	Material Bank	{HTML,CSS,React,"CSS Preprocessors","Front-End Engineering","Executive Engagement","Product Collaboration","Design Collaboration","QA Collaboration",Wireframing,"Responsive Design",Accessibility,"UX Design","Technical Documentation","E2E Testing",Node.js,"Web Analytics","Engineering Collaboration","Back-End Engineering","Computer Science",E-Commerce,"Project Management","Performance Optimization","Technology Tradeoffs","Cross-Browser Compatibility","Startup Environment"}
+9	1	Upwork Product Analyst	{"Product Management","Project Management","Cross-Functional Collaboration","Data Analysis",SQL,Python,Spreadsheets,"Product Development","Data Visualization","Market Research & Analysis","User Research & Analysis","Product Design","Product Dashboards","Product Analytics","Product Roadmaps","Product Backlogs","Performance Optimization","Company Operations","Product Strategy","Product Experiments","Stakeholder Engagement"}
 3	1	Raft	{HTML,CSS,React,Javascript,Typescript,D3.js,"UX Research","UX Design","Responsive Design","Cloud-Native Environment","Gradle Dependency Manager","NPM Package Manager","Yarn Package Manager","Secret Clearance","Map-Based UIs",Java,Python,Go,"Customer-Obsessed Mindset","Public-Sector Modernization",Microservices,"Streaming Tools",STEM,"UX Education"}
 \.
 
@@ -766,8 +853,8 @@ COPY public.themes (id, user_id, name, tags) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, hashed_password, current_session, name, username) FROM stdin;
-1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Robert Stark	bob.stark
+COPY public.users (id, email, hashed_password, current_session, name, username, location, phone) FROM stdin;
+1	bobness@gmail.com	2a9d119df47ff993b662a8ef36f9ea20	4c393d3e-288b-4155-a9fd-d77b58c49547	Robert Stark	bob.stark	Grand Rapids, MI	510-882-3319
 \.
 
 
@@ -782,7 +869,7 @@ SELECT pg_catalog.setval('public.experiences_id_seq', 21, true);
 -- Name: facts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.facts_id_seq', 8, true);
+SELECT pg_catalog.setval('public.facts_id_seq', 11, true);
 
 
 --
@@ -810,14 +897,14 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 354, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 441, true);
 
 
 --
 -- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.themes_id_seq', 4, true);
+SELECT pg_catalog.setval('public.themes_id_seq', 9, true);
 
 
 --
@@ -954,6 +1041,13 @@ CREATE INDEX ix_users_email ON public.users USING btree (email);
 --
 
 CREATE INDEX ix_users_username ON public.users USING btree (username);
+
+
+--
+-- Name: u_eid_value; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX u_eid_value ON public.tags USING btree (experience_id, value);
 
 
 --

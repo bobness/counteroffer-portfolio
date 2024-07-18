@@ -20,15 +20,23 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
     return "";
   }, [data?.enddate]);
 
+  const filteredTags = useMemo(() => {
+    if (selectedTags) {
+      return data.tags.filter((tag) => selectedTags?.includes(tag.value));
+    } else {
+      return data.tags;
+    }
+  }, []);
+
   return (
-    <div style={{ display: "inline-block" }}>
+    <div style={{ display: "block" }}>
       <h3>{data.title}</h3>
       <h4>{data.company}</h4>
       {startDate} - {endDate}
       <div className="summary">{data.summary}</div>
       <div>
         <ul className="tag-list">
-          {data.tags
+          {filteredTags
             .sort((a: Tag, b: Tag) => {
               if (b.value < a.value) {
                 return 1;
@@ -39,14 +47,7 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
               return 0;
             })
             .map((tag, i) => (
-              <li
-                className={
-                  selectedTags?.includes(tag.value)
-                    ? "tag-item danger"
-                    : "tag-item"
-                }
-                key={`tag ${data.id} - ${i}`}
-              >
+              <li className={"tag-item"} key={`tag ${data.id} - ${i}`}>
                 {tag.value}
               </li>
             ))}

@@ -75,16 +75,23 @@ const Portfolio = () => {
   const histogramHeight = "80vh";
 
   if (portfolio) {
-    const genericFacts = portfolio.facts.filter((fact) => !fact.theme_id);
-    const themeFacts = portfolio.facts.filter(
-      (fact) => fact.theme_id === currentThemeObject?.id
-    );
+    // const genericFacts = portfolio.facts.filter((fact) => !fact.theme_id);
+    // const themeFacts = portfolio.facts.filter(
+    //   (fact) => fact.theme_id === currentThemeObject?.id
+    // );
     return (
       <div style={{ margin: "50px" }}>
         <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
-        <div id="facts">
+        <p style={{ textAlign: "center" }}>
+          {portfolio.location} ·{" "}
+          <a href="mailto:${portfolio.email}" target="_blank">
+            {portfolio.email}
+          </a>{" "}
+          · ${portfolio.phone}
+        </p>
+        {/* <div id="facts">
           <Facts data={[...genericFacts, ...themeFacts]} />
-        </div>
+        </div> */}
         <h2>
           {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
         </h2>
@@ -126,6 +133,15 @@ const Portfolio = () => {
             ))}
           </div>
           <div key="Material Bank">
+            {filteredExperiences.map((exp, i) => (
+              <ExperienceRow
+                data={exp}
+                key={`ExperienceRow #${i}`}
+                selectedTags={currentThemeObject?.tags}
+              />
+            ))}
+          </div>
+          <div key="Upwork Product Analyst">
             {filteredExperiences.map((exp, i) => (
               <ExperienceRow
                 data={exp}
