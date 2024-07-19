@@ -33,6 +33,7 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
       <h3>{data.title}</h3>
       <h4>{data.company}</h4>
       {startDate} - {endDate}
+      {/* TODO: remove wrapping within words */}
       <div className="summary">{data.summary}</div>
       <div>
         <ul className="tag-list">
