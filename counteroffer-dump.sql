@@ -495,8 +495,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 96	16	Machine Learning
 97	11	Machine Learning
 103	8	Data Science
-104	9	Product Lead
-105	4	Product Lead
 106	16	SciKit-Learn
 107	16	NumPy
 108	16	Python
@@ -551,7 +549,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 143	7	Product Design
 185	3	Product Design
 32	6	D3.js
-16	4	Product Roadmaps
 174	1	Cloud-Native Environment
 175	1	Gradle Dependency Manager
 176	1	Yarn Package Manager
@@ -577,14 +574,15 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 137	7	Node.js
 178	1	Stakeholder Engagement
 189	3	Stakeholder Engagement
-24	6	User Research & Analysis
-25	1	User Research & Analysis
-49	8	User Research & Analysis
-50	9	User Research & Analysis
-73	10	User Research & Analysis
-93	14	User Research & Analysis
-101	4	User Research & Analysis
-91	1	Product Roadmaps
+24	6	User/Customer Research
+25	1	User/Customer Research
+49	8	User/Customer Research
+50	9	User/Customer Research
+73	10	User/Customer Research
+93	14	User/Customer Research
+101	4	User/Customer Research
+16	4	Product Roadmapping
+91	1	Product Roadmapping
 127	4	AngularJS
 129	4	Data Visualization
 130	4	Javascript
@@ -666,8 +664,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 274	10	Product Collaboration
 275	9	Product Collaboration
 276	15	Product Collaboration
-277	13	Product Collaboration
-278	14	Product Collaboration
 279	4	Design Collaboration
 280	6	Design Collaboration
 281	7	Design Collaboration
@@ -697,7 +693,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 311	17	Back-End Engineering
 312	18	Back-End Engineering
 313	21	Computer Science
-314	12	Computer Science
 315	12	Management Science
 316	12	Psychology
 317	15	E-Commerce
@@ -720,7 +715,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 332	7	Prototyping
 333	21	Prototyping
 334	20	Prototyping
-335	17	Prototyping
 336	18	Prototyping
 256	4	CSS Preprocessors
 337	1	Technology Tradeoffs
@@ -731,8 +725,8 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 342	20	Technology Tradeoffs
 343	17	Technology Tradeoffs
 344	18	Technology Tradeoffs
-330	3	Performance Optimization
-331	4	Performance Optimization
+405	1	Market Research
+409	4	Market Research
 345	18	Cross-Browser Compatibility
 346	17	Cross-Browser Compatibility
 347	20	Cross-Browser Compatibility
@@ -799,20 +793,8 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 402	20	Product Development
 403	18	Product Development
 404	1	Data Visualization
-405	1	Market Research & Analysis
-406	20	Market Research & Analysis
-407	17	Market Research & Analysis
-408	18	Market Research & Analysis
-409	4	Market Research & Analysis
-410	8	Market Research & Analysis
-411	9	Market Research & Analysis
-125	2	User Research & Analysis
-141	7	User Research & Analysis
 412	6	Product Dashboards & Reports
 413	7	Product Dashboards & Reports
-414	7	Product Roadmaps
-415	8	Product Roadmaps
-416	9	Product Roadmaps
 417	1	Product Backlogs
 418	3	Product Backlogs
 419	4	Product Backlogs
@@ -835,6 +817,43 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 439	6	Product Experiments
 440	8	Product Experiments
 441	9	Product Experiments
+330	3	Product Performance Optimization
+331	4	Product Performance Optimization
+125	2	User/Customer Research
+141	7	User/Customer Research
+410	8	Market Research
+411	9	Market Research
+442	1	Artificial Intelligence
+443	4	Artificial Intelligence
+444	16	Artificial Intelligence
+445	9	Artificial Intelligence
+446	10	Artificial Intelligence
+447	12	Artificial Intelligence
+448	21	Artificial Intelligence
+454	21	Machine Learning
+414	7	Product Roadmapping
+415	8	Product Roadmapping
+416	9	Product Roadmapping
+455	3	Agile Methodology
+456	4	Agile Methodology
+457	1	Solution Design
+458	3	Solution Design
+459	4	Solution Design
+460	7	Solution Design
+461	8	Solution Design
+462	1	Go-To-Market Strategizing
+463	7	Go-To-Market Strategizing
+464	8	Go-To-Market Strategizing
+465	11	Artificial Intelligence
+466	10	Generative AI
+467	12	Generative AI
+468	1	Generative AI
+469	4	Generative AI
+470	16	Generative AI
+471	1	Product Launch
+472	4	Product Launch
+473	7	Product Launch
+474	8	Product Launch
 \.
 
 
@@ -843,8 +862,9 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 --
 
 COPY public.themes (id, user_id, name, tags) FROM stdin;
+12	1	AI Product	{"Product Management","Artificial Intelligence","Machine Learning","Stakeholder Engagement","User/Customer Research","Product Strategy","Market Research","Product Roadmapping","Cross-Functional Collaboration","Executive Engagement","Startup Environment","Team Lead","Computer Science",STEM,"Technical Documentation","Agile Methodology","Solution Design","Product Performance Optimization","Product Development","Go-To-Market Strategizing","Project Management",Prototyping,"Product Experiments","Product Collaboration","Engineering Collaboration","Generative AI","Product Launch"}
+13	1	Product Management	{"Product Management","Project Management","Cross-Functional Collaboration","Stakeholder Engagement","Data Analysis",SQL,Python,Spreadsheets,"Product Development","Data Visualization","Market Research","Solution Design","User/Customer Research","Product Analytics","Product Roadmapping","Product Performance Optimization","Company Operations","Product Strategy","Product Experiments"}
 4	1	Material Bank	{HTML,CSS,React,"CSS Preprocessors","Front-End Engineering","Executive Engagement","Product Collaboration","Design Collaboration","QA Collaboration",Wireframing,"Responsive Design",Accessibility,"UX Design","Technical Documentation","E2E Testing",Node.js,"Web Analytics","Engineering Collaboration","Back-End Engineering","Computer Science",E-Commerce,"Project Management","Performance Optimization","Technology Tradeoffs","Cross-Browser Compatibility","Startup Environment"}
-9	1	Upwork Product Analyst	{"Product Management","Project Management","Cross-Functional Collaboration","Data Analysis",SQL,Python,Spreadsheets,"Product Development","Data Visualization","Market Research & Analysis","User Research & Analysis","Product Design","Product Dashboards","Product Analytics","Product Roadmaps","Product Backlogs","Performance Optimization","Company Operations","Product Strategy","Product Experiments","Stakeholder Engagement"}
 3	1	Raft	{HTML,CSS,React,Javascript,Typescript,D3.js,"UX Research","UX Design","Responsive Design","Cloud-Native Environment","Gradle Dependency Manager","NPM Package Manager","Yarn Package Manager","Secret Clearance","Map-Based UIs",Java,Python,Go,"Customer-Obsessed Mindset","Public-Sector Modernization",Microservices,"Streaming Tools",STEM,"UX Education"}
 \.
 
@@ -897,14 +917,14 @@ SELECT pg_catalog.setval('public.questions_id_seq', 4, true);
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tags_id_seq', 441, true);
+SELECT pg_catalog.setval('public.tags_id_seq', 474, true);
 
 
 --
 -- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.themes_id_seq', 9, true);
+SELECT pg_catalog.setval('public.themes_id_seq', 13, true);
 
 
 --
