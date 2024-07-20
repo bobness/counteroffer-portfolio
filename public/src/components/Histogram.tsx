@@ -64,21 +64,8 @@ const Histogram = ({
 
   return (
     <>
-      <div
-        id="histogram_container"
-        style={{
-          display: "inline-block",
-          width: "100%",
-          height: "200px",
-          overflowY: "scroll",
-          border: "1px black solid",
-          borderRadius: "5px",
-        }}
-      >
-        <div
-          id="histogram_header"
-          style={{ textAlign: "center", padding: "5px" }}
-        >
+      <div id="histogram_container">
+        <div id="histogram_header">
           <strong style={{ float: "left" }}>
             Click one or more bars to filter the experiences below
           </strong>
