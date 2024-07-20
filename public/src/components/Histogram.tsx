@@ -64,26 +64,8 @@ const Histogram = ({
 
   return (
     <>
-      <style>{`@media print { 
-        #histogram_header { display: none; }
-        .tagBar { 
-          min-height: 15px !important;
-          color: white !important;
-          background-color: #337ab7 !important;
-          print-color-adjust: exact;
-        }
-        .danger {
-          background-color: #dc3545 !important;
-          print-color-adjust: exact;
-        }
-        #container {
-          height: auto !important;
-        }
-        ${printStyle}
-      }
-      `}</style>
       <div
-        id="container"
+        id="histogram_container"
         style={{
           display: "inline-block",
           width: "100%",
@@ -141,7 +123,7 @@ const Histogram = ({
                     cursor: "pointer",
                   }}
                   className={
-                    "tagBar " + (selectedTag === tc.name ? "danger" : "")
+                    "histogram-tag " + (selectedTag === tc.name ? "danger" : "")
                   }
                   onClick={() => {
                     if (selectedTag === tc.name) {

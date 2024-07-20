@@ -17,13 +17,37 @@
           print-color-adjust: exact;
         }
 
-        /* #facts {
-          display: none !important;
-        } */
-      }
+        .hideFromPrint {
+          display: none;
+        }
 
-      body {
-        margin: 50px;
+        #content {
+          width: 100% !important;
+          float: none;
+        }
+
+        #histogram_header {
+          display: none;
+        }
+
+        .histogram-tag {
+          color: white !important;
+          background-color: #337ab7 !important;
+          print-color-adjust: exact;
+        }
+
+        .danger {
+          background-color: #dc3545 !important;
+          print-color-adjust: exact;
+        }
+
+        #histogram_container {
+          height: auto !important;
+        }
+
+        #histogram-container {
+          max-height: 80vh !important;
+        }
       }
 
       h1 {
@@ -36,11 +60,49 @@
         margin-top: 10px;
       }
 
-      .tagBar {
-        background-color: #337ab7;
+      #root {
+        position: absolute;
       }
 
-      .tagBar.danger {
+      #nav {
+        float: left;
+        width: 200px;
+        border-right: 2px black dotted;
+        text-align: center;
+        height: 100%;
+        position: fixed;
+      }
+
+      #nav ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #nav ul li {
+        padding: 10px;
+        border-top: 2px black dotted;
+      }
+
+      #nav ul li.active {
+        background-color: #999;
+      }
+
+      #nav ul li:last-child {
+        border-bottom: 2px black dotted;
+      }
+
+      #content {
+        margin: 50px;
+        float: right;
+        width: calc(100% - 300px);
+      }
+
+      .histogram-tag {
+        background-color: #337ab7;
+        min-height: 15px;
+      }
+
+      .histogram-tag.danger {
         background-color: #d9534f;
       }
 
@@ -110,17 +172,6 @@
       .togglePrint label {
         margin: 0;
         padding: 5px;
-      }
-
-      @media print {
-        #navLinks,
-        smcx-widget {
-          display: none !important;
-        }
-
-        .hideFromPrint {
-          display: none;
-        }
       }
     </style>
 
