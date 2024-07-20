@@ -10,14 +10,25 @@ export interface Tag {
   value: string;
 }
 
+export interface Publication {
+  id: number;
+  user_id: number;
+  experience_id: number;
+  title: string;
+  venue: string;
+  date: string;
+  link?: string;
+}
+
 export interface Experience {
   id: number;
   title: string;
   company: string;
-  startdate: Date;
-  enddate?: Date;
+  startdate: string;
+  enddate?: string;
   summary: string;
   tags: Tag[];
+  publications: Publication[];
 }
 
 export interface Theme {
@@ -30,7 +41,9 @@ export interface Theme {
 export interface Portfolio {
   name: string;
   facts: Fact[];
-  experiences: Experience[];
+  professionalExperiences: Experience[];
+  education: Experience[];
+  publications: Publication[];
   themes: Theme[];
   email: string;
   location: string;

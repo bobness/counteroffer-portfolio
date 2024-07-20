@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useLocationHash from "../hooks/useLocationHash";
 import usePortfolio from "../hooks/usePortfolio";
 import ExperienceRow from "./ExperienceRow";
@@ -6,8 +6,13 @@ import Facts from "./Facts";
 import Histogram from "./Histogram";
 import Navigation from "./Navigation";
 import Survey from "./Survey";
+import { Publication } from "../types";
 
 const CURRENT_THEME_KEY = "current_theme";
+
+interface YearsObject {
+  [key: number]: Publication[];
+}
 
 const Portfolio = () => {
   const currentThemeNameFromStorage = sessionStorage.getItem(CURRENT_THEME_KEY);
@@ -41,17 +46,21 @@ const Portfolio = () => {
   }, [portfolio?.themes, currentThemeName]);
 
   const themedExperiences = useMemo(() => {
-    if (currentThemeName && portfolio?.experiences) {
-      return portfolio.experiences.filter((exp) =>
+    if (currentThemeName && portfolio?.professionalExperiences) {
+      return portfolio.professionalExperiences.filter((exp) =>
         currentThemeObject?.tags.some((tag) =>
           exp.tags.map((t) => t.value).includes(tag)
         )
       );
     }
-  }, [currentThemeName, currentThemeObject, portfolio?.experiences]);
+  }, [
+    currentThemeName,
+    currentThemeObject,
+    portfolio?.professionalExperiences,
+  ]);
 
   const filteredExperiences = useMemo(() => {
-    let experiences = portfolio?.experiences;
+    let experiences = portfolio?.professionalExperiences;
     if (currentThemeObject) {
       experiences = themedExperiences;
     }
@@ -66,10 +75,38 @@ const Portfolio = () => {
     return [];
   }, [
     themedExperiences,
-    portfolio?.experiences,
+    portfolio?.professionalExperiences,
     currentThemeObject,
     tagFilter,
   ]);
+
+  // const goToPublication = useCallback((expId: number) => {
+  //   const publications = portfolio?.publications.filter(
+  //     (pub) => pub.experience_id === expId
+  //   );
+  //   if (publications) {
+  //     const lastPublication = publications.sort(
+  //       (a, b) => a.date.getTime() - b.date.getTime()
+  //     )[0];
+  //     document
+  //       .getElementById(`Publication #${lastPublication.id}`)
+  //       ?.scrollIntoView();
+  //   }
+  // }, []);
+
+  const publicationYears = useMemo(() => {
+    if (portfolio?.publications && portfolio.publications.length > 0) {
+      return portfolio.publications.reduce((yearsObject, pub) => {
+        const pubYear = new Date(pub.date).getFullYear();
+        if (!(pubYear in yearsObject)) {
+          yearsObject[pubYear] = [];
+        }
+        yearsObject[pubYear].push(pub);
+        return yearsObject;
+      }, {} as YearsObject);
+    }
+    return [];
+  }, [portfolio?.publications]);
 
   if (portfolio) {
     // const genericFacts = portfolio.facts.filter((fact) => !fact.theme_id);
@@ -83,42 +120,22 @@ const Portfolio = () => {
             <input
               type="checkbox"
               onChange={(event) => {
-                const tagLists = Array.from(
-                  document.getElementsByClassName("tag-list")
-                );
-                const educationExpxeriences = Array.from(
-                  document.querySelectorAll<HTMLElement>("h4")
-                ).filter((element) =>
-                  element.innerText.toLocaleLowerCase().includes("university")
-                );
                 if (event.target.checked) {
-                  tagLists.forEach(
-                    (element) =>
-                      // element.classList.add("hideFromPrint")
-                      ((element as HTMLElement).style.display = "none")
-                  );
-                  educationExpxeriences.forEach((element) => {
-                    // element.parentElement?.classList.add("hideFromPrint");
-                    if (element.parentElement) {
-                      element.parentElement.style.display = "none";
-                    }
+                  Array.from(
+                    document.getElementsByClassName("tag-list")
+                  ).forEach((tagList) => {
+                    tagList.classList.add("hideFromPrint");
                   });
                 } else {
-                  tagLists.forEach(
-                    (element) =>
-                      // element.classList.remove("hideFromPrint")
-                      ((element as HTMLElement).style.display = "block")
-                  );
-                  educationExpxeriences.forEach((element) => {
-                    // element.parentElement?.classList.remove("hideFromPrint");
-                    if (element.parentElement) {
-                      element.parentElement.style.display = "block";
-                    }
+                  Array.from(
+                    document.getElementsByClassName("tag-list")
+                  ).forEach((tagList) => {
+                    tagList.classList.remove("hideFromPrint");
                   });
                 }
               }}
             />{" "}
-            Print resume: hide tags & remove education
+            Print: remove tags from experiences
           </p>
           <Navigation
             items={navigationItems}
@@ -137,7 +154,9 @@ const Portfolio = () => {
           <Facts data={[...genericFacts, ...themeFacts]} />
         </div> */}
           <h2>
-            {currentThemeObject ? "Skills from the Job Listing" : "My Skills"}
+            {currentThemeObject
+              ? `Skills from the ${currentThemeObject.name} Job Listing`
+              : "My Skills"}
           </h2>
           <Histogram
             experiences={
@@ -159,7 +178,42 @@ const Portfolio = () => {
               data={exp}
               key={`ExperienceRow #${i}`}
               selectedTags={currentThemeObject?.tags}
+              // onPublicationClick={goToPublication}
             />
+          ))}
+          <h2>Education</h2>
+          {portfolio.education.map((edu, i) => (
+            <ExperienceRow
+              data={edu}
+              key={`EducationRow #${i}`}
+              selectedTags={currentThemeObject?.tags}
+              // onPublicationClick={goToPublication}
+            />
+          ))}
+          <h2>Publications</h2>
+          {Object.keys(publicationYears).map((pubYear) => (
+            <>
+              <h3>{pubYear}</h3>
+              <ul>
+                {portfolio.publications
+                  .filter(
+                    (pub) =>
+                      new Date(pub.date).getFullYear() === parseInt(pubYear)
+                  )
+                  .map((pub, i) => (
+                    <li>
+                      <a
+                        href={pub.link}
+                        target="_blank"
+                        id={`Publication #${pub.id}`}
+                      >
+                        {pub.title}
+                      </a>{" "}
+                      - {pub.venue}
+                    </li>
+                  ))}
+              </ul>
+            </>
           ))}
         </div>
       </>

@@ -4,9 +4,10 @@ import { Experience, Tag } from "../types";
 interface Props {
   data: Experience;
   selectedTags?: string[];
+  onPublicationClick?: (expId: number) => void;
 }
 
-const ExperienceRow = ({ data, selectedTags }: Props) => {
+const ExperienceRow = ({ data, selectedTags, onPublicationClick }: Props) => {
   const startDate = useMemo(() => {
     const date = new Date(data.startdate);
     return date.toLocaleDateString("en-US");
@@ -21,19 +22,40 @@ const ExperienceRow = ({ data, selectedTags }: Props) => {
   }, [data?.enddate]);
 
   const filteredTags = useMemo(() => {
-    if (selectedTags) {
-      return data.tags.filter((tag) => selectedTags?.includes(tag.value));
+    if ("tags" in data) {
+      if (selectedTags) {
+        return data.tags.filter((tag) => selectedTags?.includes(tag.value));
+      } else {
+        return data.tags;
+      }
     } else {
-      return data.tags;
+      return [];
     }
   }, []);
 
+  const dateFormat = { month: "long" as const, year: "numeric" as const };
+
   return (
     <div style={{ display: "block" }}>
-      <h3>{data.title}</h3>
+      <h3>
+        {data.title}
+        {data.publications.length > 0 && (
+          <span style={{ float: "right" }} className="tag-item">
+            {onPublicationClick && (
+              <a
+                onClick={(event) => onPublicationClick(data.id)}
+                style={{ cursor: "pointer" }}
+              >
+                {data.publications.length}
+              </a>
+            )}
+            {!onPublicationClick && data.publications.length} Publications
+          </span>
+        )}
+      </h3>
       <h4>{data.company}</h4>
-      {startDate} - {endDate}
-      {/* TODO: remove wrapping within words */}
+      {new Date(startDate).toLocaleDateString("en-US", dateFormat)} -{" "}
+      {endDate ? new Date(endDate).toLocaleDateString("en-US", dateFormat) : ""}
       <div className="summary">{data.summary}</div>
       <div>
         <ul className="tag-list">

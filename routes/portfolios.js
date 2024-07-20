@@ -9,6 +9,14 @@ const getTagsForExperience = (req, experience_id) =>
     })
     .then((response) => response.rows);
 
+const getPubsForExperience = (req, experience_id) =>
+  req.client
+    .query({
+      text: "select * from publications where experience_id = $1::integer order by date asc",
+      values: [Number(experience_id)],
+    })
+    .then((response) => response.rows);
+
 router.get("/:username", async (req, res, next) => {
   const username = req.params.username;
   const userResult = await req.client.query({
@@ -25,17 +33,28 @@ router.get("/:username", async (req, res, next) => {
     const facts = factsResult.rows;
     const experiencesResult = await req.client.query({
       text: `select * from experiences 
-      where user_id = $1::integer 
+      where user_id = $1::integer
       order by enddate desc, startdate desc`,
       values: [userId],
     });
-    const experiences = experiencesResult.rows;
+    let experiences = experiencesResult.rows;
     await Promise.all(
       experiences.map(async (e) => {
-        const tags = await getTagsForExperience(req, e.id);
-        e.tags = tags;
+        e.tags = await getTagsForExperience(req, e.id);
+        e.publications = await getPubsForExperience(req, e.id);
       })
     );
+    const education = experiences.filter((exp) => exp.is_education);
+    const lastEducation = education.sort((a, b) => a.enddate - b.endddate)[0];
+    const professionalExperiences = experiences
+      .filter((exp) => !exp.is_education)
+      .filter((exp) => exp.startdate >= lastEducation.startdate);
+    const publications = await req.client
+      .query({
+        text: "select * from publications where user_id = $1::integer",
+        values: [userId],
+      })
+      .then((response) => response.rows);
     const themesResult = await req.client.query({
       text: "select * from themes where user_id = $1::integer",
       values: [userId],
@@ -48,7 +67,9 @@ router.get("/:username", async (req, res, next) => {
       location: user.location,
       phone: user.phone,
       facts,
-      experiences,
+      professionalExperiences,
+      education,
+      publications,
       themes,
     });
   } else {

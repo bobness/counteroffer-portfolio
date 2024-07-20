@@ -14,7 +14,7 @@ interface Props {
   printStyle?: string;
 }
 
-export const EXPERIENCE_YEAR_HEIGHT = 3;
+export const EXPERIENCE_YEAR_HEIGHT = 2;
 
 const Histogram = ({
   experiences,
@@ -84,7 +84,7 @@ const Histogram = ({
             ></span>
           </div>
         </div>
-        <div style={{ clear: "both" }}>
+        <div style={{ clear: "both", fontSize: "12px" }}>
           {tagCounts
             .filter((tc) =>
               tc.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
@@ -95,12 +95,11 @@ const Histogram = ({
                   display: "inline-block",
                   width: "80px",
                   verticalAlign: "bottom",
-                  margin: "5px",
-                  fontSize: "smaller",
+                  margin: "0 5px",
                 }}
                 key={`histogram span for ${tc.name}`}
               >
-                <div>{tc.name}</div>
+                <div style={{ textAlign: "center" }}>{tc.name}</div>
                 <div
                   style={{
                     color: "white",

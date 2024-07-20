@@ -31,7 +31,8 @@ CREATE TABLE public.experiences (
     company text NOT NULL,
     startdate date NOT NULL,
     enddate date,
-    summary text
+    summary text,
+    is_education boolean DEFAULT false
 );
 
 
@@ -169,6 +170,45 @@ ALTER TABLE public.messages_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
+
+
+--
+-- Name: publications; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.publications (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    title text NOT NULL,
+    venue text NOT NULL,
+    link text,
+    experience_id integer NOT NULL,
+    date date NOT NULL
+);
+
+
+ALTER TABLE public.publications OWNER TO postgres;
+
+--
+-- Name: publications_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.publications_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.publications_id_seq OWNER TO postgres;
+
+--
+-- Name: publications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.publications_id_seq OWNED BY public.publications.id;
 
 
 --
@@ -340,6 +380,13 @@ ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.mes
 
 
 --
+-- Name: publications id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publications ALTER COLUMN id SET DEFAULT nextval('public.publications_id_seq'::regclass);
+
+
+--
 -- Name: questions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -364,25 +411,25 @@ ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.theme
 -- Data for Name: experiences; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.experiences (id, user_id, title, company, startdate, enddate, summary) FROM stdin;
-12	1	MS in Information Science	Pennsylvania State University	2007-09-01	2010-05-01	● Relevant Classes: Pattern Recognition, Human-Computer Interaction, Information Management, Organizational Informatics.\n● Research: Decision tree induction machine learning using R.\n● Thesis: Hand gesture recognition using machine learning for immersive training systems in Java.\n● Honors: Jordan H. Rednor Graduate Fellowship.
-11	1	Data Scientist (Graduate Intern)	ScanScout	2008-05-01	2008-08-01	● Analyzed behavioral data mining system to optimize video ad placement (in R)\n● Developed optimizer evaluation system using statistical significance measures (in R embedded in LaTeX)
-13	1	Software Engineering Team Lead (Intern)	IBM	2007-05-01	2007-08-01	● Led team that developed a web renderer for IBM’s XML dialect for user interfaces (Abstract User Interface Markup Language, AUIML)
-9	1	Government R&D Scientist & Project Lead	Charles River Analytics	2010-10-01	2013-03-01	● Technical lead for over 5 government R&D projects involving data visualizations and machine learning.\n● Published peer-reviewed research papers project outcomes.\n● Managed the development and maintenance of a Bayesian network machine learning toolkit.
-10	1	Government R&D Engineer	BBN Technologies	2008-08-01	2010-10-01	● Developed & user-tested gesture recognition system using hidden Markov Models (Java, Matlab)\n● Designed & developed a distributed natural language processing pipeline (Python)\n● Developed a web app for team collaboration (ASP/C# .NET, HTML, CSS, JS)
-3	1	Lead Frontend Engineer	Tanium	2016-08-01	2018-06-01	● Led the frontend engineering team for the core administrative product, working with design.\n● Managed SOAP-based backend request flow to optimize tech stack performance.\n● Provided expert guidance through code reviews, ensuring alignment with project goals.\n● Implemented CI/CD practices and and Agile methodology to enhance development efficiency.
-4	1	Lead UX Engineer & Product Manager	Driven Inc.	2015-07-01	2016-08-01	● Led frontend engineering team and supported backend development to boost system performance, utilizing Agile methodology.\n● Enhanced user experience through user research, product analytics, and intuitive feature flows.\n● Directed a strategic pivot targeting cluster operators/administrators, collaborating with sales, marketing, and executives.
-14	1	Software Engineering Team Lead (Intern)	IBM	2005-01-01	2005-08-01	● Started out developing software with SQL-embedded C using IBM’s DB2 database system\n● Was promoted to lead a summer team to create a tool to aid bug-fixing these applications\n● Interviewed developer “customers” to determine their software development habits and needs
-21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	● Relevant Classes: Discrete Structures, Data Structures, Intro to Operating Systems, Object-Oriented Design, Advanced Artificial Intelligence, Real Analysis, Regression Analysis.\n● Research: Temporal data mining for computer architecture simulation results; machine learning for “expert” Go playing data; evolutionary algorithms for relational database optimization.\n● Activities: Workshop on Data Visualization and its Role in the Practice of Statistics, Phi Kappa Phi Honor Society, Upsilon Pi Epsilon Honor Society chapter president.\n● Honors: Upsilon Pi Epsilon Honor Society Jim Nolen Scholarship, Mathematics Department Certificate of Merit, Board of Controls Merit Scholarship.
-16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	● Tutored students on descriptive and inferential statistics—data analysis, and machine learning models (linear and logistic regression, k-nearest neighbors, decision trees/random forests, latent dirichlet allocation/LDA, and time series autocorrelation).\n● Mastered Python technologies (SK Learn, NumPy, Pandas, iPython/Jupyter Notebook).
-18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	● A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE).
-15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	● Worked part-time (full-time in summers) while in high school and early college.\n● Created an ERP system that tracked all aspects of the business, including printing inventory, purchase orders, and payments.\n● Implemented with FileMaker Pro database and later hooked up to a custom PHP ecommerce website so customers could place orders in the system.
-7	1	Lead UX Engineer	Collusion	2013-12-01	2014-11-01	● Led frontend team and supported middle-tier and back-end development to ensure a high-performing application stack.\n● Deployed a responsive web interface to complement the iOS app, ensuring cross-platform compatibility.
-6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	● Assisted user research of and solutions to clients’ problems.\n● Led the development of front-end prototypes with Javascript (D3.js) data visualizations.\n● Developed comprehensive dashboards integrating user research data, feature roadmaps, and evaluation results for product managers and startup founders.
-8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.
-20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
-17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
-1	1	Research Scientist & Entrepreneur	Datagotchi Labs	2018-01-01	\N	Incubating an R&D firm to “empower people with information” in underserved market segments\n\n● Inspect: Enabling sharing important, reliable online news on social media\n  · Interviewed prospective users to determine their news consumption habits and needs\n  · Implemented a mobile app to empower users to share news summaries online\n  · Ran an MVP test with friends and families to verify their use of the mobile app versus my\nexpectations and used the results to improve it\n  · Researched and designed a readership AI analytics service for news organizations\n\n● Counteroffer: Enhancing online candidate-job fit by visualizing skills and matches to job listings\n  · Interviewed prospective users to determine their job application processes and needs\n  · Developed a skill visualization web app to for job candidates to illustrate their fit for jobs\n  · Ran an MVP test with real recruiters who contacted me online to test the perceived value\nof my skill-based resume versus their expectations and used the results to improve it\n  · Researched and designed a candidate AI analytics service for recruiters and employers
+COPY public.experiences (id, user_id, title, company, startdate, enddate, summary, is_education) FROM stdin;
+11	1	Data Scientist (Graduate Intern)	ScanScout	2008-05-01	2008-08-01	● Analyzed behavioral data mining system to optimize video ad placement (in R)\n● Developed optimizer evaluation system using statistical significance measures (in R embedded in LaTeX)	f
+12	1	MS in Information Science	Pennsylvania State University	2007-09-01	2010-05-01	● Relevant Classes: Pattern Recognition, Human-Computer Interaction, Information Management, Organizational Informatics.\n● Research: Decision tree induction machine learning using R.\n● Thesis: Hand gesture recognition using machine learning for immersive training systems in Java.\n● Honors: Jordan H. Rednor Graduate Fellowship.	t
+13	1	Software Engineering Team Lead (Intern)	IBM	2007-05-01	2007-08-01	● Led team that developed a web renderer for IBM’s XML dialect for user interfaces (Abstract User Interface Markup Language, AUIML)	f
+9	1	Government R&D Scientist & Project Lead	Charles River Analytics	2010-10-01	2013-03-01	● Technical lead for over 5 government R&D projects involving data visualizations and machine learning.\n● Published peer-reviewed research papers project outcomes.\n● Managed the development and maintenance of a Bayesian network machine learning toolkit.	f
+10	1	Government R&D Engineer	BBN Technologies	2008-08-01	2010-10-01	● Developed & user-tested gesture recognition system using hidden Markov Models (Java, Matlab)\n● Designed & developed a distributed natural language processing pipeline (Python)\n● Developed a web app for team collaboration (ASP/C# .NET, HTML, CSS, JS)	f
+3	1	Lead Frontend Engineer	Tanium	2016-08-01	2018-06-01	● Led the frontend engineering team for the core administrative product, working with design.\n● Managed SOAP-based backend request flow to optimize tech stack performance.\n● Provided expert guidance through code reviews, ensuring alignment with project goals.\n● Implemented CI/CD practices and and Agile methodology to enhance development efficiency.	f
+4	1	Lead UX Engineer & Product Manager	Driven Inc.	2015-07-01	2016-08-01	● Led frontend engineering team and supported backend development to boost system performance, utilizing Agile methodology.\n● Enhanced user experience through user research, product analytics, and intuitive feature flows.\n● Directed a strategic pivot targeting cluster operators/administrators, collaborating with sales, marketing, and executives.	f
+14	1	Software Engineering Team Lead (Intern)	IBM	2005-01-01	2005-08-01	● Started out developing software with SQL-embedded C using IBM’s DB2 database system\n● Was promoted to lead a summer team to create a tool to aid bug-fixing these applications\n● Interviewed developer “customers” to determine their software development habits and needs	f
+16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	● Tutored students on descriptive and inferential statistics—data analysis, and machine learning models (linear and logistic regression, k-nearest neighbors, decision trees/random forests, latent dirichlet allocation/LDA, and time series autocorrelation).\n● Mastered Python technologies (SK Learn, NumPy, Pandas, iPython/Jupyter Notebook).	f
+18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	● A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE).	f
+15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	● Worked part-time (full-time in summers) while in high school and early college.\n● Created an ERP system that tracked all aspects of the business, including printing inventory, purchase orders, and payments.\n● Implemented with FileMaker Pro database and later hooked up to a custom PHP ecommerce website so customers could place orders in the system.	f
+7	1	Lead UX Engineer	Collusion	2013-12-01	2014-11-01	● Led frontend team and supported middle-tier and back-end development to ensure a high-performing application stack.\n● Deployed a responsive web interface to complement the iOS app, ensuring cross-platform compatibility.	f
+6	1	Co-Founder & UX Consultant	Social Ergonomics Consulting	2014-11-01	2015-07-01	● Assisted user research of and solutions to clients’ problems.\n● Led the development of front-end prototypes with Javascript (D3.js) data visualizations.\n● Developed comprehensive dashboards integrating user research data, feature roadmaps, and evaluation results for product managers and startup founders.	f
+8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.	f
+20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages	f
+17	1	Founder	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself	f
+1	1	Research Scientist & Entrepreneur	Datagotchi Labs	2018-01-01	\N	Incubating an R&D firm to “empower people with information” in underserved market segments.\n\n● Inspect spinoff: Enabling sharing important, reliable online news on social media.\n  · Interviewed prospective users to determine their news consumption habits and needs.\n  · Designed & developed a mobile app to empower users to share news summaries online & tested it with real users.\n\n● Counteroffer spinoff: Enhancing candidate-job fit by visualizing skills and matches to job listings.\n  · Interviewed prospective users to determine their job application processes and needs.\n  · Designed & developed a skill visualization web app to for job candidates to illustrate their fit for jobs & tested it with real users.	f
+21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	● Relevant Classes: Discrete Structures, Data Structures, Intro to Operating Systems, Object-Oriented Design, Advanced Artificial Intelligence, Real Analysis, Regression Analysis.\n● Research: Temporal data mining for computer architecture simulation results; machine learning for “expert” Go playing data; evolutionary algorithms for relational database optimization.\n● Activities: Workshop on Data Visualization and its Role in the Practice of Statistics, Phi Kappa Phi Honor Society, Upsilon Pi Epsilon Honor Society chapter president.\n● Honors: Upsilon Pi Epsilon Honor Society Jim Nolen Scholarship, Mathematics Department Certificate of Merit, Board of Controls Merit Scholarship.	t
 \.
 
 
@@ -422,6 +469,15 @@ COPY public.messages (id, value, question_id, sender, job_id, datetime) FROM std
 29	asdf	2	bob@datagotchi.net	15	\N
 30	asdf	3	bob@datagotchi.net	15	\N
 31	asdf	4	bob@datagotchi.net	15	\N
+\.
+
+
+--
+-- Data for Name: publications; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.publications (id, user_id, title, venue, link, experience_id, date) FROM stdin;
+1	1	Incrementally Formalizing Graphical Models for Collaborative Operations Research	57th Annual Meetings of the Human Factors and Ergonomics Society (HFES)	https://www.dropbox.com/s/pa9ez2ka76sojku/Stark-et-al-2013%20HFES.pdf?dl=0	9	2013-01-01
 \.
 
 
@@ -703,7 +759,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 322	7	Project Management
 323	8	Project Management
 324	9	Project Management
-327	20	Project Management
 198	4	Stakeholder Engagement
 220	8	Product Design
 294	3	Product Analytics
@@ -744,7 +799,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 357	7	Product Management
 358	8	Product Management
 359	9	Product Management
-360	20	Product Management
 362	3	Cross-Functional Collaboration
 363	4	Cross-Functional Collaboration
 364	6	Cross-Functional Collaboration
@@ -760,7 +814,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 374	8	Data Analysis
 375	9	Data Analysis
 376	10	Data Analysis
-377	20	Data Analysis
 380	1	SQL
 381	3	SQL
 382	4	SQL
@@ -802,7 +855,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 431	7	Product Strategy
 432	8	Product Strategy
 433	9	Product Strategy
-434	20	Product Strategy
 436	1	Product Experiments
 437	4	Product Experiments
 438	7	Product Experiments
@@ -815,7 +867,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 141	7	User/Customer Research
 410	8	Market Research
 411	9	Market Research
-442	1	Artificial Intelligence
 443	4	Artificial Intelligence
 444	16	Artificial Intelligence
 445	9	Artificial Intelligence
@@ -839,7 +890,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 465	11	Artificial Intelligence
 466	10	Generative AI
 467	12	Generative AI
-468	1	Generative AI
 469	4	Generative AI
 470	16	Generative AI
 471	1	Product Launch
@@ -896,6 +946,13 @@ SELECT pg_catalog.setval('public.jobs_id_seq', 15, true);
 --
 
 SELECT pg_catalog.setval('public.messages_id_seq', 31, true);
+
+
+--
+-- Name: publications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.publications_id_seq', 2, true);
 
 
 --

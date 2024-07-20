@@ -16,7 +16,7 @@ export const mockExperiences = [
     title: "experienceTitle",
     company: "experienceCompany",
     summary: "experienceSummary",
-    startdate: oneYearAgo,
+    startdate: oneYearAgo.toLocaleDateString(),
     enddate: undefined,
     tags: [
       {
@@ -24,6 +24,7 @@ export const mockExperiences = [
         value: "experienceTagValue",
       },
     ],
+    publications: [],
   },
 ];
 
