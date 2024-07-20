@@ -382,7 +382,7 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.
 20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages
 17	1	Founder & Developer	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself
-1	1	Self-Employed R&D Scientist and Engineer	Datagotchi Labs	2018-01-01	\N	● Addressing the trustworthy AI problem by comparing Bayesian networks to deep neural networks on output quality, ease of development, and training costs.\n● Enabling sharing of online news summaries with a social app and data analytics to increase reader engagement in a two-sided marketplace solution to the news reliability problem.\n● Improving candidate-job fit with a skill visualization app and data analytics to target candidates in a two-sided marketplace solution to the candidate-recruiter discovery problem.
+1	1	Research Scientist & Entrepreneur	Datagotchi Labs	2018-01-01	\N	Incubating an R&D firm to “empower people with information” in underserved market segments\n\n● Inspect: Enabling sharing important, reliable online news on social media\n  · Interviewed prospective users to determine their news consumption habits and needs\n  · Implemented a mobile app to empower users to share news summaries online\n  · Ran an MVP test with friends and families to verify their use of the mobile app versus my\nexpectations and used the results to improve it\n  · Researched and designed a readership AI analytics service for news organizations\n\n● Counteroffer: Enhancing online candidate-job fit by visualizing skills and matches to job listings\n  · Interviewed prospective users to determine their job application processes and needs\n  · Developed a skill visualization web app to for job candidates to illustrate their fit for jobs\n  · Ran an MVP test with real recruiters who contacted me online to test the perceived value\nof my skill-based resume versus their expectations and used the results to improve it\n  · Researched and designed a candidate AI analytics service for recruiters and employers
 \.
 
 
@@ -703,11 +703,7 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 322	7	Project Management
 323	8	Project Management
 324	9	Project Management
-325	13	Project Management
-326	14	Project Management
 327	20	Project Management
-328	17	Project Management
-329	18	Project Management
 198	4	Stakeholder Engagement
 220	8	Product Design
 294	3	Product Analytics
@@ -749,7 +745,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 358	8	Product Management
 359	9	Product Management
 360	20	Product Management
-361	18	Product Management
 362	3	Cross-Functional Collaboration
 363	4	Cross-Functional Collaboration
 364	6	Cross-Functional Collaboration
@@ -766,8 +761,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 375	9	Data Analysis
 376	10	Data Analysis
 377	20	Data Analysis
-378	17	Data Analysis
-379	18	Data Analysis
 380	1	SQL
 381	3	SQL
 382	4	SQL
@@ -810,7 +803,6 @@ COPY public.tags (id, experience_id, value) FROM stdin;
 432	8	Product Strategy
 433	9	Product Strategy
 434	20	Product Strategy
-435	18	Product Strategy
 436	1	Product Experiments
 437	4	Product Experiments
 438	7	Product Experiments
