@@ -6,6 +6,21 @@
 
     <style>
       @media print {
+        a[href] {
+          color: #337ab7 !important;
+        }
+        a[href]:after {
+          content: none !important;
+        }
+
+        .experience-row {
+          page-break-inside: avoid !important;
+        }
+
+        .publications-link a {
+          color: #fff !important;
+        }
+
         .tag-item {
           color: white !important;
           background-color: #337ab7 !important;

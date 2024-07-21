@@ -36,20 +36,26 @@ const ExperienceRow = ({ data, selectedTags, onPublicationClick }: Props) => {
   const dateFormat = { month: "long" as const, year: "numeric" as const };
 
   return (
-    <div style={{ display: "block" }}>
+    <div style={{ display: "block" }} className="experience-row">
       <h3>
         {data.title}
         {data.publications.length > 0 && (
-          <span style={{ float: "right" }} className="tag-item">
+          <span
+            style={{ float: "right" }}
+            className="publications-link tag-item"
+          >
             {onPublicationClick && (
               <a
                 onClick={(event) => onPublicationClick(data.id)}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  color: "#fff",
+                }}
               >
-                {data.publications.length}
+                {data.publications.length} Publications
               </a>
             )}
-            {!onPublicationClick && data.publications.length} Publications
+            {!onPublicationClick && `${data.publications.length} Publications`}
           </span>
         )}
       </h3>

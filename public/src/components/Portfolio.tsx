@@ -80,19 +80,22 @@ const Portfolio = () => {
     tagFilter,
   ]);
 
-  // const goToPublication = useCallback((expId: number) => {
-  //   const publications = portfolio?.publications.filter(
-  //     (pub) => pub.experience_id === expId
-  //   );
-  //   if (publications) {
-  //     const lastPublication = publications.sort(
-  //       (a, b) => a.date.getTime() - b.date.getTime()
-  //     )[0];
-  //     document
-  //       .getElementById(`Publication #${lastPublication.id}`)
-  //       ?.scrollIntoView();
-  //   }
-  // }, []);
+  const goToPublication = useCallback(
+    (expId: number) => {
+      const publications = portfolio?.publications.filter(
+        (pub) => pub.experience_id === expId
+      );
+      if (publications) {
+        const lastPublication = publications.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0];
+        document
+          .getElementById(`Publication #${lastPublication.id}`)
+          ?.scrollIntoView();
+      }
+    },
+    [portfolio]
+  );
 
   const publicationYears = useMemo(() => {
     if (portfolio?.publications && portfolio.publications.length > 0) {
@@ -148,6 +151,7 @@ const Portfolio = () => {
           <h1 style={{ textAlign: "center" }}>{portfolio.name}</h1>
           <p style={{ textAlign: "center" }}>
             {/*portfolio.location · */}
+            {/* TODO: add portfolio.url */}
             {portfolio.email} · {portfolio.phone}
           </p>
           {/* <div id="facts">
@@ -178,7 +182,7 @@ const Portfolio = () => {
               data={exp}
               key={`ExperienceRow #${i}`}
               selectedTags={currentThemeObject?.tags}
-              // onPublicationClick={goToPublication}
+              onPublicationClick={goToPublication}
             />
           ))}
           <h2>Education</h2>
@@ -187,7 +191,7 @@ const Portfolio = () => {
               data={edu}
               key={`EducationRow #${i}`}
               selectedTags={currentThemeObject?.tags}
-              // onPublicationClick={goToPublication}
+              onPublicationClick={goToPublication}
             />
           ))}
           <h2>Publications</h2>
@@ -202,17 +206,31 @@ const Portfolio = () => {
                     .filter(
                       (pub) => new Date(pub.date).getFullYear() === pubYear
                     )
+                    .sort(
+                      (a, b) =>
+                        new Date(b.date).getTime() - new Date(a.date).getTime()
+                    )
                     .map((pub, i) => (
                       <li>
-                        <a
-                          href={pub.link}
-                          target="_blank"
-                          id={`Publication #${pub.id}`}
-                        >
-                          {pub.title}
-                        </a>
-                        <p style={{ padding: "0 0 0 10" }}>{pub.authors}</p>
-                        <p style={{ padding: "0 0 0 10" }}>{pub.venue}</p>
+                        {pub.link && (
+                          <a
+                            href={pub.link}
+                            target="_blank"
+                            id={`Publication #${pub.id}`}
+                          >
+                            {pub.title}
+                          </a>
+                        )}
+                        {!pub.link && pub.title}
+                        <ul>
+                          <li>{pub.authors}</li>
+                          <li>{pub.venue}</li>
+                          <li>
+                            {new Date(pub.date).toLocaleDateString("en-US", {
+                              month: "long",
+                            })}
+                          </li>
+                        </ul>
                       </li>
                     ))}
                 </ul>

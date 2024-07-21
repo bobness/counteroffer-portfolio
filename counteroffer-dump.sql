@@ -183,7 +183,8 @@ CREATE TABLE public.publications (
     venue text NOT NULL,
     link text,
     experience_id integer NOT NULL,
-    date date NOT NULL
+    date date NOT NULL,
+    authors text
 );
 
 
@@ -420,6 +421,7 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 3	1	Lead Frontend Engineer	Tanium	2016-08-01	2018-06-01	● Led the frontend engineering team for the core administrative product, working with design.\n● Managed SOAP-based backend request flow to optimize tech stack performance.\n● Provided expert guidance through code reviews, ensuring alignment with project goals.\n● Implemented CI/CD practices and and Agile methodology to enhance development efficiency.	f
 4	1	Lead UX Engineer & Product Manager	Driven Inc.	2015-07-01	2016-08-01	● Led frontend engineering team and supported backend development to boost system performance, utilizing Agile methodology.\n● Enhanced user experience through user research, product analytics, and intuitive feature flows.\n● Directed a strategic pivot targeting cluster operators/administrators, collaborating with sales, marketing, and executives.	f
 14	1	Software Engineering Team Lead (Intern)	IBM	2005-01-01	2005-08-01	● Started out developing software with SQL-embedded C using IBM’s DB2 database system\n● Was promoted to lead a summer team to create a tool to aid bug-fixing these applications\n● Interviewed developer “customers” to determine their software development habits and needs	f
+1	1	Research Scientist & Entrepreneur	Datagotchi Labs	2018-01-01	\N	Incubating an R&D firm to “empower people with information” in underserved market segments.\n\n● Inspect: Enabling sharing important, reliable online news on social media.\n  · Interviewed prospective users to determine their news consumption habits and needs.\n  · Designed & developed a mobile app to empower users to share news summaries online & tested it with real users.\n\n● Counteroffer: Enhancing candidate-job fit by visualizing skills and matches to job listings.\n  · Interviewed prospective users to determine their job application processes and needs.\n  · Designed & developed a skill visualization web app to for job candidates to illustrate their fit for jobs & tested it with real users.	f
 16	1	Data Science Teaching Assistant	General Assembly	2016-05-01	2016-07-31	● Tutored students on descriptive and inferential statistics—data analysis, and machine learning models (linear and logistic regression, k-nearest neighbors, decision trees/random forests, latent dirichlet allocation/LDA, and time series autocorrelation).\n● Mastered Python technologies (SK Learn, NumPy, Pandas, iPython/Jupyter Notebook).	f
 18	1	Founder & Developer	Simhack	2002-01-01	2004-01-01	● A massive, multiplayer online game about computer security; written first with PHP with a MySQL database, and later with Java servlets (J2EE).	f
 15	1	IT Administrator & Web/Database Developer	Great Lakes Label, LLC	2002-01-01	2004-01-01	● Worked part-time (full-time in summers) while in high school and early college.\n● Created an ERP system that tracked all aspects of the business, including printing inventory, purchase orders, and payments.\n● Implemented with FileMaker Pro database and later hooked up to a custom PHP ecommerce website so customers could place orders in the system.	f
@@ -428,7 +430,6 @@ COPY public.experiences (id, user_id, title, company, startdate, enddate, summar
 8	1	Full-Stack Software Engineer & Assistant Product Manager	Exaptive	2013-03-01	2013-10-01	● Worked with the founder to define product direction and target market segments.\n● Developed data analytics and visualizations to provide insights from complex datasets.	f
 20	1	Founder & Developer	The Disconnection Network	2003-01-01	2007-01-01	● A network of web apps for shared blogging, a Shoutcast radio station, and customer web pages	f
 17	1	Founder	Infinity Computing Services	2003-01-01	2005-01-01	● Created company that provided web hosting, email hosting, and IT support services; had several customers and web site paid for itself	f
-1	1	Research Scientist & Entrepreneur	Datagotchi Labs	2018-01-01	\N	Incubating an R&D firm to “empower people with information” in underserved market segments.\n\n● Inspect spinoff: Enabling sharing important, reliable online news on social media.\n  · Interviewed prospective users to determine their news consumption habits and needs.\n  · Designed & developed a mobile app to empower users to share news summaries online & tested it with real users.\n\n● Counteroffer spinoff: Enhancing candidate-job fit by visualizing skills and matches to job listings.\n  · Interviewed prospective users to determine their job application processes and needs.\n  · Designed & developed a skill visualization web app to for job candidates to illustrate their fit for jobs & tested it with real users.	f
 21	1	BS in Computer Science	Michigan Technological University	2003-08-01	2007-05-01	● Relevant Classes: Discrete Structures, Data Structures, Intro to Operating Systems, Object-Oriented Design, Advanced Artificial Intelligence, Real Analysis, Regression Analysis.\n● Research: Temporal data mining for computer architecture simulation results; machine learning for “expert” Go playing data; evolutionary algorithms for relational database optimization.\n● Activities: Workshop on Data Visualization and its Role in the Practice of Statistics, Phi Kappa Phi Honor Society, Upsilon Pi Epsilon Honor Society chapter president.\n● Honors: Upsilon Pi Epsilon Honor Society Jim Nolen Scholarship, Mathematics Department Certificate of Merit, Board of Controls Merit Scholarship.	t
 \.
 
@@ -476,8 +477,36 @@ COPY public.messages (id, value, question_id, sender, job_id, datetime) FROM std
 -- Data for Name: publications; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.publications (id, user_id, title, venue, link, experience_id, date) FROM stdin;
-1	1	Incrementally Formalizing Graphical Models for Collaborative Operations Research	57th Annual Meetings of the Human Factors and Ergonomics Society (HFES)	https://www.dropbox.com/s/pa9ez2ka76sojku/Stark-et-al-2013%20HFES.pdf?dl=0	9	2013-01-01
+COPY public.publications (id, user_id, title, venue, link, experience_id, date, authors) FROM stdin;
+6	1	Development of Dynamic Visual Artifacts for Resilient Human-Automation Collaboration	4th International Conference on Applied Human Factors and Ergonomics (AHFE)	\N	9	2012-07-01	Stark, R.F., Voshell, M., Mahoney, S., & Farry, M.
+19	1	Tracking the Reliability of Information	Datagotchi.net	https://datagotchi.net/2020/11/16/tracking-the-reliability-of-information/	1	2020-11-16	Stark, R.F.
+20	1	My Solution for Tracking the Reliability of Information	Datagotchi.net	https://datagotchi.net/2020/11/22/my-solution-for-tracking-the-reliability-of-information/	1	2020-11-22	Stark, R.F.
+17	1	Why Artificial Intelligence Must Be Regulated	Medium.com	https://medium.com/@bobstark/why-artificial-intelligence-must-be-regulated-c5c8ca1c02d9	1	2020-06-28	Stark, R.F.
+16	1	A Better Approach for Iteratively Creating New Technology	Medium.com	https://medium.com/@bobstark/a-better-approach-for-iteratively-creating-new-technology-cce311404482	1	2020-06-19	Stark, R.F.
+15	1	Enabling Human-Machine Collaboration to Improve the Use of AI	Medium.com	https://medium.com/@bobstark/enabling-human-machine-collaboration-to-improve-the-use-of-ai-5742b5517f28	1	2020-06-15	Stark, R.F.
+14	1	Information Science as a Lens for Better Software	Medium.com	https://medium.com/@bobstark/information-science-as-a-lens-for-better-software-580ac1d50fa1	1	2020-06-13	Stark, R.F.
+13	1	Using Information to Actually Help People	Medium.com	https://medium.com/@bobstark/using-information-to-actually-help-people-f11d1e7347c7	1	2020-06-09	Stark, R.F.
+18	1	Datagotchi Labs: Empowering People with Information	Datagotchi.net	https://datagotchi.net/2022/12/30/about/	1	2022-12-30	Stark, R.F.
+8	1	Framing the Sociocultural Context to Aid Course of Action Generation for Counterinsurgency	Advances in Applied Human Modeling and Simulation	http://books.google.com/books?hl=en&lr=&id=l1BJ6XTBfo8C&oi=fnd&pg=PA436&dq=info:1pPkQ0m9b_sJ:scholar.google.com&ots=95dYYFCG-b&sig=CzF3IC4IPzWjbOD2FwlpSxXQ-68	9	2012-01-01	Farry, M., Stark, B., Mahoney, S., Carlson, E., & Koelle, D.
+7	1	Mixed-Initiative Data Mining with Bayesian Networks	IEEE Conference on Cognitive Methods in Situation Awareness and Decision Support (CogSIMA)	https://www.dropbox.com/s/m6yarozba98kb4l/Stark-et-al-2012%20CogSIMA.pdf?dl=0	9	2012-03-01	Stark, R.F., Farry, M., & Pfautz, J.
+3	1	Supporting tactical intelligence using collaborative environments and social networking	SPIE Defense, Security, and Sensing	https://www.spiedigitallibrary.org/conference-proceedings-of-spie/8758/87580E/Supporting-tactical-intelligence-using-collaborative-environments-and-social-networking/10.1117/12.2015997.short#_=_	9	2013-01-01	Wollocko, A.B., Farry, M.P., & Stark, R.F.
+22	1	How AI Systems are Used Today (and Their Problems)	Medium.com	https://medium.com/@bobstark/how-ai-systems-are-used-today-and-their-problems-c821229b05fd	1	2024-07-10	Stark, R.F.
+23	1	Why Startups Need Problem-Solution Fit	Medium.com	https://medium.com/@bobstark/why-startups-need-problem-solution-fit-57303a53f5d6	1	2024-02-15	Stark, R.F.
+24	1	Why is AI dangerous? Automation!	Medium.com	https://medium.com/@bobstark/why-is-ai-dangerous-automation-ab6a63cc0d09	1	2023-07-04	Stark, R.F.
+4	1	Visualizations and Interaction Methods for Resilient Submarine Decision Support	56th Annual Meetings of the Human Factors and Ergonomics Society (HFES)	https://www.dropbox.com/s/l8b10uglras1z1r/Stark-et-al-2012%20HFES.pdf?dl=0	9	2012-10-01	Stark, R.F., Woods, D.D., Farry, M., Morison, A., Thornton, W., & Wollocko, A.
+27	1	Using Leverage to Make Demands from Employers	Datagotchi.net	https://datagotchi.net/2022/06/07/using-leverage-to-make-demands-from-employers/	1	2022-06-07	Stark, R.F.
+10	1	Aiding the User Input to Video Games: Virtual Role Players with Speech and Gesture Recognition	MS Thesis, Pennsylvania State University	https://etda.libraries.psu.edu/paper/10686/6306	12	2010-05-01	Stark, R.F.
+11	1	Reducing Risk in System Design through Human-Systems Integration	Ergonomics In Design	https://www.dropbox.com/s/uav23x1q9u1jvz6/Stark-Kokini-2010%20EID.pdf?dl=0	12	2010-04-01	Stark, R.F. & Kokini, C.
+5	1	Visualizing Large Scale Patterns and Anomalies in Geospatial Data	VisWeek 2012	https://www.dropbox.com/s/l0o54erpoh051cs/Stark-et-al-2012%20VAST.pdf?dl=0	9	2012-10-01	Stark, R.F., Wollocko, A., Borys, M., Kierstead, M. & Farry, M.
+9	1	Modeling Resilient Submarine Decision Making	21st Annual Conference on Behavior Representation in Modeling Simulation (BRiMS)	https://www.dropbox.com/scl/fi/drmc1lf5ga8gqlsd35x27/Stark-et-al-2012-BRIMS.pdf?rlkey=nqiqimhhg2cmocqfrfepe35tn&st=amj1opk0&dl=0	9	2012-01-01	Stark, R.F., Farry, M.P., Thornton, W.A., & Wollocko, A.B.
+12	1	Interacting Naturally in Virtual Environments	2010 Interservice/Industry Training, Simulation and Education Conference (I/ITSEC)	https://www.dropbox.com/scl/fi/p9cocc7tow54buwlfnq1r/Diller-et-al-2010-IITSEC.pdf?rlkey=t2x6lhc6nzbfzi7w5mp3mncos&st=1q6uuv82&dl=0	10	2010-01-01	Diller, D., Stark, R.F., Krisler, B., Shapiro, R., & Moffitt, K.
+25	1	What is AI? It’s just processing data and returning similar training instances!	Medium.com	https://medium.com/@bobstark/what-is-ai-its-just-processing-data-and-returning-similar-training-instances-32ac370dfeef	1	2023-06-07	Stark, R.F.
+28	1	My Solution to Using Leverage to Make Demands from Employers	Datagotchi.net	https://datagotchi.net/2022/06/17/my-solution-to-using-leverage-to-make-demands-from-employers/	1	2022-06-17	Stark, R.F.
+29	1	Hiring in the Wake of the Pandemic	Datagotchi.net	https://datagotchi.net/2021/08/25/hiring-in-the-wake-of-the-pandemic/	1	2021-08-25	Stark, R.F.
+30	1	My Solution to Hiring in the Wake of the Pandemic	Datagotchi.net	https://datagotchi.net/2021/08/30/my-solution-to-hiring-in-the-wake-of-the-pandemic/	1	2021-08-30	Stark, R.F.
+26	1	Counteroffer: A Public Forum for Improved Candidate-Job Listing Fitness	Datagotchi.net	https://datagotchi.net/2024/06/22/counteroffer-proposal/	1	2024-06-22	Stark, R.F.
+21	1	Inspect: A Multiplatform Social Network for Trustworthy News	Datagotchi.net	https://datagotchi.net/2024/06/21/inspect-proposal/	1	2024-06-21	Stark, R.F.
+1	1	Incrementally Formalizing Graphical Models for Collaborative Operations Research	57th Annual Meetings of the Human Factors and Ergonomics Society (HFES)	https://www.dropbox.com/s/pa9ez2ka76sojku/Stark-et-al-2013%20HFES.pdf?dl=0	9	2013-01-01	Stark, R.F., Roth, E.M., & Farry, M.P.,
 \.
 
 
@@ -952,7 +981,7 @@ SELECT pg_catalog.setval('public.messages_id_seq', 31, true);
 -- Name: publications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.publications_id_seq', 2, true);
+SELECT pg_catalog.setval('public.publications_id_seq', 30, true);
 
 
 --
