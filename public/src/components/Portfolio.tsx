@@ -191,30 +191,33 @@ const Portfolio = () => {
             />
           ))}
           <h2>Publications</h2>
-          {Object.keys(publicationYears).map((pubYear) => (
-            <>
-              <h3>{pubYear}</h3>
-              <ul>
-                {portfolio.publications
-                  .filter(
-                    (pub) =>
-                      new Date(pub.date).getFullYear() === parseInt(pubYear)
-                  )
-                  .map((pub, i) => (
-                    <li>
-                      <a
-                        href={pub.link}
-                        target="_blank"
-                        id={`Publication #${pub.id}`}
-                      >
-                        {pub.title}
-                      </a>{" "}
-                      - {pub.venue}
-                    </li>
-                  ))}
-              </ul>
-            </>
-          ))}
+          {Object.keys(publicationYears)
+            .map((yearString) => parseInt(yearString))
+            .sort((a, b) => b - a)
+            .map((pubYear) => (
+              <>
+                <h3>{pubYear}</h3>
+                <ul>
+                  {portfolio.publications
+                    .filter(
+                      (pub) => new Date(pub.date).getFullYear() === pubYear
+                    )
+                    .map((pub, i) => (
+                      <li>
+                        <a
+                          href={pub.link}
+                          target="_blank"
+                          id={`Publication #${pub.id}`}
+                        >
+                          {pub.title}
+                        </a>
+                        <p style={{ padding: "0 0 0 10" }}>{pub.authors}</p>
+                        <p style={{ padding: "0 0 0 10" }}>{pub.venue}</p>
+                      </li>
+                    ))}
+                </ul>
+              </>
+            ))}
         </div>
       </>
     );

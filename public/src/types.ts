@@ -14,6 +14,7 @@ export interface Publication {
   id: number;
   user_id: number;
   experience_id: number;
+  authors: string;
   title: string;
   venue: string;
   date: string;
