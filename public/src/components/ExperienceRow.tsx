@@ -62,7 +62,7 @@ const ExperienceRow = ({ data, selectedTags, onPublicationClick }: Props) => {
       <h4>{data.company}</h4>
       {new Date(startDate).toLocaleDateString("en-US", dateFormat)} -{" "}
       {endDate ? new Date(endDate).toLocaleDateString("en-US", dateFormat) : ""}
-      <div className="summary">{data.summary}</div>
+      <div className="experience-summary">{data.summary}</div>
       <div>
         <ul className="tag-list">
           {filteredTags
