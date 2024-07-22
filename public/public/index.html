@@ -2,10 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Illuminate by Datagotchi Labs</title>
+    <title>Counteroffer by Datagotchi Labs</title>
 
     <style>
       @media print {
+        a[href] {
+          color: #337ab7 !important;
+        }
+        a[href]:after {
+          content: none !important;
+        }
+
+        .experience-row {
+          page-break-inside: avoid !important;
+        }
+
+        .publications-link a {
+          color: #fff !important;
+        }
+
         .tag-item {
           color: white !important;
           background-color: #337ab7 !important;
@@ -17,31 +32,125 @@
           print-color-adjust: exact;
         }
 
-        #facts {
-          display: none !important;
+        .hideFromPrint {
+          display: none;
+        }
+
+        #content {
+          width: auto !important;
+          float: none;
+        }
+
+        #histogram_header {
+          display: none;
+        }
+
+        .histogram-tag {
+          color: white !important;
+          background-color: #337ab7 !important;
+          print-color-adjust: exact;
+        }
+
+        .danger {
+          background-color: #dc3545 !important;
+          print-color-adjust: exact;
+        }
+
+        #histogram_container {
+          height: auto !important;
+        }
+
+        #histogram-container {
+          max-height: 80vh !important;
+          /* font-size: 12px !important; */
         }
       }
 
-      body {
-        margin: 50px;
-      }
-
       h1 {
-        font-size: 30px;
+        font-size: 28px;
         margin-top: 10px;
       }
 
       h2 {
-        font-size: 24px;
+        font-size: 20px;
         margin-top: 10px;
       }
 
-      .tagBar {
-        background-color: #337ab7;
+      #root {
+        position: absolute;
       }
 
-      .tagBar.danger {
+      #nav {
+        float: left;
+        width: 200px;
+        border-right: 2px black dotted;
+        text-align: center;
+        height: 100%;
+        position: fixed;
+        margin: 10px 0 0 0;
+      }
+
+      #nav ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #nav ul li {
+        padding: 10px;
+        border-top: 2px black dotted;
+      }
+
+      #nav ul li.active {
+        background-color: #999;
+      }
+
+      #nav ul li:last-child {
+        border-bottom: 2px black dotted;
+      }
+
+      #content {
+        margin: 50px;
+        float: right;
+        width: calc(100% - 300px);
+      }
+
+      #histogram-container {
+        /* display: inline-block; */
+        /* width: 100%; */
+        /* height: 200px; */
+        overflow-y: scroll;
+        border: "1px black solid";
+        border-radius: 5px;
+      }
+
+      #histogram-header {
+        text-align: center;
+        padding: 5px;
+      }
+
+      .histogram-tag {
+        background-color: #337ab7;
+        min-height: 15px;
+      }
+
+      .histogram-tag.danger {
         background-color: #d9534f;
+      }
+
+      .experience-summary {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        white-space: pre;
+        text-wrap: wrap !important;
       }
 
       .tag-list {
@@ -55,7 +164,7 @@
         margin: 2px;
         padding: 0 5px;
         display: inline-block;
-        font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
         height: 26px;
         line-height: 25px;
         border-radius: 3px;
@@ -94,18 +203,6 @@
       .togglePrint label {
         margin: 0;
         padding: 5px;
-      }
-
-      @media print {
-        histogram,
-        #navLinks,
-        smcx-widget {
-          display: none !important;
-        }
-
-        .hideFromPrint {
-          display: none;
-        }
       }
     </style>
 

@@ -240,24 +240,20 @@ router.delete("/jobs/:job_id/facts/:fact_id", (req, res, next) => {
 });
 
 router.post("/session", (req, res, next) => {
-  console.log("*** posting session");
   const values = req.body,
     username = values.username,
     password = values.password,
     hash = md5(password);
-  // console.log("*** got username: ", username);
   return req.client
     .query({
       text: "select * from users where username = $1::text",
       values: [username],
     })
     .then((results) => {
-      console.log("*** found user: ", username);
       const user = results.rows[0],
         currentSession = user.current_session,
         passwordHash = user.hashed_password;
       if (passwordHash === hash) {
-        // console.log("*** passwords match");
         if (currentSession) {
           return res.json(currentSession);
         }
@@ -271,7 +267,6 @@ router.post("/session", (req, res, next) => {
             return res.json(session);
           });
       } else {
-        // console.log("*** passwords DO NOT match");
         return res.sendStatus(403);
       }
     });

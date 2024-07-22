@@ -4,10 +4,10 @@ import "@testing-library/jest-dom";
 
 import Survey from "../components/Survey";
 
-import { mockQuestions } from "../hooks/__mocks__/useApi";
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
-afterAll(() => jest.clearAllMocks());
+import { mockQuestions } from "../hooks/__mocks__/axios";
+
+import axios from "axios";
+jest.mock("axios");
 
 const mockUsername = "test username";
 

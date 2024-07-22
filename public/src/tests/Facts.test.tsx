@@ -4,10 +4,7 @@ import "@testing-library/jest-dom";
 
 import Facts from "../components/Facts";
 
-import { mockFacts } from "../hooks/__mocks__/useApi";
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
-afterAll(() => jest.clearAllMocks());
+import { mockFacts } from "../hooks/__mocks__/axios";
 
 describe("Facts", () => {
   test("Renders mock facts", async () => {

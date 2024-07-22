@@ -16,7 +16,7 @@ export const mockExperiences = [
     title: "experienceTitle",
     company: "experienceCompany",
     summary: "experienceSummary",
-    startdate: oneYearAgo,
+    startdate: oneYearAgo.toLocaleDateString(),
     enddate: undefined,
     tags: [
       {
@@ -24,6 +24,7 @@ export const mockExperiences = [
         value: "experienceTagValue",
       },
     ],
+    publications: [],
   },
 ];
 
@@ -32,13 +33,6 @@ export const mockPortfolio = {
   facts: mockFacts,
   experiences: mockExperiences,
 };
-
-// TODO: can't export this and expect() against it for some reason
-const mockGetPortfolio = jest.fn((username: string) => {
-  return new Promise((resolve, reject) => {
-    resolve({ data: mockPortfolio });
-  });
-});
 
 export const mockQuestions = [
   {
@@ -61,17 +55,27 @@ export const mockQuestions = [
   },
 ];
 
-const mockGetQuestions = jest.fn((username: string) => {
-  return new Promise((resolve, reject) => {
-    resolve({ data: mockQuestions });
-  });
-});
-
-const useApi = () => {
+export const create = () => {
   return {
-    getPortfolio: mockGetPortfolio,
-    getQuestions: mockGetQuestions,
+    get: (url: string) => {
+      if (url.includes("portfolios")) {
+        return new Promise<any>((resolve, reject) => {
+          resolve({ data: mockPortfolio });
+        });
+      } else if (url.includes("surveys")) {
+        return new Promise((resolve, reject) => {
+          resolve({ data: mockQuestions });
+        });
+      }
+    },
+    post: (url: string, body: any) => {
+      if (url.includes("surveys")) {
+        return new Promise((resolve, reject) => {
+          resolve({ data: mockQuestions });
+        });
+      }
+    },
   };
 };
 
-export default useApi;
+export default { create };

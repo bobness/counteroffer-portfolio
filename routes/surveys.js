@@ -93,7 +93,7 @@ router.post("/:username", async (req, res, next) => {
       from: `"${senderEmail}" <hit-reply@datagotchi.net>`,
       replyTo: senderEmail,
       to: user.email,
-      subject: "Illuminate Survey Response",
+      subject: "Counteroffer Survey Response",
       html: renderEmail(questions, sortedResponses),
     });
     res.sendStatus(201);

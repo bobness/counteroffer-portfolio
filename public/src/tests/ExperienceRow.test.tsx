@@ -4,10 +4,7 @@ import "@testing-library/jest-dom";
 
 import ExperienceRow from "../components/ExperienceRow";
 
-import { mockExperiences } from "../hooks/__mocks__/useApi";
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
-afterAll(() => jest.clearAllMocks());
+import { mockExperiences } from "../hooks/__mocks__/axios";
 
 const singleMockExperience = mockExperiences[0];
 
@@ -19,8 +16,8 @@ describe("ExperienceRow", () => {
   };
   test("Renders the mock experience correctly", async () => {
     render(<ExperienceRow data={singleMockExperience} />);
-    await expectExperienceRowElement(singleMockExperience.title, "h1");
-    await expectExperienceRowElement(singleMockExperience.company, "h2");
+    await expectExperienceRowElement(singleMockExperience.title, "h3");
+    await expectExperienceRowElement(singleMockExperience.company, "h4");
     await expectExperienceRowElement(singleMockExperience.summary, "div");
     await expectExperienceRowElement(singleMockExperience.tags[0].value, "li");
   });

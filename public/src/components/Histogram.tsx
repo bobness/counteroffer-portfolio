@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Experience } from "../types";
+import { Experience, Tag } from "../types";
 
 interface TagCount {
   name: string;
@@ -14,7 +14,7 @@ interface Props {
   printStyle?: string;
 }
 
-export const EXPERIENCE_YEAR_HEIGHT = 10;
+export const EXPERIENCE_YEAR_HEIGHT = 2;
 
 const Histogram = ({
   experiences,
@@ -29,21 +29,25 @@ const Histogram = ({
   const tagCounts = useMemo(() => {
     return experiences
       .reduce<TagCount[]>((counts, experience) => {
-        experience.tags.forEach((tag) => {
-          if (!counts.find((c) => c.name === tag.value)) {
-            counts.push({ name: tag.value, count: 0 });
-          }
-          const tc = counts.find((c) => c.name === tag.value);
-          if (tc) {
-            const end = experience.enddate
-              ? new Date(experience.enddate)
-              : new Date();
-            const start = new Date(experience.startdate);
-            const time = end.getTime() - start.getTime();
-            const years = Math.round(time / (1000 * 60 * 60 * 24 * 365));
-            tc.count += years;
-          }
-        });
+        experience.tags
+          .filter((tag: Tag) =>
+            selectedThemeTags ? selectedThemeTags?.includes(tag.value) : true
+          )
+          .forEach((tag: Tag) => {
+            if (!counts.find((c) => c.name === tag.value)) {
+              counts.push({ name: tag.value, count: 0 });
+            }
+            const tc = counts.find((c) => c.name === tag.value);
+            if (tc) {
+              const end = experience.enddate
+                ? new Date(experience.enddate)
+                : new Date();
+              const start = new Date(experience.startdate);
+              const time = end.getTime() - start.getTime();
+              const years = Math.round(time / (1000 * 60 * 60 * 24 * 365));
+              tc.count += years;
+            }
+          });
         return counts;
       }, [])
       .sort((a, b) => b.count - a.count);
@@ -60,35 +64,8 @@ const Histogram = ({
 
   return (
     <>
-      <style>{`@media print { 
-        #histogram_header { display: none; }
-        .tagBar { 
-          color: white !important;
-          background-color: #337ab7 !important;
-          print-color-adjust: exact;
-        }
-        .danger {
-          background-color: #dc3545 !important;
-          print-color-adjust: exact;
-        }
-        ${printStyle}
-      }
-      `}</style>
-      <div
-        id="container"
-        style={{
-          display: "inline-block",
-          width: "100%",
-          maxHeight: "300px",
-          overflowY: "scroll",
-          border: "1px black solid",
-          borderRadius: "5px",
-        }}
-      >
-        <div
-          id="histogram_header"
-          style={{ textAlign: "center", padding: "5px" }}
-        >
+      <div id="histogram_container">
+        <div id="histogram_header">
           <strong style={{ float: "left" }}>
             Click one or more bars to filter the experiences below
           </strong>
@@ -107,7 +84,7 @@ const Histogram = ({
             ></span>
           </div>
         </div>
-        <div style={{ clear: "both" }}>
+        <div style={{ clear: "both", fontSize: "12px" }}>
           {tagCounts
             .filter((tc) =>
               tc.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
@@ -116,16 +93,13 @@ const Histogram = ({
               <span
                 style={{
                   display: "inline-block",
-                  width: "70px",
+                  width: "80px",
                   verticalAlign: "bottom",
-                  margin: "15px",
-                  fontSize: "smaller",
+                  margin: "0 5px",
                 }}
                 key={`histogram span for ${tc.name}`}
               >
-                <div style={{ textOverflow: "ellipsis", overflow: "hidden" }}>
-                  {tc.name}
-                </div>
+                <div style={{ textAlign: "center" }}>{tc.name}</div>
                 <div
                   style={{
                     color: "white",
@@ -135,11 +109,7 @@ const Histogram = ({
                     cursor: "pointer",
                   }}
                   className={
-                    "tagBar " +
-                    (selectedTag === tc.name ||
-                    selectedThemeTags?.includes(tc.name)
-                      ? "danger"
-                      : "")
+                    "histogram-tag " + (selectedTag === tc.name ? "danger" : "")
                   }
                   onClick={() => {
                     if (selectedTag === tc.name) {

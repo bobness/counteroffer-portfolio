@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from "react";
-import { Experience, Suggestion, Tag } from "../types";
+import { Experience, Tag } from "../types";
 
 interface Props {
   data: Experience;
   selectedTags?: string[];
-  selectedSuggestions?: Suggestion[];
+  onPublicationClick?: (expId: number) => void;
 }
 
-const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
+const ExperienceRow = ({ data, selectedTags, onPublicationClick }: Props) => {
   const startDate = useMemo(() => {
     const date = new Date(data.startdate);
     return date.toLocaleDateString("en-US");
@@ -21,53 +21,65 @@ const ExperienceRow = ({ data, selectedTags, selectedSuggestions }: Props) => {
     return "";
   }, [data?.enddate]);
 
-  const [addedTags, setAddedTags] = useState<Tag[]>([]);
+  const filteredTags = useMemo(() => {
+    if ("tags" in data) {
+      if (selectedTags) {
+        return data.tags.filter((tag) => selectedTags?.includes(tag.value));
+      } else {
+        return data.tags;
+      }
+    } else {
+      return [];
+    }
+  }, [data.tags, selectedTags]);
+
+  const dateFormat = { month: "long" as const, year: "numeric" as const };
 
   return (
-    <div>
-      {/* <div style={{ display: "inline-block", width: 30 }}>
-        {selectedSuggestions && selectedSuggestions.length > 0 && (
-          <button
-            onClick={() => {
-              setAddedTags([
-                ...addedTags,
-                ...selectedSuggestions.map((s) => ({
-                  id: 0,
-                  value: s.text,
-                })),
-              ]);
-            }}
+    <div style={{ display: "block" }} className="experience-row">
+      <h3>
+        {data.title}
+        {data.publications.length > 0 && (
+          <span
+            style={{ float: "right" }}
+            className="publications-link tag-item"
           >
-            +
-          </button>
+            {onPublicationClick && (
+              <a
+                onClick={(event) => onPublicationClick(data.id)}
+                style={{
+                  cursor: "pointer",
+                  color: "#fff",
+                }}
+              >
+                {data.publications.length} Publications
+              </a>
+            )}
+            {!onPublicationClick && `${data.publications.length} Publications`}
+          </span>
         )}
-      </div> */}
-      <div style={{ display: "inline-block" }}>
-        <h1>{data.title}</h1>
-        <h2>{data.company}</h2>
-        {startDate} - {endDate}
-        <div>{data.summary}</div>
+      </h3>
+      <h4>{data.company}</h4>
+      {new Date(startDate).toLocaleDateString("en-US", dateFormat)} -{" "}
+      {endDate ? new Date(endDate).toLocaleDateString("en-US", dateFormat) : ""}
+      <div className="experience-summary">{data.summary}</div>
+      <div>
         <ul className="tag-list">
-          {data.tags.map((tag, i) => (
-            <li
-              className={
-                selectedTags?.includes(tag.value)
-                  ? "tag-item danger"
-                  : "tag-item"
+          {filteredTags
+            .sort((a: Tag, b: Tag) => {
+              if (b.value < a.value) {
+                return 1;
               }
-              key={`tag ${data.id} - ${i}`}
-            >
-              {tag.value}
-            </li>
-          ))}
-          {/* {addedTags?.map((tag, i) => (
-            <li
-              className="tag-item"
-              key={`tag ${data.id} - ${data.tags.length + i}`}
-            >
-              {tag.value}
-            </li>
-          ))} */}
+              if (a.value < b.value) {
+                return -1;
+              }
+              return 0;
+            })
+            .map((tag, i) => (
+              <li className={"tag-item"} key={`tag ${data.id} - ${i}`}>
+                {tag.value}
+              </li>
+            ))}
         </ul>
       </div>
     </div>

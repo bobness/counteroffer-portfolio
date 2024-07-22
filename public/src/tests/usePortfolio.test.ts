@@ -3,10 +3,12 @@ import { renderHook, waitFor } from "@testing-library/react";
 import usePortfolio from "../hooks/usePortfolio";
 import { Portfolio } from "../types";
 
-import { mockPortfolio } from "../hooks/__mocks__/useApi";
-import useApi from "../hooks/useApi";
-jest.mock("../hooks/useApi");
-afterAll(() => jest.clearAllMocks());
+import { mockPortfolio } from "../hooks/__mocks__/axios";
+
+import axios from "axios";
+jest.mock("axios");
+
+// afterEach(() => jest.clearAllMocks());
 
 describe("usePortfolio", () => {
   test("Returns the mock portfolio object", async () => {
