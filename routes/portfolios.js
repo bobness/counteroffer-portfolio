@@ -46,9 +46,10 @@ router.get("/:username", async (req, res, next) => {
     );
     const education = experiences.filter((exp) => exp.is_education);
     const lastEducation = education.sort((a, b) => a.enddate - b.endddate)[0];
-    const professionalExperiences = experiences
-      .filter((exp) => !exp.is_education)
-      .filter((exp) => exp.startdate >= lastEducation.startdate);
+    const professionalExperiences = experiences.filter(
+      (exp) => !exp.is_education
+    );
+    // .filter((exp) => exp.startdate >= lastEducation.startdate);
     const publications = await req.client
       .query({
         text: "select * from publications where user_id = $1::integer",

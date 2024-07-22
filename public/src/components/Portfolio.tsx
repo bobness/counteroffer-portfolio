@@ -194,7 +194,7 @@ const Portfolio = () => {
               onPublicationClick={goToPublication}
             />
           ))}
-          <h2>Publications</h2>
+          <h2 style={{ pageBreakBefore: "always" }}>Appendix: Publications</h2>
           {Object.keys(publicationYears)
             .map((yearString) => parseInt(yearString))
             .sort((a, b) => b - a)
@@ -224,11 +224,12 @@ const Portfolio = () => {
                         {!pub.link && pub.title}
                         <ul>
                           <li>{pub.authors}</li>
-                          <li>{pub.venue}</li>
                           <li>
+                            {pub.venue} (
                             {new Date(pub.date).toLocaleDateString("en-US", {
                               month: "long",
                             })}
+                            )
                           </li>
                         </ul>
                       </li>

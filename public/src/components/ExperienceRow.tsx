@@ -31,7 +31,7 @@ const ExperienceRow = ({ data, selectedTags, onPublicationClick }: Props) => {
     } else {
       return [];
     }
-  }, []);
+  }, [data.tags, selectedTags]);
 
   const dateFormat = { month: "long" as const, year: "numeric" as const };
 
