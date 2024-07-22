@@ -15,6 +15,7 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // 0 (no timeout!) is default
 });
 
+// TODO: add this functionality to the web app
 async function main() {
   let client;
   try {
@@ -28,7 +29,7 @@ async function main() {
     process.exit();
   }
   if (process.argv.length < 4) {
-    console.log("Usage: node newjob.js [themeName] [...skills]");
+    console.log("Usage: node newTheme.js [themeName] [...skills]");
   }
   const name = process.argv[2];
   const tags = process.argv.slice(3);

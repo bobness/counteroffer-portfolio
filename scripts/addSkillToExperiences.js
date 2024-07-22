@@ -14,6 +14,7 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // 0 (no timeout!) is default
 });
 
+// TODO: add this functionality to the web app
 async function main() {
   let client;
   try {
