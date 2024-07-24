@@ -31,6 +31,7 @@ async function main() {
     console.log(
       "Usage: node addSkillToExpeirences.js [skill] [...experience regexes]"
     );
+    process.exit();
   }
   const skill = process.argv[2];
   const experienceRegexes = process.argv.slice(3);

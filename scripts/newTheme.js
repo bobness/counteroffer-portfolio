@@ -30,6 +30,7 @@ async function main() {
   }
   if (process.argv.length < 4) {
     console.log("Usage: node newTheme.js [themeName] [...skills]");
+    process.exit();
   }
   const name = process.argv[2];
   const tags = process.argv.slice(3);
